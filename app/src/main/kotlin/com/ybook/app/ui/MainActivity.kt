@@ -1,6 +1,7 @@
-package com.ybook.app
+package com.ybook.app.ui
 
 import android.app.Activity
+import com.ybook.app.NavigationDrawerFragment
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.view.Menu
@@ -9,9 +10,10 @@ import android.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
+import com.ybook.app.R
 import android.app.ActionBar
 
-public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawerCallbacks, CollectionDrawerFragment.CollectionDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -35,6 +37,12 @@ public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawe
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
+        // update the main content by replacing fragments
+        val fragmentManager = getFragmentManager()
+        fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit()
+    }
+
+    override fun onCollectionDrawerItemSelected(position: Int) {
         // update the main content by replacing fragments
         val fragmentManager = getFragmentManager()
         fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit()
