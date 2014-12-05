@@ -1,24 +1,23 @@
 package com.ybook.app.ui
 
 import android.app.Activity
-import com.ybook.app.NavigationDrawerFragment
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.view.Menu
 import android.view.MenuItem
-import android.app.Fragment
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.View
 import com.ybook.app.R
 import android.app.ActionBar
+import android.content.Intent
+import com.unique.libraryquery.ui.FeedBackAct
+import com.unique.libraryquery.ui.HomeFrag
+import com.ybook.app.AboutFragment
 
-public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawerCallbacks{
+public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private var mNavigationDrawerFragment: NavigationDrawerFragment? = null
+    private var mNavigationDrawerFragment: com.ybook.app.ui.NavigationDrawerFragment? = null
 
     private var mCollectionDrawerFragment: CollectionDrawerFragment? = null
     /**
@@ -30,26 +29,26 @@ public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawe
         super<Activity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mNavigationDrawerFragment = getFragmentManager().findFragmentById(R.id.navigation_drawer) as NavigationDrawerFragment
+        mNavigationDrawerFragment = getFragmentManager().findFragmentById(R.id.navigation_drawer) as com.ybook.app.ui.NavigationDrawerFragment
         mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
         mTitle = getTitle()
 
         mCollectionDrawerFragment = getFragmentManager().findFragmentById(R.id.collection_drawer) as CollectionDrawerFragment
-        mCollectionDrawerFragment!!.setUp(R.id.collection_drawer,findViewById(R.id.drawer_layout) as DrawerLayout)
+        mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
-        // update the main content by replacing fragments
-        val fragmentManager = getFragmentManager()
-        fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit()
+        getFragmentManager().beginTransaction().replace(R.id.container, HomeFrag()).commit()
+        getFragmentManager().beginTransaction().replace(R.id.container, AboutFragment()).commit()
+        startActivity(Intent(this, javaClass<FeedBackAct>()))
+
     }
 
 
     public fun onSectionAttached(number: Int) {
         when (number) {
-            1 -> mTitle = getString(R.string.title_section1)
-            2 -> mTitle = getString(R.string.title_section2)
-            3 -> mTitle = getString(R.string.title_section3)
+            1 -> mTitle = getString(R.string.navigationHome)
+            2 -> mTitle = getString(R.string.navigationAbout)
         }
     }
 
@@ -87,40 +86,40 @@ public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawe
         return super<Activity>.onOptionsItemSelected(item)
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public class PlaceholderFragment : Fragment() {
-
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            val rootView = inflater.inflate(R.layout.fragment_main, container, false)
-            return rootView
-        }
-
-        override fun onAttach(activity: Activity?) {
-            super.onAttach(activity)
-            (activity as MainActivity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER))
-        }
-
-        class object {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
-            private val ARG_SECTION_NUMBER = "section_number"
-
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
-            public fun newInstance(sectionNumber: Int): PlaceholderFragment {
-                val fragment = PlaceholderFragment()
-                val args = Bundle()
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
-                fragment.setArguments(args)
-                return fragment
-            }
-        }
-    }
+    //    /**
+    //     * A placeholder fragment containing a simple view.
+    //     */
+    //    public class PlaceholderFragment : Fragment() {
+    //
+    //        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    //            val rootView = inflater.inflate(R.layout.fragment_main, container, false)
+    //            return rootView
+    //        }
+    //
+    //        override fun onAttach(activity: Activity?) {
+    //            super.onAttach(activity)
+    //            (activity as MainActivity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER))
+    //        }
+    //
+    //        class object {
+    //            /**
+    //             * The fragment argument representing the section number for this
+    //             * fragment.
+    //             */
+    //            private val ARG_SECTION_NUMBER = "section_number"
+    //
+    //            /**
+    //             * Returns a new instance of this fragment for the given section
+    //             * number.
+    //             */
+    //            public fun newInstance(sectionNumber: Int): PlaceholderFragment {
+    //                val fragment = PlaceholderFragment()
+    //                val args = Bundle()
+    //                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+    //                fragment.setArguments(args)
+    //                return fragment
+    //            }
+    //        }
+    //    }
 
 }

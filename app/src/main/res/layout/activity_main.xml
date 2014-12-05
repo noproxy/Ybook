@@ -26,7 +26,7 @@
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:name="com.ybook.app.NavigationDrawerFragment"
+            android:name="com.ybook.app.ui.NavigationDrawerFragment"
             tools:layout="@layout/fragment_navigation_drawer"/>
 
     <fragment
