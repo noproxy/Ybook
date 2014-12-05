@@ -13,13 +13,14 @@ import android.view.View
 import com.ybook.app.R
 import android.app.ActionBar
 
-public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawerCallbacks, CollectionDrawerFragment.CollectionDrawerCallbacks {
+public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private var mNavigationDrawerFragment: NavigationDrawerFragment? = null
 
+    private var mCollectionDrawerFragment: CollectionDrawerFragment? = null
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -30,10 +31,11 @@ public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawe
         setContentView(R.layout.activity_main)
 
         mNavigationDrawerFragment = getFragmentManager().findFragmentById(R.id.navigation_drawer) as NavigationDrawerFragment
+        mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
         mTitle = getTitle()
 
-        // Set up the drawer.
-        mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
+        mCollectionDrawerFragment = getFragmentManager().findFragmentById(R.id.collection_drawer) as CollectionDrawerFragment
+        mCollectionDrawerFragment!!.setUp(R.id.collection_drawer,findViewById(R.id.drawer_layout) as DrawerLayout)
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
@@ -42,11 +44,6 @@ public class MainActivity : Activity(), NavigationDrawerFragment.NavigationDrawe
         fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit()
     }
 
-    override fun onCollectionDrawerItemSelected(position: Int) {
-        // update the main content by replacing fragments
-        val fragmentManager = getFragmentManager()
-        fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit()
-    }
 
     public fun onSectionAttached(number: Int) {
         when (number) {
