@@ -1,4 +1,4 @@
-package com.unique.libraryquery.bean
+package com.ybook.app.bean
 
 /**
  * Created by carlos on 11/14/14.

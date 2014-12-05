@@ -34,7 +34,7 @@
                         android:maxLines="1"
                         android:padding="8dp"
                         android:hint="@string/search_hint"
-                        android:textColorHint="@color/light_gray"
+                        android:textColorHint="@color/lightGray"
                         android:gravity="center_vertical"
                         android:textSize="16sp"
                         android:id="@+id/search_edit_text"

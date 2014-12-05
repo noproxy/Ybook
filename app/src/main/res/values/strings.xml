@@ -14,4 +14,58 @@
 
 
     <string name="text_about">Ybook from UniqueStudio</string>
+
+
+    <string name="available_hint">在架上</string>
+    <string name="book_cover_hint">封面</string>
+    <string name="is_collection_hint">Collection</string>
+    <string name="author_hint">作者 :</string>
+    <string name="publisher_hint">出版 :</string>
+    <string name="query_id_hint">查询 :</string>
+    <string name="isbn_hint">ISBN :</string>
+    <string name="detail_hint">简介 :</string>
+    <string name="search_hint">搜索书名</string>
+    <string name="collection">收藏</string>
+    <string name="add">加入书单</string>
+    <string name="toast_mark">已收藏!</string>
+    <string name="toast_cancel_mark">取消收藏!</string>
+    <string name="no_details_hint">这本书没有提供简介.</string>
+
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="create_list_name">新建书单?</string>
+    <string name="list_name">书单名</string>
+    <string name="toast_create_list">书单创建成功!</string>
+
+    <string name="long_text_test">的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款</string>
+    <string name="long_adc_test">ksadhfkahsdjkfhaskhdfskahfkhaskjhfafuiwqfhkdasssfsdddddddddddddddddddddddddd</string>
+    <string name="long_123_test">83172648146790002348</string>
+    <string name="action_search">搜索</string>
+    <string name="no_title_hint">无标题</string>
+    <string name="detail_tab_title_infro">图书描述</string>
+    <string name="detail_tab_title_status">馆藏状态</string>
+
+    <string name="login_btn_hint">登陆</string>
+    <string name="skip_login_btn_hint">游客</string>
+    <string name="name_tx_hint">姓名</string>
+    <string name="pass_tx_hint">卡号</string>
+
+
+    <string name="feedbackCommit">commit</string>
+
+
+    <string name="empty_message">No items yet</string>
+    <string name="loading_message">Please wait</string>
+    <string name="error_message">Oops! Something wrong happened</string>
+
+    <string name="empty_button">Try again</string>
+    <string name="loading_button">Cancel</string>
+    <string name="error_button">Try again</string>
+
+    <string name="load_history_error">Load Error!</string>
+    <string name="password_error">Your account is wrong! Please login again</string>
+    <string name="loading_history_message_prefix">Loading page </string>
+
+    <string name="load_search_error">Load Error!</string>
+    <string name="loading_search_message_prefix">Loading page  </string>
 </resources>

@@ -10,9 +10,15 @@ import android.app.ActionBar
 import android.content.Intent
 import com.unique.libraryquery.ui.FeedBackAct
 import com.unique.libraryquery.ui.HomeFrag
-import com.ybook.app.AboutFragment
 
 public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
+    /**
+     * The fragment argument representing the section number for this
+     * fragment.
+     */
+    class object {
+        public val ARG_SECTION_NUMBER: String = "section_number"
+    }
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -38,12 +44,12 @@ public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragmen
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
-        getFragmentManager().beginTransaction().replace(R.id.container, HomeFrag()).commit()
-        getFragmentManager().beginTransaction().replace(R.id.container, AboutFragment()).commit()
-        startActivity(Intent(this, javaClass<FeedBackAct>()))
-
+        when (position) {
+            1 -> getFragmentManager().beginTransaction().replace(R.id.container, HomeFrag(position)).commit()
+            2 -> getFragmentManager().beginTransaction().replace(R.id.container, com.ybook.app.ui.AboutFragment(position)).commit()
+            3 -> startActivity(Intent(this, javaClass<FeedBackAct>()))
+        }
     }
-
 
     public fun onSectionAttached(number: Int) {
         when (number) {
@@ -85,41 +91,4 @@ public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragmen
 
         return super<Activity>.onOptionsItemSelected(item)
     }
-
-    //    /**
-    //     * A placeholder fragment containing a simple view.
-    //     */
-    //    public class PlaceholderFragment : Fragment() {
-    //
-    //        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    //            val rootView = inflater.inflate(R.layout.fragment_main, container, false)
-    //            return rootView
-    //        }
-    //
-    //        override fun onAttach(activity: Activity?) {
-    //            super.onAttach(activity)
-    //            (activity as MainActivity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER))
-    //        }
-    //
-    //        class object {
-    //            /**
-    //             * The fragment argument representing the section number for this
-    //             * fragment.
-    //             */
-    //            private val ARG_SECTION_NUMBER = "section_number"
-    //
-    //            /**
-    //             * Returns a new instance of this fragment for the given section
-    //             * number.
-    //             */
-    //            public fun newInstance(sectionNumber: Int): PlaceholderFragment {
-    //                val fragment = PlaceholderFragment()
-    //                val args = Bundle()
-    //                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
-    //                fragment.setArguments(args)
-    //                return fragment
-    //            }
-    //        }
-    //    }
-
 }

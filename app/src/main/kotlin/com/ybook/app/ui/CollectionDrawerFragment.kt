@@ -43,7 +43,7 @@ public class CollectionDrawerFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mDrawerListView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false) as ListView
+        mDrawerListView = inflater.inflate(R.layout.fragment_collection_drawer, container, false) as ListView
         mDrawerListView!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 Toast.makeText(inflater.getContext(), "onClick", Toast.LENGTH_SHORT).show()

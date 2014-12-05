@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.unique.libraryquery.view.MultiSwipeRefreshLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
-        <ListView
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white">
+        android:layout_height="match_parent">
 
-        </ListView>
-    </FrameLayout>
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
-</com.unique.libraryquery.view.MultiSwipeRefreshLayout>
+    </ListView>
+</FrameLayout>

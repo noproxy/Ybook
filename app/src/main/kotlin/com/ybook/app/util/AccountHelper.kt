@@ -1,7 +1,8 @@
-package com.unique.libraryquery.util
+package com.ybook.app.util
 
-import com.unique.libraryquery.net.LoginRequest
 import android.content.Context
+import com.ybook.app.net.LoginRequest
+import com.ybook.app.MyApplication
 
 /**
  * Created by carlos on 11/12/14.

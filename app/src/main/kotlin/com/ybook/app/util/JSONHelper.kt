@@ -1,21 +1,22 @@
-package com.unique.libraryquery.util
+package com.ybook.app.util
 
 import org.json.JSONObject
-import com.unique.libraryquery.bean.SearchResponse
 import org.json.JSONArray
 import java.util.ArrayList
-import com.unique.libraryquery.bean.DetailResponse
-import com.unique.libraryquery.bean.SearchResponse.SearchObject
-import com.unique.libraryquery.bean.DetailResponse.LibInfo
-import com.unique.libraryquery.bean.RenewResponse
-import com.unique.libraryquery.bean.RenewResponse.RenewObject
-import com.unique.libraryquery.bean.HistoryResponse
-import com.unique.libraryquery.bean.CurrentResponse
-import com.unique.libraryquery.bean.HistoryResponse.HistoryObject
-import com.unique.libraryquery.bean.CurrentResponse.CurrentObject
-import com.unique.libraryquery.bean.LoginResponse
+
 import org.json.JSONException
 import android.util.Log
+import com.ybook.app.bean.LoginResponse
+import com.ybook.app.bean.SearchResponse
+import com.ybook.app.bean.SearchResponse.SearchObject
+import com.ybook.app.bean.DetailResponse
+import com.ybook.app.bean.DetailResponse.LibInfo
+import com.ybook.app.bean.RenewResponse
+import com.ybook.app.bean.RenewResponse.RenewObject
+import com.ybook.app.bean.HistoryResponse
+import com.ybook.app.bean.HistoryResponse.HistoryObject
+import com.ybook.app.bean.CurrentResponse
+import com.ybook.app.bean.CurrentResponse.CurrentObject
 
 /**
  * Created by carlos on 11/10/14.

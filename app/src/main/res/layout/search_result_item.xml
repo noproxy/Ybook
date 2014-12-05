@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:padding="24dp"
+              android:weightSum="1"
+        >
+
+    <ImageView
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="96dp"
+            android:id="@+id/image_view_book_cover"
+            android:src="@drawable/ic_empty"
+            android:layout_marginRight="24dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/book_cover_hint"/>
+
+    <LinearLayout
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_marginRight="24dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/background_dark"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:text="Large Text"
+                android:id="@+id/text_view_book_title"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Holo.Small"
+                android:text="Small Text"
+                android:textColor="@color/light_gray"
+                android:id="@+id/text_view_book_query_id"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/background_dark"
+                android:textAppearance="@android:style/TextAppearance.Holo.Small"
+                android:text="Small Text"
+                android:id="@+id/text_view_book_author"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/background_dark"
+                android:textAppearance="@android:style/TextAppearance.Holo.Small"
+                android:text="Small Text"
+                android:id="@+id/text_view_book_publisher"/>
+    </LinearLayout>
+
+
+    <ImageView
+            android:id="@+id/image_view_book_isMarked"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_mark"
+            android:background="@drawable/btn_default_selector"
+            android:contentDescription="@string/is_collection_hint"/>
+</LinearLayout>

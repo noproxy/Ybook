@@ -1,4 +1,6 @@
-package com.unique.libraryquery.net
+package com.ybook.app.net
+
+import com.ybook.app.util.JSONHelper
 
 /**
  * Created by carlos on 11/11/14.
@@ -27,7 +29,7 @@ object PostHelper {
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
-                            msg.obj = com.unique.libraryquery.util.JSONHelper.readLoginResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
+                            msg.obj = JSONHelper.readLoginResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
                         }
                         else -> msg.what = MSG_ERROR
                     }
@@ -51,7 +53,7 @@ object PostHelper {
                 when (rep.getStatusLine().getStatusCode()) {
                     org.apache.http.HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
-                        msg.obj = com.unique.libraryquery.util.JSONHelper.readSearchResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
+                        msg.obj = JSONHelper.readSearchResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
                     }
                     else -> msg.what = MSG_ERROR
                 }
@@ -73,7 +75,7 @@ object PostHelper {
                 when (rep.getStatusLine().getStatusCode()) {
                     org.apache.http.HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
-                        msg.obj = com.unique.libraryquery.util.JSONHelper.readDetailResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
+                        msg.obj = JSONHelper.readDetailResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
                     }
                     else -> msg.what = MSG_ERROR
                 }

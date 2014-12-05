@@ -1,4 +1,4 @@
-package com.unique.libraryquery.net
+package com.ybook.app.net
 
 /**
  * Created by carlos on 11/12/14.

@@ -9,14 +9,22 @@ import android.view.KeyEvent
 import android.widget.EditText
 import android.content.Intent
 import android.app.SearchManager
-import com.ybook.app.R
 import android.app.ListFragment
+import com.ybook.app.R
+import com.ybook.app.ui.SearchAct
+import android.app.Activity
+import com.ybook.app.ui.MainActivity
 
 /**
  * Created by carlos on 11/13/14.
  */
 
-public class HomeFrag : ListFragment() {
+public class HomeFrag(sectionNumber: Int) : ListFragment() {
+    {
+        val args = Bundle()
+        args.putInt(MainActivity.ARG_SECTION_NUMBER, sectionNumber)
+        this.setArguments(args)
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, s: Bundle?): View? {
@@ -29,7 +37,7 @@ public class HomeFrag : ListFragment() {
     val onSearchKeyListener = {(v: View?, keyCode: Int, keyEvent: KeyEvent) ->
         when (v) {
             is EditText -> if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                val intent = Intent(getActivity(), javaClass<SearchResultActivity>())
+                val intent = Intent(getActivity(), javaClass<SearchAct>())
                 intent.putExtra(SearchManager.QUERY, v.getText().toString().trim())
                 v.clearFocus()
             }
@@ -37,6 +45,10 @@ public class HomeFrag : ListFragment() {
         true
     }
 
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        (activity as MainActivity).onSectionAttached(getArguments().getInt(MainActivity.ARG_SECTION_NUMBER))
+    }
 
     object HomeListAdapter : BaseAdapter() {
         override fun getCount(): Int {

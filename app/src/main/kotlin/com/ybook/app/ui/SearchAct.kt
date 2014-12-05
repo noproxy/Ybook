@@ -1,4 +1,4 @@
-package com.unique.libraryquery.ui
+package com.ybook.app.ui
 
 import android.app.ListActivity
 import android.os.Bundle
@@ -18,14 +18,14 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import android.view.View.OnClickListener
 import com.ybook.app.R
-import com.unique.libraryquery.bean.SearchResponse.SearchObject
-import com.unique.libraryquery.net.PostHelper
-import com.unique.libraryquery.net.SearchRequest
-import com.unique.libraryquery.bean.getLibCode
-import com.unique.libraryquery.net.MSG_SUCCESS
-import com.unique.libraryquery.bean.SearchResponse
-import com.unique.libraryquery.net.MSG_ERROR
-import com.unique.libraryquery.net.MSG_PASSWORD_WRONG
+import com.ybook.app.bean.SearchResponse.SearchObject
+import com.ybook.app.net.PostHelper
+import com.ybook.app.net.SearchRequest
+import com.ybook.app.bean.getLibCode
+import com.ybook.app.net.MSG_SUCCESS
+import com.ybook.app.bean.SearchResponse
+import com.ybook.app.net.MSG_ERROR
+import com.ybook.app.net.MSG_PASSWORD_WRONG
 
 /**
  * Created by carlos on 11/14/14.

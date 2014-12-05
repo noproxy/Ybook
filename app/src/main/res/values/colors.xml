@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lightGray">#bfbfbf</color>
+
+    <color name="Holo.Light.Library_query.BackgroundColor">#39b583</color>
+    <color name="light_gray">#bfbfbf</color>
+    <color name="very_light_gray">#f2f2f2</color>
+    <color name="a_bit_light_gray">#a3a3a3</color>
+
+    <color name="head_background_color">#bbffffff</color>
+
+    <color name="red">#b00a0a</color>
+    <color name="search_edit_background_color">#f6f6f6</color>
+    <color name="search_edit_background_color_pressed">@color/default_pressed_bg</color>
+
+    <color name="default_pressed_bg">#44000000</color>
+
+    <color name="refresh_progress_1">#e91e63</color>
+    <color name="refresh_progress_2">#00b0ff</color>
+    <color name="refresh_progress_3">#303f9f</color>
+    <color name="refresh_progress_4">#7986cb</color>
+</resources>

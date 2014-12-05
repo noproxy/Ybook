@@ -1,10 +1,10 @@
-package com.unique.libraryquery.bean
+package com.ybook.app.bean
 
-import com.unique.libraryquery.bean.SearchResponse.SearchObject
-import com.unique.libraryquery.bean.DetailResponse.LibInfo
-import com.unique.libraryquery.bean.RenewResponse.RenewObject
-import com.unique.libraryquery.bean.HistoryResponse.HistoryObject
-import com.unique.libraryquery.bean.CurrentResponse.CurrentObject
+import com.ybook.app.bean.SearchResponse.SearchObject
+import com.ybook.app.bean.DetailResponse.LibInfo
+import com.ybook.app.bean.RenewResponse.RenewObject
+import com.ybook.app.bean.HistoryResponse.HistoryObject
+import com.ybook.app.bean.CurrentResponse.CurrentObject
 
 
 data class LoginResponse(
