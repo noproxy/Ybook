@@ -45,8 +45,8 @@ public class DetailInfoFragment(val searchObject: SearchObject?, val bookItem: B
             authorTextView.setText(searchObject!!.author)
             publisherTextView.setText(searchObject.press)
             detailTextView.setText(searchObject.detail)
-            queryTextView.setText(R.string.loading_content)
-            isbnTextView.setText(R.string.loading_content)
+            queryTextView.setText(R.string.loadingContentHint)
+            isbnTextView.setText(R.string.loadingContentHint)
         } else {
             authorTextView.setText(mDetailResponse!!.author)
             publisherTextView.setText(mDetailResponse!!.publish)

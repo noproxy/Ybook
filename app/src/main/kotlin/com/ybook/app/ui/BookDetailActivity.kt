@@ -23,6 +23,9 @@ import com.ybook.app.bean.DetailResponse
 import com.ybook.app.net.MSG_ERROR
 import android.support.v4.app.Fragment
 import com.ybook.app.bean.BookItem
+import de.keyboardsurfer.android.widget.crouton.Crouton
+import de.keyboardsurfer.android.widget.crouton.Style
+import android.widget.Toast
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -60,12 +63,12 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
         var title: String? = null
         if (mSearchObject == null) {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
-            if (mBookItem!!.detailResponse.title.trim().length() == 0) title = getResources().getString(R.string.no_title_hint)
+            if (mBookItem!!.detailResponse.title.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!))
             if (mBookItem!!.isMarked(mUtil)) mMarkImg!!.setImageResource(R.drawable.ic_marked) else mMarkImg!!.setImageResource(R.drawable.ic_mark)
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
-            if (mSearchObject!!.title.trim().length() == 0) title = getResources().getString(R.string.no_title_hint)
+            if (mSearchObject!!.title.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
         }
         indicator.setViewPager(viewPager)
@@ -83,14 +86,18 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.getId()) {
-        //            R.id.button_mark -> {
-        //                mBookItem!!.markOrCancelMarked(mUtil)
-        //                Crouton.makeText(this, getResources().getString(if (mBookItem!!.isMarked(mUtil)) R.string.toast_mark else R.string.toast_cancel_mark), Style.INFO).show()
-        //                mMarkImg.setImageResource(if (mBookItem!!.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
-        //            }
+            R.id.image_view_book_isMarked -> {
+                if (mBookItem == null) {
+                    Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
+                } else {
+                    mBookItem!!.markOrCancelMarked(mUtil)
+                    Crouton.makeText(this, getResources().getString(if (mBookItem!!.isMarked(mUtil)) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
+                    mMarkImg?.setImageResource(if (mBookItem!!.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
+                }
+            }
         //            R.id.button_addToList -> {
         //            }
-        }//TODO
+        }
     }
 
 
@@ -107,9 +114,10 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
 
         }
         val pagers = array(DetailInfoFragment(searchObject, bookItem), DetailStoreFragment(searchObject, bookItem))
-        val titleResId = array(R.string.detail_tab_title_infro, R.string.detail_tab_title_status)
+        val titleResId = array(R.string.detailTabTitleInfo, R.string.detailTabTitleStatus)
 
         fun onRefresh(detail: DetailResponse) {
+            mBookItem = detail.toBookItem()
             pagers[0].onRefresh(detail)
             pagers[1].onRefresh(detail)
         }

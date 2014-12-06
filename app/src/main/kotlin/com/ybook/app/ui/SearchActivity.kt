@@ -43,9 +43,9 @@ public class SearchActivity : ListActivity() {
     val SEARCH_BY_KEY = "key"
     val TAG = "SearchAct"
 
-    val loadError = { Crouton.makeText(this, getResources().getString(R.string.load_search_error), Style.ALERT).show() }
-    val passError = { Crouton.makeText(this, getResources().getString(R.string.password_error), Style.ALERT).show() }
-    val loading = {(page: Int) -> Crouton.makeText(this, getResources().getString(R.string.loading_search_message_prefix) + page, Style.INFO).show() }
+    val loadError = { Crouton.makeText(this, getResources().getString(R.string.loadSearchError), Style.ALERT).show() }
+    val passError = { Crouton.makeText(this, getResources().getString(R.string.passwordError), Style.ALERT).show() }
+    val loading = {(page: Int) -> Crouton.makeText(this, getResources().getString(R.string.loadingSearchMessagePrefix) + page, Style.INFO).show() }
 
     val listItems = ArrayList<SearchObject>()
     var key: String? = null
@@ -127,7 +127,7 @@ public class SearchActivity : ListActivity() {
                 override fun onClick(v: View): Unit = when (v.getId() ) {
                     R.id.image_view_book_isMarked -> {
                         val dialog = ProgressDialog(this@SearchActivity)
-                        dialog.setMessage(getResources().getString(R.string.loading_message))
+                        dialog.setMessage(getResources().getString(R.string.loadingMessage))
                         dialog.setIndeterminate(true)
                         dialog.setCancelable(false)
                         dialog.show()
@@ -140,9 +140,9 @@ public class SearchActivity : ListActivity() {
                                                 val book = (msg.obj as DetailResponse).toBookItem()
                                                 book.markOrCancelMarked(mUtil)
                                                 (v as ImageView).setImageResource(if (book.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
-                                                Crouton.makeText(this@SearchActivity, getResources().getString(if (book.isMarked(mUtil)) R.string.toast_mark else R.string.toast_cancel_mark), Style.INFO).show()
+                                                Crouton.makeText(this@SearchActivity, getResources().getString(if (book.isMarked(mUtil)) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
                                             }
-                                            MSG_ERROR -> Crouton.makeText(this@SearchActivity, getResources().getString(R.string.collect_fail_error) + item.title, Style.ALERT).show()
+                                            MSG_ERROR -> Crouton.makeText(this@SearchActivity, getResources().getString(R.string.collectFailErrorHint) + item.title, Style.ALERT).show()
                                         }
                                     }
                                 })

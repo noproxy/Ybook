@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/loading_message"
+            android:text="@string/loadingMessage"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"/>
@@ -27,6 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/loading_button"/>
+            android:text="@string/loadingButton"/>
 
 </LinearLayout>
