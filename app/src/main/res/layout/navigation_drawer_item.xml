@@ -3,17 +3,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="48dp"
-              android:layout_gravity="center_vertical"
+              android:layout_height="64dp"
+              android:paddingLeft="8dp"
+              android:paddingStart="8dp"
+              android:paddingEnd="8dp"
+              android:paddingRight="8dp"
+              android:gravity="center_vertical"
               android:minHeight="48dp">
-    <ImageView android:layout_width="48dp"
-               android:layout_height="48dp"
-               android:src="@drawable/ic_launcher"
-               android:scaleType="centerInside"
-               android:padding="8dp"
-               android:contentDescription="@string/app_name"
-               android:id="@+id/menu_icon"
+
+    <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_launcher"
+            android:scaleType="centerInside"
+            android:padding="8dp"
+            android:contentDescription="@string/app_name"
+            android:id="@+id/menu_icon"
             />
+
     <TextView
             android:id="@+id/menu_text"
             android:layout_width="0dp"

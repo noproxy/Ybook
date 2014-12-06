@@ -31,7 +31,7 @@
 
     <fragment
             android:id="@+id/collection_drawer"
-            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_width="@dimen/collection_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:name="com.ybook.app.ui.CollectionDrawerFragment"

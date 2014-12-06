@@ -35,9 +35,10 @@ public class HomeFragment() : ListFragment() {
                 intent.putExtra(SearchManager.QUERY, v.getText().toString().trim())
                 v.clearFocus()
                 startActivity(intent)
+                true
             }
         }
-        true
+        false
     }
 
     override fun onAttach(activity: Activity?) {

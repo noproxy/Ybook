@@ -19,6 +19,7 @@
             android:layout_height="48dp"
             android:text="New Text"
             android:gravity="center_vertical"
+            android:textColor="@color/headItemText"
             android:textAppearance="@android:style/TextAppearance.Large"
             android:id="@+id/textView_head_type"/>
 </LinearLayout>

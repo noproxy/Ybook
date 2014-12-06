@@ -2,34 +2,38 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
-              android:padding="8dp"
+              android:paddingLeft="16dp"
+              android:paddingStart="16dp"
+              android:paddingEnd="8dp"
+              android:paddingRight="8dp"
               android:layout_width="match_parent"
-              android:layout_gravity="center_horizontal"
+              android:gravity="center_vertical"
               android:layout_height="48dp">
 
     <TextView
             android:id="@+id/text_view_book_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/longTextTestCN"
+            android:text="xxxxxxx"
             android:layout_marginRight="8dp"
             android:textColor="@color/collectionItemText"
             android:maxLength="25"
+            android:textSize="15sp"
             android:singleLine="true"/>
 
     <TextView
             android:id="@+id/text_view_book_query_id"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/longTextTest"
             android:textSize="12sp"
-            android:maxLength="20"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
             android:singleLine="true"
-            android:textColor="@color/collectionItemText"/>
-
+            android:textColor="@color/collectionItemSubText"/>
+    <!--android:maxLength="20"-->
     <ImageButton
             android:id="@+id/image_btn_book_available"
             android:layout_width="48dp"

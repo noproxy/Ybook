@@ -64,15 +64,16 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
         var title: String? = null
         if (mSearchObject == null) {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
-            if (mBookItem!!.detailResponse.title.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
+            title = mBookItem!!.detailResponse.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!))
             if (mBookItem!!.isMarked(mUtil)) mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected) else mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
-            if (mSearchObject!!.title.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
+            title = mSearchObject!!.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
         }
         indicator.setViewPager(viewPager)
+        if (title!!.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
         titleView.setText(title)
         setupActionBar()
     }

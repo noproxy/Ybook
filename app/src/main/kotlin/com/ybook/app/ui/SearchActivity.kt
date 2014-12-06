@@ -6,8 +6,6 @@ import android.app.SearchManager
 import android.os.Handler
 import android.os.Message
 import android.widget.BaseAdapter
-import de.keyboardsurfer.android.widget.crouton.Crouton
-import de.keyboardsurfer.android.widget.crouton.Style
 import java.util.ArrayList
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +42,7 @@ import com.ybook.app.util.ListEndLoadUtil
 
 public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback {
     override fun onEndLoad() {
-        if (nextPage > requestedPage) {
+        if (nextPage > requestedPage && nextPage * 10 == listItems.size()) {
             PostHelper.search(SearchRequest(key!!, nextPage, SEARCH_BY_KEY, getLibCode()), SearchHandler())
             requestedPage++
             loading(nextPage)

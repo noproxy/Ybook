@@ -10,29 +10,41 @@
 
     <ImageView
             android:id="@+id/image_view_book_cover"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_launcher"/>
 
     <TextView
-            android:padding="8dp"
             android:id="@+id/text_view_book_title"
             android:layout_below="@id/image_view_book_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:textColor="@color/collectionItemText"
             android:text="Large Text"/>
+
+    <View
+            android:id="@+id/lineView"
+            android:layout_below="@id/text_view_book_title"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/lightGray"/>
 
     <com.ybook.app.viewpagerindicator.TabPageIndicator
             style="@style/Widget.TabPageIndicator"
             android:background="@drawable/indicator_bg"
             android:id="@+id/detail_viewPager_indicator"
-            android:layout_below="@id/text_view_book_title"
-            android:layout_width="match_parent"
+            android:layout_below="@id/lineView"
+            android:layout_width="240dp"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content">
     </com.ybook.app.viewpagerindicator.TabPageIndicator>
 

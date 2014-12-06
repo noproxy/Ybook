@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#3ab582</color>
-    <color name="primaryDark">#ff26795b</color>
+    <!--<color name="primary">#3ab582</color>-->
+    <color name="primary">#38b684</color>
+    <color name="primaryDark">#ff28896c</color>
 
     <color name="lightGray">#bfbfbf</color>
     <color name="veryLightGray">#f2f2f2</color>
@@ -20,7 +21,7 @@
     <color name="navigationExitText">#ffffff</color>
 
     <color name="detailNormalText">#333333</color>
-    <color name="detailBoldText">#333333</color>
+    <color name="detailBoldText">#ff333333</color>
     <color name="detailLightText">#a3a3a3</color>
     <color name="detailTabSelectedText">#38b684</color>
     <color name="detailTabUnSelectedText">#959595</color>
@@ -30,6 +31,8 @@
     <color name="collectionItemText">@android:color/black</color>
     <color name="collectionItemSubText">@color/lightGray</color>
     <color name="headItemBackground">#bbffffff</color>
+    <color name="headItemText">#38b684</color>
+
 
     <color name="searchItemText">@android:color/black</color>
     <color name="searchItemSubText">@color/lightGray</color>

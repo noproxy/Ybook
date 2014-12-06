@@ -248,7 +248,7 @@ public class NavigationDrawerFragment : Fragment() {
         override fun getItemId(position: Int): Long = position.toLong()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-            val v = convertView ?: LayoutInflater.from(getActivity()).inflate(R.layout.left_menu_item, parent, false)
+            val v = convertView ?: LayoutInflater.from(getActivity()).inflate(R.layout.navigation_drawer_item, parent, false)
             (v.findViewById(R.id.menu_text) as TextView).setText(nameStrings[position])
             (v.findViewById(R.id.menu_icon) as ImageView).setImageResource(iconResIds[position])
             return v
