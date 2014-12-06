@@ -17,7 +17,7 @@
 
     <string name="ordBtnText">order</string>
     <string name="loadingContentHint">loading</string>
-    <string name="collectFailErrorHint">"collected failed: </string>
+    <string name="collectFailErrorHint">collected failed: </string>
     <string name="isCollectionHint">Collection</string>
 
 
@@ -30,10 +30,9 @@
     <string name="isbnText" translatable="false">ISBN :</string>
     <string name="detailText">Intro :</string>
 
-    <string name="searchHintText">Search by book's name</string>
+    <string name="searchHintText">Search by book name</string>
 
     <string name="collectBtnText">Collect</string>
-    <string name="add" translatable="false">Add to list</string>
     <string name="toastMarked">Collected!</string>
     <string name="toastCancelMark">Remove from collection!</string>
     <string name="noDetailHintText">No detail available</string>

@@ -33,19 +33,32 @@ import android.view.View.OnClickListener
 import android.app.ProgressDialog
 import com.ybook.app.net.DetailRequest
 import com.ybook.app.bean.DetailResponse
+import android.util.Log
+import android.widget.Toast
+import com.ybook.app.bean.BookItem
+import com.ybook.app.util.ListEndLoadUtil
 
 /**
  * Created by carlos on 11/14/14.
  */
 
-public class SearchActivity : ListActivity() {
+public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback {
+    override fun onEndLoad() {
+        if (nextPage > requestedPage) {
+            PostHelper.search(SearchRequest(key!!, nextPage, SEARCH_BY_KEY, getLibCode()), SearchHandler())
+            requestedPage++
+            loading(nextPage)
+        }
+    }
+
     var nextPage = 0
     val SEARCH_BY_KEY = "key"
     val TAG = "SearchAct"
+    var requestedPage = -1
 
-    val loadError = { Crouton.makeText(this, getResources().getString(R.string.loadSearchError), Style.ALERT).show() }
-    val passError = { Crouton.makeText(this, getResources().getString(R.string.passwordError), Style.ALERT).show() }
-    val loading = {(page: Int) -> Crouton.makeText(this, getResources().getString(R.string.loadingSearchMessagePrefix) + page, Style.INFO).show() }
+    val loadError = { Toast.makeText(this, getResources().getString(R.string.loadSearchError), Toast.LENGTH_SHORT).show() }
+    val passError = { Toast.makeText(this, getResources().getString(R.string.passwordError), Toast.LENGTH_SHORT).show() }
+    val loading = {(page: Int) -> Toast.makeText(this, getResources().getString(R.string.loadingSearchMessagePrefix) + " " + (page + 1), Toast.LENGTH_SHORT).show() }
 
     val listItems = ArrayList<SearchObject>()
     var key: String? = null
@@ -71,12 +84,14 @@ public class SearchActivity : ListActivity() {
         }
 
         setListAdapter(SearchListAdapter(this))
+        ListEndLoadUtil.setupEndLoad(this, getListView())
     }
 
 
     override fun onResume() {
         super<ListActivity>.onResume()
-        if (nextPage <= 0) load()
+        if (nextPage == 0) onEndLoad()
+        Log.i(TAG, "resume, nextPage:" + nextPage)
     }
 
     override fun onListItemClick(l: ListView?, v: View?, position: Int, id: Long) {
@@ -85,17 +100,13 @@ public class SearchActivity : ListActivity() {
         startActivity(intent)
     }
 
-    private fun load() {
-        PostHelper.search(SearchRequest(key!!, nextPage, SEARCH_BY_KEY, getLibCode()), SearchHandler())
-    }
-
     inner class SearchHandler : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MSG_SUCCESS -> {
                     val r = msg.obj as SearchResponse
                     listItems.addAll(r.objects)
-                    nextPage++;
+                    nextPage++
                     (getListView().getAdapter() as BaseAdapter).notifyDataSetChanged()
                 }
                 MSG_ERROR -> loadError()
@@ -126,26 +137,32 @@ public class SearchActivity : ListActivity() {
             collectionBtn.setOnClickListener(object : OnClickListener {
                 override fun onClick(v: View): Unit = when (v.getId() ) {
                     R.id.image_view_book_isMarked -> {
-                        val dialog = ProgressDialog(this@SearchActivity)
-                        dialog.setMessage(getResources().getString(R.string.loadingMessage))
-                        dialog.setIndeterminate(true)
-                        dialog.setCancelable(false)
-                        dialog.show()
-                        PostHelper.detail(DetailRequest(item.id, item.idType, getLibCode()),
-                                object : Handler() {
-                                    override fun handleMessage(msg: Message) {
-                                        dialog.dismiss()
-                                        when (msg.what) {
-                                            MSG_SUCCESS -> {
-                                                val book = (msg.obj as DetailResponse).toBookItem()
-                                                book.markOrCancelMarked(mUtil)
-                                                (v as ImageView).setImageResource(if (book.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
-                                                Crouton.makeText(this@SearchActivity, getResources().getString(if (book.isMarked(mUtil)) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
+                        if (item.isMarked(mUtil)) {
+                            BookItem.cancelMarked(mUtil, item)
+                            (v as ImageView).setImageResource(R.drawable.ic_mark)
+                            Toast.makeText(this@SearchActivity, getResources().getString(R.string.toastCancelMark), Toast.LENGTH_SHORT).show()
+                        } else {
+                            val dialog = ProgressDialog(this@SearchActivity)
+                            dialog.setMessage(getResources().getString(R.string.loadingMessage))
+                            dialog.setIndeterminate(true)
+                            dialog.setCancelable(false)
+                            dialog.show()
+                            PostHelper.detail(DetailRequest(item.id, item.idType, getLibCode()),
+                                    object : Handler() {
+                                        override fun handleMessage(msg: Message) {
+                                            dialog.dismiss()
+                                            when (msg.what) {
+                                                MSG_SUCCESS -> {
+                                                    val book = (msg.obj as DetailResponse).toBookItem()
+                                                    book.markOrCancelMarked(mUtil)
+                                                    (v as ImageView).setImageResource(R.drawable.ic_marked)
+                                                    Toast.makeText(this@SearchActivity, getResources().getString(R.string.toastMarked), Toast.LENGTH_SHORT).show()
+                                                }
+                                                MSG_ERROR -> Toast.makeText(this@SearchActivity, getResources().getString(R.string.collectFailErrorHint) + item.title, Toast.LENGTH_SHORT).show()
                                             }
-                                            MSG_ERROR -> Crouton.makeText(this@SearchActivity, getResources().getString(R.string.collectFailErrorHint) + item.title, Style.ALERT).show()
                                         }
-                                    }
-                                })
+                                    })
+                        }
                     }
                 }
             })

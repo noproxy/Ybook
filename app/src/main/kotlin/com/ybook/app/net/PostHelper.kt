@@ -1,7 +1,6 @@
 package com.ybook.app.net
 
 import com.ybook.app.util.JSONHelper
-import java.net.ConnectException
 
 /**
  * Created by carlos on 11/11/14.
@@ -65,7 +64,8 @@ object PostHelper {
                     }
                     rep.getEntity().consumeContent()
                 } catch (e: Exception) {
-                    msg.what = MSG_ERROR
+                    e.printStackTrace()
+                    //                    msg.what = MSG_ERROR TODO produce lots of msg
                 }
                 h.sendMessage(msg)
             }

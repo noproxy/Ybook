@@ -8,7 +8,6 @@ import android.support.v4.app.ActionBarDrawerToggle
 import android.support.v4.widget.DrawerLayout
 import android.view.*
 import android.widget.ListView
-import android.widget.Toast
 import com.ybook.app.R
 import android.util.Log
 import android.widget.TextView
@@ -20,7 +19,6 @@ import java.util.ArrayList
 import com.ybook.app.bean.BookItem
 import com.ybook.app.EmptyLayout
 import android.support.v4.app.ListFragment
-import android.widget.BaseAdapter
 import android.widget.AdapterView
 import android.content.Intent
 
@@ -60,8 +58,9 @@ public class CollectionDrawerFragment : ListFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mDrawerListView = inflater.inflate(R.layout.fragment_collection_drawer, container, false) as ListView
-        return mDrawerListView
+        val view = inflater.inflate(R.layout.fragment_collection_drawer, container, false)
+        mDrawerListView = view.findViewById(android.R.id.list) as  ListView
+        return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -149,12 +148,6 @@ public class CollectionDrawerFragment : ListFragment() {
         if (mDrawerToggle!!.onOptionsItemSelected(item)) {
             return true
         }
-
-        if (item!!.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example.", Toast.LENGTH_SHORT).show()
-            return true
-        }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -186,7 +179,8 @@ public class CollectionDrawerFragment : ListFragment() {
             Log.i("MyCollectionListAdapter", "notifyDataSetChanged()")
             super.notifyDataSetChanged()
             if (MarkedList.getMarkedList().getBookItems(mUtil).size() == 0) {
-                mEmptyLayout.setEmptyMessage("Empty")
+                mEmptyLayout.setEmptyViewRes(R.layout.empty_layout)
+                mEmptyLayout.setEmptyMessage("No books collected yet.", R.id.emptyMessageTextView)
                 mEmptyLayout.showEmpty()
             }
         }

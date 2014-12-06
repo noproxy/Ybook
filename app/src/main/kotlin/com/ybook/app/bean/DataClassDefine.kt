@@ -115,7 +115,7 @@ data class DetailResponse(
             ###
          */
 ) : Serializable {
-    data class LibInfo(
+    data class LibInfo (
             val libStatus: String,
             val libLocation: String
             /*
@@ -125,7 +125,7 @@ data class DetailResponse(
                     }
              */
 
-    )
+    ) : Serializable
 
     fun toBookItem(): com.ybook.app.bean.BookItem {
         val b = com.ybook.app.bean.BookItem()

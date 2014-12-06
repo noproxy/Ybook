@@ -24,6 +24,13 @@ public class BookItem implements Serializable {
     @DatabaseField(generatedId = true)
     int id;
 
+    public static void cancelMarked(BooksListUtil util, SearchResponse.SearchObject object) {
+        int in = MarkedList.getMarkedList().index(util, object.getId());
+        if (in > -1) {
+            MarkedList.getMarkedList().removeBook(MarkedList.getMarkedList().getBookItems(util).get(in), util);
+        }
+    }
+
     public void markOrCancelMarked(BooksListUtil util) {
         int in = MarkedList.getMarkedList().index(util, detailResponse.getId());
         if (in > -1) {

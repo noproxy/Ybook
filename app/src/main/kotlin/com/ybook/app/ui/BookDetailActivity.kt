@@ -26,6 +26,7 @@ import com.ybook.app.bean.BookItem
 import de.keyboardsurfer.android.widget.crouton.Crouton
 import de.keyboardsurfer.android.widget.crouton.Style
 import android.widget.Toast
+import android.widget.Button
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -34,7 +35,7 @@ import android.widget.Toast
 public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
 
 
-    var mMarkImg: ImageView? = null
+    var mMarkBtn: Button? = null
     private var mSearchObject: SearchObject? = null
     private var mBookItem: BookItem? = null
     private var mUtil = BooksListUtil.getInstance(this)
@@ -54,7 +55,7 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
     }
 
     private fun initViews() {
-        mMarkImg = findViewById(R.id.image_view_book_isMarked) as ImageView
+        mMarkBtn = findViewById(R.id.image_view_book_isMarked) as Button
         val imageView = findViewById(R.id.image_view_book_cover) as ImageView
         val titleView = (findViewById(R.id.text_view_book_title) as TextView)
         val viewPager = findViewById(R.id.detail_viewPager) as ViewPager
@@ -65,7 +66,7 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             if (mBookItem!!.detailResponse.title.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!))
-            if (mBookItem!!.isMarked(mUtil)) mMarkImg!!.setImageResource(R.drawable.ic_marked) else mMarkImg!!.setImageResource(R.drawable.ic_mark)
+            if (mBookItem!!.isMarked(mUtil)) mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected) else mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             if (mSearchObject!!.title.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
@@ -92,7 +93,7 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
                 } else {
                     mBookItem!!.markOrCancelMarked(mUtil)
                     Crouton.makeText(this, getResources().getString(if (mBookItem!!.isMarked(mUtil)) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
-                    mMarkImg?.setImageResource(if (mBookItem!!.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
+                    mMarkBtn?.setBackgroundResource(if (mBookItem!!.isMarked(mUtil)) R.drawable.detail_btn_selector else R.drawable.detail_btn_selector_collected)
                 }
             }
         //            R.id.button_addToList -> {
