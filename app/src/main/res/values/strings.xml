@@ -25,7 +25,7 @@
     <string name="bookCoverHint">Cover Image</string>
 
     <string name="authorText">Author :</string>
-    <string name="publisherText">Publisher :</string>
+    <string name="publisherText">Publish :</string>
     <string name="queryIdText">Query :</string>
     <string name="isbnText" translatable="false">ISBN :</string>
     <string name="detailText">Intro :</string>

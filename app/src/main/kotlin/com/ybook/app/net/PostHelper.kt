@@ -7,7 +7,9 @@ import com.ybook.app.util.JSONHelper
  */
 object PostHelper {
 
-    val client = org.apache.http.impl.client.DefaultHttpClient();
+    val detailClient = object : org.apache.http.impl.client.DefaultHttpClient() {}
+    val searchClient = object : org.apache.http.impl.client.DefaultHttpClient() {}
+    val loginClient = object : org.apache.http.impl.client.DefaultHttpClient() {}
 
     private fun newPost(s: String, data: java.util.ArrayList<org.apache.http.NameValuePair>?): org.apache.http.client.methods.HttpPost {
         val p = org.apache.http.client.methods.HttpPost(s)
@@ -26,7 +28,7 @@ object PostHelper {
         Thread(object : Runnable {
             override fun run() {
                 try {
-                    val rep = client.execute(newPost(mainUrl + "/profile", data))
+                    val rep = loginClient.execute(newPost(mainUrl + "/profile", data))
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
@@ -54,7 +56,7 @@ object PostHelper {
         Thread(object : Runnable {
             override fun run() {
                 try {
-                    val rep = client.execute(newPost(mainUrl + "/search", data))
+                    val rep = searchClient.execute(newPost(mainUrl + "/search", data))
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
@@ -81,7 +83,7 @@ object PostHelper {
         Thread(object : Runnable {
             override fun run() {
                 try {
-                    val rep = client.execute(newPost(mainUrl + "/detail", data))
+                    val rep = detailClient.execute(newPost(mainUrl + "/detail", data))
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS

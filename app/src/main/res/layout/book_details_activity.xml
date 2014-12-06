@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
-                android:padding="8dp"
+                android:layout_margin="8dp"
                 android:gravity="center_horizontal"
                 android:weightSum="1"
                 android:layout_width="match_parent"
@@ -40,7 +40,6 @@
 
     <com.ybook.app.viewpagerindicator.TabPageIndicator
             style="@style/Widget.TabPageIndicator"
-            android:background="@drawable/indicator_bg"
             android:id="@+id/detail_viewPager_indicator"
             android:layout_below="@id/lineView"
             android:layout_width="240dp"
@@ -80,10 +79,6 @@
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:text="@string/collectBtnText"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:textColor="@color/detailCollectBtnText"
                 android:textAppearance="@android:style/TextAppearance.Holo"
                 android:gravity="center"
