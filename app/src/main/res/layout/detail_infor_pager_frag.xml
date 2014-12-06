@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/author_hint"
+                android:textStyle="bold"
+                android:textAppearance="@android:style/TextAppearance.Holo"/>
+
+        <TextView
+                android:id="@+id/text_view_book_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:text="@string/app_name"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/publisher_hint"
+                android:textStyle="bold"
+                android:textAppearance="@android:style/TextAppearance.Holo"/>
+
+        <TextView
+                android:id="@+id/text_view_book_publisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:text="@string/app_name"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/query_id_hint"
+                android:textStyle="bold"
+                android:textAppearance="@android:style/TextAppearance.Holo"/>
+
+        <TextView
+                android:id="@+id/text_view_book_query_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:text="@string/app_name"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/isbn_hint"
+                android:textStyle="bold"
+                android:textAppearance="@android:style/TextAppearance.Holo"/>
+
+        <TextView
+                android:id="@+id/text_view_book_isbn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:text="@string/app_name"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_hint"
+                android:textStyle="bold"
+                android:textAppearance="@android:style/TextAppearance.Holo"/>
+
+        <TextView
+                android:id="@+id/text_view_book_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:text="@string/app_name"/>
+    </LinearLayout>
+</LinearLayout>

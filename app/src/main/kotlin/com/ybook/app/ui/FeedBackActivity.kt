@@ -1,4 +1,4 @@
-package com.unique.libraryquery.ui
+package com.ybook.app.ui
 
 import android.app.Activity
 import android.os.Bundle
@@ -9,7 +9,7 @@ import com.ybook.app.R
 /**
  * Created by carlos on 12/3/14.
  */
-public class FeedBackAct : Activity() {
+public class FeedBackActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Activity>.onCreate(savedInstanceState)
         this.setContentView(R.layout.feedback_layout)
@@ -21,8 +21,6 @@ public class FeedBackAct : Activity() {
         }
     }
 
-    private fun postFeedback(text: String) = {
-        true
-        //TODO implement postFeedback() function
-    }
+    //TODO implement postFeedback() function
+    private fun postFeedback(text: String): Boolean = true
 }

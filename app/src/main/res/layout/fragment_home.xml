@@ -1,80 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.unique.libraryquery.view.MultiSwipeRefreshLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-    <ScrollView
-
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
 
-        <LinearLayout
-                android:orientation="vertical"
+
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                >
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp">
 
-
-            <RelativeLayout
+            <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingStart="32dp"
-                    android:paddingEnd="32dp">
+                    android:layout_height="@dimen/search_edit_height"
+                    android:minLines="1"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:hint="@string/search_hint"
+                    android:textColorHint="@color/lightGray"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:id="@+id/search_edit_text"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoCorrect"
+                    android:selectAllOnFocus="true"
+                    android:background="@drawable/search_edit_selector"/>
 
-                <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/search_edit_height"
-                        android:minLines="1"
-                        android:maxLines="1"
-                        android:padding="8dp"
-                        android:hint="@string/search_hint"
-                        android:textColorHint="@color/lightGray"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
-                        android:id="@+id/search_edit_text"
-                        android:imeOptions="actionSearch"
-                        android:inputType="textAutoCorrect"
-                        android:selectAllOnFocus="true"
-                        android:background="@drawable/search_edit_selector"/>
+        </RelativeLayout>
 
-            </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:requiresFadingEdge="horizontal">
 
-            <RelativeLayout
+            <View
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:requiresFadingEdge="horizontal">
+                    android:layout_height="8dp"
+                    android:background="@drawable/shadow_top"/>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="@drawable/shadow_top"/>
-
-                <View
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="@drawable/shadow_bottom"/>
-            </RelativeLayout>
-
-            <!--android:layout_marginStart="24dp"-->
-            <!--android:layout_marginEnd="24dp"-->
-            <ListView
-                    android:id="@android:id/list"
-                    android:layout_marginTop="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:divider="@color/light_gray"
+            <View
+                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="8dp"
+                    android:background="@drawable/shadow_bottom"/>
+        </RelativeLayout>
+
+        <!--android:layout_marginStart="24dp"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <ListView
+                android:id="@android:id/list"
+                android:layout_marginTop="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:divider="@color/light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
 
-        </LinearLayout>
-    </ScrollView>
-</com.unique.libraryquery.view.MultiSwipeRefreshLayout>
+    </LinearLayout>
+</ScrollView>

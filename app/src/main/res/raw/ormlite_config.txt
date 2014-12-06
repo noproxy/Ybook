@@ -1,0 +1,59 @@
+#
+# generated on 2014/11/15 01:10:50
+#
+# --table-start--
+dataClass=com.ybook.app.bean.MarkedList
+tableName=markedlist
+# --table-fields-start--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.ybook.app.bean.BookList
+tableName=BookLists
+# --table-fields-start--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.ybook.app.bean.BookItem
+tableName=BookItems
+
+# --table-fields-start--
+
+# --field-start--
+fieldName=listID
+# --field-end--
+
+# --field-start--
+fieldName=collectTime
+# --field-end--
+
+# --field-start--
+fieldName=detailResponse
+dataPersister=SERIALIZABLE
+# --field-end--
+
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+
+
+# --table-fields-end--
+# --table-end--
+#################################

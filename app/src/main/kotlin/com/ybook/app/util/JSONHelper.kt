@@ -113,6 +113,7 @@ object JSONHelper {
     }
 
     fun readDetailResponse(s: String): DetailResponse {
+        Log.i("readDetailResponse", s)
         val j = JSONObject(s)
         val a = ArrayList<LibInfo>()
 

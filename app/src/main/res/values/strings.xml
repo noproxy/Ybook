@@ -15,6 +15,11 @@
 
     <string name="text_about">Ybook from UniqueStudio</string>
 
+    <string name="loading_content">loading</string>
+
+    <string name="ordBtnHint">order</string>
+    <string name="collect_fail_error">"collected failed: </string>
+
 
     <string name="available_hint">在架上</string>
     <string name="book_cover_hint">封面</string>
@@ -55,7 +60,7 @@
 
 
     <string name="empty_message">No items yet</string>
-    <string name="loading_message">Please wait</string>
+    <string name="loading_message">Please wait...</string>
     <string name="error_message">Oops! Something wrong happened</string>
 
     <string name="empty_button">Try again</string>

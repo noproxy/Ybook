@@ -1,10 +1,12 @@
 package com.ybook.app.bean
 
 import com.ybook.app.bean.SearchResponse.SearchObject
-import com.ybook.app.bean.DetailResponse.LibInfo
 import com.ybook.app.bean.RenewResponse.RenewObject
 import com.ybook.app.bean.HistoryResponse.HistoryObject
 import com.ybook.app.bean.CurrentResponse.CurrentObject
+import java.io.Serializable
+import com.ybook.app.bean.DetailResponse.LibInfo
+import com.ybook.app.util.BooksListUtil
 
 
 data class LoginResponse(
@@ -61,19 +63,12 @@ data class SearchResponse(
                         "id": book_id,
                     },
              */
-    ) {
+    ) : Serializable {
         /**
          * to compatible with the old bean
          */
-        fun toBookItem(): BookItem {
-            val b = BookItem()
-            b.author = this.author
-            b.publisher = this.press
-            b.detail = this.detail
-            b.title = this.title
-            b.coverImgUrl = this.coverImgUrl
-            b.recordID = this.id
-            return b
+        public fun isMarked(util: BooksListUtil): Boolean {
+            return MarkedList.getMarkedList().index(util, this) > -1
         }
     }
 }
@@ -119,7 +114,7 @@ data class DetailResponse(
             "order_status": order_status,
             ###
          */
-) {
+) : Serializable {
     data class LibInfo(
             val libStatus: String,
             val libLocation: String
@@ -131,6 +126,13 @@ data class DetailResponse(
              */
 
     )
+
+    fun toBookItem(): com.ybook.app.bean.BookItem {
+        val b = com.ybook.app.bean.BookItem()
+        b.detailResponse = this;
+        b.collectTime = System.currentTimeMillis()
+        return b
+    }
 }
 
 data class RenewResponse(

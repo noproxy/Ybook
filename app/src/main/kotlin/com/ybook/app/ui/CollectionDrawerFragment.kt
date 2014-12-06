@@ -2,24 +2,34 @@ package com.ybook.app.ui
 
 
 import android.app.ActionBar
-import android.app.Fragment
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.ActionBarDrawerToggle
 import android.support.v4.widget.DrawerLayout
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import com.ybook.app.R
+import android.util.Log
+import android.widget.TextView
+import android.widget.ImageView
+import com.ybook.app.util.BooksListUtil
+import com.ybook.app.pinnedheaderlistview.SectionedBaseAdapter
+import com.ybook.app.bean.MarkedList
+import java.util.ArrayList
+import com.ybook.app.bean.BookItem
+import com.ybook.app.EmptyLayout
+import android.support.v4.app.ListFragment
+import android.widget.BaseAdapter
+import android.widget.AdapterView
+import android.content.Intent
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class CollectionDrawerFragment : Fragment() {
+public class CollectionDrawerFragment : ListFragment() {
 
 
     /**
@@ -30,6 +40,7 @@ public class CollectionDrawerFragment : Fragment() {
     private var mDrawerLayout: DrawerLayout? = null
     private var mDrawerListView: ListView? = null
     private var mFragmentContainerView: View? = null
+    private var mAdapter: MyCollectionListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +53,33 @@ public class CollectionDrawerFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onResume() {
+        mAdapter?.notifyDataSetChanged()
+        super.onResume()
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mDrawerListView = inflater.inflate(R.layout.fragment_collection_drawer, container, false) as ListView
-        mDrawerListView!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-            override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                Toast.makeText(inflater.getContext(), "onClick", Toast.LENGTH_SHORT).show()
-            }
-        })
-        mDrawerListView!!.setAdapter(ArrayAdapter(getActionBar().getThemedContext(), android.R.layout.simple_list_item_activated_1, android.R.id.text1, array("s","sf","sd")))
         return mDrawerListView
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+
+        mAdapter = MyCollectionListAdapter()
+        mDrawerListView!!.setAdapter(mAdapter)
+        mDrawerListView!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+            override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                Log.i("onItemClick()", position.toString())
+                val intent = Intent(getActivity(), javaClass<BookDetailActivity>())
+                intent.putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, view.getTag() as java.io.Serializable)
+                startActivity(intent)
+            }
+        })
+    }
+
     public fun isDrawerOpen(): Boolean {
-        return mDrawerLayout != null && mDrawerLayout!!.isDrawerOpen(mFragmentContainerView)
+        return mDrawerLayout?.isDrawerOpen(mFragmentContainerView) ?: false
     }
 
     /**
@@ -146,6 +171,68 @@ public class CollectionDrawerFragment : Fragment() {
 
     private fun getActionBar(): ActionBar {
         return getActivity().getActionBar()
+    }
+
+    public inner class MyCollectionListAdapter : SectionedBaseAdapter() {
+        private var mUtil: BooksListUtil? = null
+        {
+            mUtil = BooksListUtil.getInstance(getActivity())
+        }
+        private val mEmptyLayout = EmptyLayout(getActivity(), getListView())
+
+
+        override public fun notifyDataSetChanged() {
+            mEmptyLayout.showLoading()
+            Log.i("MyCollectionListAdapter", "notifyDataSetChanged()")
+            super.notifyDataSetChanged()
+            if (MarkedList.getMarkedList().getBookItems(mUtil).size() == 0) {
+                mEmptyLayout.setEmptyMessage("Empty")
+                mEmptyLayout.showEmpty()
+            }
+        }
+
+
+        private fun getItems(): ArrayList<ArrayList<BookItem>> {
+            return MarkedList.getMarkedList().getSeparatedItems(mUtil)
+        }
+
+        override public fun getItem(section: Int, position: Int): Any {
+            return getItems().get(section).get(position)
+        }
+
+        override public fun getItemId(section: Int, position: Int): Long {
+            return position.toLong()
+        }
+
+        override public fun getSectionCount(): Int {
+            return getItems().size()
+        }
+
+        override public fun getCountForSection(section: Int): Int {
+            return getItems().get(section).size()
+        }
+
+        override public fun getItemView(section: Int, position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = convertView ?: LayoutInflater.from(getActivity()).inflate(R.layout.collection_item, parent, false)
+            val item = (getItem(section, position) as BookItem)
+            view.setTag(item)
+            (view.findViewById(R.id.text_view_book_title) as TextView).setText(item.detailResponse.title)
+            (view.findViewById(R.id.text_view_book_query_id) as TextView).setText(item.detailResponse.queryID)
+            view.findViewById(R.id.image_btn_book_available).setVisibility(View.INVISIBLE)
+            return view
+        }
+
+        override public fun getSectionHeaderView(section: Int, convertView: View?, parent: ViewGroup): View {
+            val view = convertView ?: LayoutInflater.from(getActivity()).inflate(R.layout.collection_head_item, parent, false)
+            val item = (getItem(section, 0) as BookItem)
+            val head = MarkedList.getQueryHead(item.detailResponse.queryID)
+            val type = MarkedList.getType(head)
+            view.setTag(item)
+            (view.findViewById(R.id.textView_head_type) as TextView).setText(type)
+            //TODO set the icon
+            (view.findViewById(R.id.imageView_head_icon) as ImageView).setImageResource(MarkedList.getIconID(head))
+            return view
+        }
     }
 
 

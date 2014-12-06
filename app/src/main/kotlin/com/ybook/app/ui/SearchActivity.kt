@@ -16,7 +16,6 @@ import android.widget.TextView
 import android.content.Context
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import android.view.View.OnClickListener
 import com.ybook.app.R
 import com.ybook.app.bean.SearchResponse.SearchObject
 import com.ybook.app.net.PostHelper
@@ -26,12 +25,20 @@ import com.ybook.app.net.MSG_SUCCESS
 import com.ybook.app.bean.SearchResponse
 import com.ybook.app.net.MSG_ERROR
 import com.ybook.app.net.MSG_PASSWORD_WRONG
+import com.ybook.app.util.BooksListUtil
+import android.widget.ListView
+import android.content.Intent
+import java.io.Serializable
+import android.view.View.OnClickListener
+import android.app.ProgressDialog
+import com.ybook.app.net.DetailRequest
+import com.ybook.app.bean.DetailResponse
 
 /**
  * Created by carlos on 11/14/14.
  */
 
-public class SearchAct : ListActivity() {
+public class SearchActivity : ListActivity() {
     var nextPage = 0
     val SEARCH_BY_KEY = "key"
     val TAG = "SearchAct"
@@ -72,6 +79,12 @@ public class SearchAct : ListActivity() {
         if (nextPage <= 0) load()
     }
 
+    override fun onListItemClick(l: ListView?, v: View?, position: Int, id: Long) {
+        val intent = Intent(this, javaClass<BookDetailActivity>())
+        intent.putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v?.getTag() as Serializable)
+        startActivity(intent)
+    }
+
     private fun load() {
         PostHelper.search(SearchRequest(key!!, nextPage, SEARCH_BY_KEY, getLibCode()), SearchHandler())
     }
@@ -98,7 +111,6 @@ public class SearchAct : ListActivity() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
             val v = convertView ?: LayoutInflater.from(con).inflate(R.layout.search_result_item, parent, false)
             val item = getItem(position) as SearchObject
-            val bookItem = item.toBookItem()
 
             v.setTag(item)
             v.findViewById(R.id.image_view_book_isMarked).setTag(item)
@@ -109,16 +121,31 @@ public class SearchAct : ListActivity() {
             val coverImage = v.findViewById(R.id.image_view_book_cover) as ImageView
             Picasso.with(con).load(item.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).into(coverImage)
 
-            //TODO * to compatible with the old bean
             val collectionBtn = v.findViewById(R.id.image_view_book_isMarked) as ImageView
-            collectionBtn.setImageResource(if (bookItem.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
+            collectionBtn.setImageResource(if (item.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
             collectionBtn.setOnClickListener(object : OnClickListener {
                 override fun onClick(v: View): Unit = when (v.getId() ) {
                     R.id.image_view_book_isMarked -> {
-                        val bookItem = (v.getTag() as SearchObject).toBookItem()
-                        bookItem.markOrCancelMarked(mUtil)
-                        (v as ImageView).setImageResource(if (bookItem.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
-                        Crouton.makeText(this@SearchAct, getResources().getString(if (bookItem.isMarked(mUtil)) R.string.toast_mark else R.string.toast_cancel_mark), Style.INFO).show()
+                        val dialog = ProgressDialog(this@SearchActivity)
+                        dialog.setMessage(getResources().getString(R.string.loading_message))
+                        dialog.setIndeterminate(true)
+                        dialog.setCancelable(false)
+                        dialog.show()
+                        PostHelper.detail(DetailRequest(item.id, item.idType, getLibCode()),
+                                object : Handler() {
+                                    override fun handleMessage(msg: Message) {
+                                        dialog.dismiss()
+                                        when (msg.what) {
+                                            MSG_SUCCESS -> {
+                                                val book = (msg.obj as DetailResponse).toBookItem()
+                                                book.markOrCancelMarked(mUtil)
+                                                (v as ImageView).setImageResource(if (book.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
+                                                Crouton.makeText(this@SearchActivity, getResources().getString(if (book.isMarked(mUtil)) R.string.toast_mark else R.string.toast_cancel_mark), Style.INFO).show()
+                                            }
+                                            MSG_ERROR -> Crouton.makeText(this@SearchActivity, getResources().getString(R.string.collect_fail_error) + item.title, Style.ALERT).show()
+                                        }
+                                    }
+                                })
                     }
                 }
             })

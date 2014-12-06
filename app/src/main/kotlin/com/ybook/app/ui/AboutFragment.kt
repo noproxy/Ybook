@@ -1,6 +1,6 @@
 package com.ybook.app.ui
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +12,7 @@ import android.app.Activity
 /**
  * Created by carlos on 9/21/14.
  */
-public class AboutFragment(sectionNumber: Int) : Fragment() {
-    {
-        val args = Bundle()
-        args.putInt(MainActivity.ARG_SECTION_NUMBER, sectionNumber)
-        this.setArguments(args)
-    }
-
+public class AboutFragment() : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_about, container, false)
         val textView = view.findViewById(R.id.text_content) as TextView
@@ -29,6 +23,6 @@ public class AboutFragment(sectionNumber: Int) : Fragment() {
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
-        (activity as MainActivity).onSectionAttached(getArguments().getInt(MainActivity.ARG_SECTION_NUMBER))
+        (activity as MainActivity).onSectionAttached(1)
     }
 }

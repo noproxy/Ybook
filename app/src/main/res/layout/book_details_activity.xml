@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center_horizontal"
+                android:weightSum="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/image_view_book_cover"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_launcher"/>
+
+    <TextView
+            android:padding="8dp"
+            android:id="@+id/text_view_book_title"
+            android:layout_below="@id/image_view_book_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"/>
+
+    <com.ybook.app.viewpagerindicator.TabPageIndicator
+            style="@style/Widget.TabPageIndicator"
+            android:background="@drawable/indicator_bg"
+            android:id="@+id/detail_viewPager_indicator"
+            android:layout_below="@id/text_view_book_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    </com.ybook.app.viewpagerindicator.TabPageIndicator>
+
+    <LinearLayout
+            android:id="@+id/bottom_btn"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+        <Button
+                android:id="@+id/button_addToList"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:text="@string/add"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:onClick="onClick"
+                android:gravity="center"
+                android:layout_gravity="bottom|center_horizontal"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:textColor="@color/a_bit_light_gray"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/detail_btn_selector"/>
+
+        <ImageView
+                android:id="@+id/image_view_book_isMarked"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:text="@string/collection"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/a_bit_light_gray"
+                android:textAppearance="@android:style/TextAppearance.Holo"
+                android:gravity="center"
+                android:layout_gravity="bottom|center_horizontal"
+                android:onClick="onClick"
+                android:background="@drawable/detail_btn_selector"/>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/detail_viewPager"
+            android:layout_width="match_parent"
+            android:layout_below="@id/detail_viewPager_indicator"
+            android:layout_above="@id/bottom_btn"
+            android:layout_height="match_parent"
+            >
+    </android.support.v4.view.ViewPager>
+
+
+</RelativeLayout>

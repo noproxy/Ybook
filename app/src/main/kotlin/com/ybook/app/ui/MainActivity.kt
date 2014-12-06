@@ -1,6 +1,5 @@
 package com.ybook.app.ui
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.view.Menu
@@ -8,10 +7,9 @@ import android.view.MenuItem
 import com.ybook.app.R
 import android.app.ActionBar
 import android.content.Intent
-import com.unique.libraryquery.ui.FeedBackAct
-import com.unique.libraryquery.ui.HomeFrag
+import android.support.v4.app.FragmentActivity
 
-public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -23,7 +21,7 @@ public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragmen
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private var mNavigationDrawerFragment: com.ybook.app.ui.NavigationDrawerFragment? = null
+    private var mNavigationDrawerFragment: NavigationDrawerFragment? = null
 
     private var mCollectionDrawerFragment: CollectionDrawerFragment? = null
     /**
@@ -32,29 +30,29 @@ public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragmen
     private var mTitle: CharSequence? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<Activity>.onCreate(savedInstanceState)
+        super<FragmentActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mNavigationDrawerFragment = getFragmentManager().findFragmentById(R.id.navigation_drawer) as com.ybook.app.ui.NavigationDrawerFragment
+        mNavigationDrawerFragment = getSupportFragmentManager().findFragmentById(R.id.navigation_drawer) as NavigationDrawerFragment
         mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
         mTitle = getTitle()
 
-        mCollectionDrawerFragment = getFragmentManager().findFragmentById(R.id.collection_drawer) as CollectionDrawerFragment
+        mCollectionDrawerFragment = getSupportFragmentManager().findFragmentById(R.id.collection_drawer) as CollectionDrawerFragment
         mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
         when (position) {
-            1 -> getFragmentManager().beginTransaction().replace(R.id.container, HomeFrag(position)).commit()
-            2 -> getFragmentManager().beginTransaction().replace(R.id.container, com.ybook.app.ui.AboutFragment(position)).commit()
-            3 -> startActivity(Intent(this, javaClass<FeedBackAct>()))
+            0 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, HomeFragment()).commit()
+            1 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, com.ybook.app.ui.AboutFragment()).commit()
+            2 -> startActivity(Intent(this, javaClass<FeedBackActivity>()))
         }
     }
 
     public fun onSectionAttached(number: Int) {
         when (number) {
-            1 -> mTitle = getString(R.string.navigationHome)
-            2 -> mTitle = getString(R.string.navigationAbout)
+            0 -> mTitle = getString(R.string.navigationHome)
+            1 -> mTitle = getString(R.string.navigationAbout)
         }
     }
 
@@ -75,7 +73,7 @@ public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragmen
             restoreActionBar()
             return true
         }
-        return super<Activity>.onCreateOptionsMenu(menu)
+        return super<FragmentActivity>.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -89,6 +87,6 @@ public class MainActivity : Activity(), com.ybook.app.ui.NavigationDrawerFragmen
             return true
         }
 
-        return super<Activity>.onOptionsItemSelected(item)
+        return super<FragmentActivity>.onOptionsItemSelected(item)
     }
 }

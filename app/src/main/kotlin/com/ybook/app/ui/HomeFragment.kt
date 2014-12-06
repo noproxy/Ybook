@@ -1,4 +1,4 @@
-package com.unique.libraryquery.ui
+package com.ybook.app.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,9 +9,9 @@ import android.view.KeyEvent
 import android.widget.EditText
 import android.content.Intent
 import android.app.SearchManager
-import android.app.ListFragment
+import android.support.v4.app.ListFragment
 import com.ybook.app.R
-import com.ybook.app.ui.SearchAct
+import com.ybook.app.ui.SearchActivity
 import android.app.Activity
 import com.ybook.app.ui.MainActivity
 
@@ -19,13 +19,7 @@ import com.ybook.app.ui.MainActivity
  * Created by carlos on 11/13/14.
  */
 
-public class HomeFrag(sectionNumber: Int) : ListFragment() {
-    {
-        val args = Bundle()
-        args.putInt(MainActivity.ARG_SECTION_NUMBER, sectionNumber)
-        this.setArguments(args)
-    }
-
+public class HomeFragment() : ListFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, s: Bundle?): View? {
         setListAdapter(HomeListAdapter)
@@ -37,9 +31,10 @@ public class HomeFrag(sectionNumber: Int) : ListFragment() {
     val onSearchKeyListener = {(v: View?, keyCode: Int, keyEvent: KeyEvent) ->
         when (v) {
             is EditText -> if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                val intent = Intent(getActivity(), javaClass<SearchAct>())
+                val intent = Intent(getActivity(), javaClass<SearchActivity>())
                 intent.putExtra(SearchManager.QUERY, v.getText().toString().trim())
                 v.clearFocus()
+                startActivity(intent)
             }
         }
         true
@@ -47,21 +42,15 @@ public class HomeFrag(sectionNumber: Int) : ListFragment() {
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
-        (activity as MainActivity).onSectionAttached(getArguments().getInt(MainActivity.ARG_SECTION_NUMBER))
+        (activity as MainActivity).onSectionAttached(0)
     }
 
     object HomeListAdapter : BaseAdapter() {
-        override fun getCount(): Int {
-            throw UnsupportedOperationException()
-        }
+        override fun getCount(): Int = 0
 
-        override fun getItem(position: Int): Any? {
-            throw UnsupportedOperationException()
-        }
+        override fun getItem(position: Int): Any? = null
 
-        override fun getItemId(position: Int): Long {
-            throw UnsupportedOperationException()
-        }
+        override fun getItemId(position: Int) = position.toLong()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
             return null

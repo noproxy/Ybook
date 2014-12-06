@@ -3,7 +3,7 @@ package com.ybook.app.ui
 
 import android.app.Activity
 import android.app.ActionBar
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.support.v4.app.ActionBarDrawerToggle
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
