@@ -1,6 +1,5 @@
 package com.ybook.app.bean;
 
-import android.util.Log;
 import com.ybook.app.R;
 import com.ybook.app.util.BooksListUtil;
 
@@ -33,7 +32,7 @@ public class MarkedList extends BookList {
     }
 
     public static MarkedList getMarkedList() {
-        Log.i(TAG, "getMarkedList()");
+//        Log.i(TAG, "getMarkedList()");
         if (mInstance == null) {
             mInstance = new MarkedList();
         }
@@ -72,7 +71,7 @@ public class MarkedList extends BookList {
     }
 
     private ArrayList<ArrayList<BookItem>> separate() {
-        Log.i(TAG, "separate()");
+//        Log.i(TAG, "separate()");
         ArrayList<ArrayList<BookItem>> results = new ArrayList<ArrayList<BookItem>>();
         ArrayList<String> headRecord = new ArrayList<String>();
         for (BookItem bookItem : items) {
@@ -82,13 +81,13 @@ public class MarkedList extends BookList {
                 results.add(new ArrayList<BookItem>());
             }
             results.get(headRecord.indexOf(head)).add(bookItem);
-            Log.i(TAG, "book: " + bookItem.detailResponse.getTitle() + "; head: " + head);
+//            Log.i(TAG, "book: " + bookItem.detailResponse.getTitle() + "; head: " + head);
         }
         return results;
     }
 
     public ArrayList<ArrayList<BookItem>> getSeparatedItems(BooksListUtil util) {
-        Log.i(TAG, "isUpdate:" + isUpdate);
+//        Log.i(TAG, "isUpdate:" + isUpdate);
         if (!isUpdate) {
             getBookItems(util);
         }

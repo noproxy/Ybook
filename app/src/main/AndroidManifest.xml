@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
             android:allowBackup="true"
@@ -30,6 +33,13 @@
                 android:launchMode="singleTop"
                 />
         <activity android:name=".ui.BookDetailActivity"/>
+
+        <meta-data
+                android:value="5483e6cffd98c54236000670"
+                android:name="UMENG_APPKEY"></meta-data>
+        <meta-data
+                android:value="github"
+                android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

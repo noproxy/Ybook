@@ -35,6 +35,7 @@ import android.widget.Toast
 import com.ybook.app.bean.BookItem
 import com.ybook.app.util.ListEndLoadUtil
 import com.ybook.app.swipebacklayout.SwipeBackActivity
+import com.umeng.analytics.MobclickAgent
 
 /**
  * Created by carlos on 11/14/14.
@@ -47,6 +48,11 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
             requestedPage++
             loading(nextPage)
         }
+    }
+
+    override fun onPause() {
+        super<SwipeBackActivity>.onPause()
+        MobclickAgent.onPause(this);
     }
 
     var nextPage = 0
@@ -95,6 +101,7 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
 
     override fun onResume() {
         super<SwipeBackActivity>.onResume()
+        MobclickAgent.onResume(this);
         if (nextPage == 0) onEndLoad()
         Log.i(TAG, "resume, nextPage:" + nextPage)
     }
@@ -113,6 +120,7 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
             }
         }
     }
+
 
     inner class SearchListAdapter(val con: Context) : BaseAdapter() {
         override fun getItem(position: Int): Any? = listItems[position]

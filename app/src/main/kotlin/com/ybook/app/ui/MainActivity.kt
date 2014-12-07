@@ -8,6 +8,7 @@ import com.ybook.app.R
 import android.app.ActionBar
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
+import com.umeng.analytics.MobclickAgent
 
 public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
     /**
@@ -28,6 +29,16 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private var mTitle: CharSequence? = null
+
+    override fun onResume() {
+        super<FragmentActivity>.onResume()
+        MobclickAgent.onResume(this);
+    }
+
+    override fun onPause() {
+        super<FragmentActivity>.onPause()
+        MobclickAgent.onPause(this);
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<FragmentActivity>.onCreate(savedInstanceState)

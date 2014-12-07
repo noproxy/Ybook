@@ -56,6 +56,7 @@ object PostHelper {
         Thread(object : Runnable {
             override fun run() {
                 try {
+                    println(mainUrl)
                     val rep = searchClient.execute(newPost(mainUrl + "/search", data))
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
@@ -67,7 +68,7 @@ object PostHelper {
                     rep.getEntity().consumeContent()
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    //                    msg.what = MSG_ERROR TODO produce lots of msg
+                    //msg.what = MSG_ERROR TODO produce lots of msg
                 }
                 h.sendMessage(msg)
             }

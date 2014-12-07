@@ -11,9 +11,10 @@ import android.content.Intent
 import android.app.SearchManager
 import android.support.v4.app.ListFragment
 import com.ybook.app.R
-import com.ybook.app.ui.SearchActivity
 import android.app.Activity
-import com.ybook.app.ui.MainActivity
+import com.umeng.analytics.MobclickAgent
+import com.ybook.app.util.SEARCH_EVENT_ID
+import java.util.HashMap
 
 /**
  * Created by carlos on 11/13/14.
@@ -32,10 +33,16 @@ public class HomeFragment() : ListFragment() {
         when (v) {
             is EditText -> if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 val intent = Intent(getActivity(), javaClass<SearchActivity>())
-                intent.putExtra(SearchManager.QUERY, v.getText().toString().trim())
+                val keyWord = v.getText().toString().trim()
+                intent.putExtra(SearchManager.QUERY, keyWord)
                 v.clearFocus()
+                val map = HashMap<String, String>()
+                map.put("searchKey", keyWord)
+                map.put("time", System.currentTimeMillis().toString())
+                MobclickAgent.onEventValue(getActivity(), SEARCH_EVENT_ID, map, 0)//TODO the last code
+                v.setText(null)
                 startActivity(intent)
-                true
+
             }
         }
         false

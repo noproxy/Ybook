@@ -11,7 +11,6 @@ import com.ybook.app.viewpagerindicator.TabPageIndicator
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v4.app.FragmentActivity
 import com.ybook.app.bean.SearchResponse.SearchObject
 import com.ybook.app.net.PostHelper
 import com.ybook.app.net.DetailRequest
@@ -28,6 +27,7 @@ import de.keyboardsurfer.android.widget.crouton.Style
 import android.widget.Toast
 import android.widget.Button
 import com.ybook.app.swipebacklayout.SwipeBackActivity
+import com.umeng.analytics.MobclickAgent
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -53,6 +53,16 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             else -> this.finish()
         }
         initViews()
+    }
+
+    override fun onResume() {
+        super<SwipeBackActivity>.onResume()
+        MobclickAgent.onResume(this);
+    }
+
+    override fun onPause() {
+        super<SwipeBackActivity>.onPause()
+        MobclickAgent.onPause(this);
     }
 
     private fun initViews() {
