@@ -28,7 +28,7 @@ public class ListEndLoadUtil {
                 if (firstVisibleItem + visibleItemCount >= totalItemCount) {
                     mMaps!!.get(view)?.onEndLoad()
                 }
-                Log.i(TAG, "firstVisibleItem,visibleItemCount,totalItemCount:" + firstVisibleItem + "," + visibleItemCount + "," + totalItemCount)
+                //                Log.i(TAG, "firstVisibleItem,visibleItemCount,totalItemCount:" + firstVisibleItem + "," + visibleItemCount + "," + totalItemCount)
             }
         }
 

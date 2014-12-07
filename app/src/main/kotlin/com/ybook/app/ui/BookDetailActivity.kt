@@ -27,12 +27,13 @@ import de.keyboardsurfer.android.widget.crouton.Crouton
 import de.keyboardsurfer.android.widget.crouton.Style
 import android.widget.Toast
 import android.widget.Button
+import com.ybook.app.swipebacklayout.SwipeBackActivity
 
 /**
  * This activity is to display the detail of book of the search results.
  * Created by Carlos on 2014/8/1.
  */
-public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
+public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
 
 
     var mMarkBtn: Button? = null
@@ -42,7 +43,7 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
     //http://ftp.lib.hust.edu.cn/record=b2673698~S0*chx
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<FragmentActivity>.onCreate(savedInstanceState)
+        super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.book_details_activity)
 
         val o = getIntent().getSerializableExtra(INTENT_SEARCH_OBJECT)
@@ -61,7 +62,7 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
         val viewPager = findViewById(R.id.detail_viewPager) as ViewPager
         val indicator = findViewById(R.id.detail_viewPager_indicator) as TabPageIndicator
 
-        var title: String? = null
+        var title: String?
         if (mSearchObject == null) {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mBookItem!!.detailResponse.title.trim()

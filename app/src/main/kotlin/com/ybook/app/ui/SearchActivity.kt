@@ -1,6 +1,5 @@
 package com.ybook.app.ui
 
-import android.app.ListActivity
 import android.os.Bundle
 import android.app.SearchManager
 import android.os.Handler
@@ -35,12 +34,13 @@ import android.util.Log
 import android.widget.Toast
 import com.ybook.app.bean.BookItem
 import com.ybook.app.util.ListEndLoadUtil
+import com.ybook.app.swipebacklayout.SwipeBackActivity
 
 /**
  * Created by carlos on 11/14/14.
  */
 
-public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback {
+public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCallback {
     override fun onEndLoad() {
         if (nextPage > requestedPage && nextPage * 10 == listItems.size()) {
             PostHelper.search(SearchRequest(key!!, nextPage, SEARCH_BY_KEY, getLibCode()), SearchHandler())
@@ -62,10 +62,11 @@ public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback 
     var key: String? = null
 
     val mUtil = BooksListUtil.getInstance(this)
-
+    var mListView: ListView ? = null
+    var mAdapter: SearchListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<ListActivity>.onCreate(savedInstanceState)
+        super<SwipeBackActivity>.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_search_result)
 
@@ -80,22 +81,22 @@ public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback 
             actionBar.setTitle(key)
             actionBar.setDisplayShowTitleEnabled(true)
         }
-
-        setListAdapter(SearchListAdapter(this))
-        ListEndLoadUtil.setupEndLoad(this, getListView())
+        mListView = findViewById(android.R.id.list) as ListView
+        mAdapter = SearchListAdapter(this)
+        mListView!!.setAdapter(mAdapter)
+        mListView!!.setOnItemClickListener {(l, v, p, i) ->
+            val intent = Intent(this, javaClass<BookDetailActivity>())
+            intent.putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v?.getTag() as Serializable)
+            startActivity(intent)
+        }
+        ListEndLoadUtil.setupEndLoad(this, mListView)
     }
 
 
     override fun onResume() {
-        super<ListActivity>.onResume()
+        super<SwipeBackActivity>.onResume()
         if (nextPage == 0) onEndLoad()
         Log.i(TAG, "resume, nextPage:" + nextPage)
-    }
-
-    override fun onListItemClick(l: ListView?, v: View?, position: Int, id: Long) {
-        val intent = Intent(this, javaClass<BookDetailActivity>())
-        intent.putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v?.getTag() as Serializable)
-        startActivity(intent)
     }
 
     inner class SearchHandler : Handler() {
@@ -105,7 +106,7 @@ public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback 
                     val r = msg.obj as SearchResponse
                     listItems.addAll(r.objects)
                     nextPage++
-                    (getListView().getAdapter() as BaseAdapter).notifyDataSetChanged()
+                    mAdapter!!.notifyDataSetChanged()
                 }
                 MSG_ERROR -> loadError()
                 MSG_PASSWORD_WRONG -> passError()

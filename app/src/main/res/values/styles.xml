@@ -5,6 +5,7 @@
         <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -39,5 +40,14 @@
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
     </style>
+
+
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
 
 </resources>

@@ -1,17 +1,17 @@
 package com.ybook.app.ui
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.ybook.app.R
+import com.ybook.app.swipebacklayout.SwipeBackActivity
 
 /**
  * Created by carlos on 12/3/14.
  */
-public class FeedBackActivity : Activity() {
+public class FeedBackActivity : SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<Activity>.onCreate(savedInstanceState)
+        super<SwipeBackActivity>.onCreate(savedInstanceState)
         this.setContentView(R.layout.feedback_layout)
     }
 
