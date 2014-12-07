@@ -47,4 +47,7 @@
     <string name="toastCancelMark">已取消收藏!</string>
     <string name="toastCreateListSuccess">创建成功!</string>
     <string name="toastMarked">已收藏!</string>
+    <string name="cancelCollectBtnText">移除</string>
+    <string name="feedbackEmailHint">邮箱（可选）</string>
+    <string name="feedbackHint">请告诉我们您的意见</string>
 </resources>

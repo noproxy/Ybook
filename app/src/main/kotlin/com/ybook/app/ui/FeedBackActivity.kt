@@ -17,10 +17,10 @@ public class FeedBackActivity : Activity() {
 
     public fun onClick(v: View) {
         when (v.getId()) {
-            R.id.commitFeedbackBtn -> postFeedback((findViewById(R.id.feedbackEditText) as EditText).getText().toString())
+            R.id.commitFeedbackBtn -> postFeedback((findViewById(R.id.feedbackEditText) as EditText).getText().toString(), (findViewById(R.id.mailEditText) as EditText).getText().toString())
         }
     }
 
     //TODO implement postFeedback() function
-    private fun postFeedback(text: String): Boolean = true
+    private fun postFeedback(text: String, mail: String): Boolean = true
 }

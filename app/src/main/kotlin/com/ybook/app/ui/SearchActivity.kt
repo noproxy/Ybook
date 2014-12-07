@@ -122,7 +122,7 @@ public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback 
             val item = getItem(position) as SearchObject
 
             v.setTag(item)
-            v.findViewById(R.id.image_view_book_isMarked).setTag(item)
+            v.findViewById(R.id.bookMarkBtn).setTag(item)
             (v.findViewById(R.id.text_view_book_title) as TextView).setText(item.title)
             (v.findViewById(R.id.text_view_book_query_id) as TextView).setText(item.id)
             (v.findViewById(R.id.text_view_book_author) as TextView).setText(item.author)
@@ -130,11 +130,11 @@ public class SearchActivity : ListActivity(), ListEndLoadUtil.OnEndLoadCallback 
             val coverImage = v.findViewById(R.id.image_view_book_cover) as ImageView
             Picasso.with(con).load(item.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).into(coverImage)
 
-            val collectionBtn = v.findViewById(R.id.image_view_book_isMarked) as ImageView
+            val collectionBtn = v.findViewById(R.id.bookMarkBtn) as ImageView
             collectionBtn.setImageResource(if (item.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
             collectionBtn.setOnClickListener(object : OnClickListener {
                 override fun onClick(v: View): Unit = when (v.getId() ) {
-                    R.id.image_view_book_isMarked -> {
+                    R.id.bookMarkBtn -> {
                         if (item.isMarked(mUtil)) {
                             BookItem.cancelMarked(mUtil, item)
                             (v as ImageView).setImageResource(R.drawable.ic_mark)

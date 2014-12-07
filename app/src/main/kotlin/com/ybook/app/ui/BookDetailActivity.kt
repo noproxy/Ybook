@@ -55,7 +55,7 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
     }
 
     private fun initViews() {
-        mMarkBtn = findViewById(R.id.image_view_book_isMarked) as Button
+        mMarkBtn = findViewById(R.id.bookMarkBtn) as Button
         val imageView = findViewById(R.id.image_view_book_cover) as ImageView
         val titleView = (findViewById(R.id.text_view_book_title) as TextView)
         val viewPager = findViewById(R.id.detail_viewPager) as ViewPager
@@ -66,11 +66,24 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mBookItem!!.detailResponse.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!))
-            if (mBookItem!!.isMarked(mUtil)) mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected) else mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
+            if (mBookItem!!.isMarked(mUtil)) {
+                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected)
+                mMarkBtn!!.setText(R.string.cancelCollectBtnText)
+            } else {
+                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
+                mMarkBtn!!.setText(R.string.collectBtnText)
+            }
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mSearchObject!!.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
+            if (mSearchObject!!.isMarked(mUtil)) {
+                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected)
+                mMarkBtn!!.setText(R.string.cancelCollectBtnText)
+            } else {
+                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
+                mMarkBtn!!.setText(R.string.collectBtnText)
+            }
         }
         indicator.setViewPager(viewPager)
         if (title!!.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
@@ -88,13 +101,14 @@ public class BookDetailActivity : FragmentActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.getId()) {
-            R.id.image_view_book_isMarked -> {
+            R.id.bookMarkBtn -> {
                 if (mBookItem == null) {
                     Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
                 } else {
                     mBookItem!!.markOrCancelMarked(mUtil)
                     Crouton.makeText(this, getResources().getString(if (mBookItem!!.isMarked(mUtil)) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
                     mMarkBtn?.setBackgroundResource(if (mBookItem!!.isMarked(mUtil)) R.drawable.detail_btn_selector else R.drawable.detail_btn_selector_collected)
+                    mMarkBtn?.setText(if (mBookItem!!.isMarked(mUtil)) R.string.cancelCollectBtnText else R.string.collectBtnText)
                 }
             }
         //            R.id.button_addToList -> {

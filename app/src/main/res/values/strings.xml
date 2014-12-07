@@ -33,6 +33,7 @@
     <string name="searchHintText">Search by book name</string>
 
     <string name="collectBtnText">Collect</string>
+    <string name="cancelCollectBtnText">Remove</string>
     <string name="toastMarked">Collected!</string>
     <string name="toastCancelMark">Remove from collection!</string>
     <string name="noDetailHintText">No detail available</string>
@@ -74,4 +75,7 @@
 
     <string name="loadSearchError">Load Error!</string>
     <string name="loadingSearchMessagePrefix">Loading page  </string>
+
+    <string name="feedbackEmailHint">Email</string>
+    <string name="feedbackHint">Content</string>
 </resources>
