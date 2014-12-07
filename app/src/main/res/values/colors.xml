@@ -39,6 +39,6 @@
 
 
     <color name="searchViewBackground">#f6f6f6</color>
-    <color name="searchViewBackgroundPressed">@color/defaultPressedBackground</color>
+    <color name="searchViewBackgroundPressed">@color/lightGray</color>
 
 </resources>

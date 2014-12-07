@@ -15,6 +15,10 @@ import android.app.Activity
 import com.umeng.analytics.MobclickAgent
 import com.ybook.app.util.SEARCH_EVENT_ID
 import java.util.HashMap
+import android.widget.AutoCompleteTextView
+import android.content.Context
+import android.widget.ArrayAdapter
+import java.util.ArrayList
 
 /**
  * Created by carlos on 11/13/14.
@@ -25,8 +29,29 @@ public class HomeFragment() : ListFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, s: Bundle?): View? {
         setListAdapter(HomeListAdapter)
         val v = inflater?.inflate(R.layout.fragment_home, container, false)
-        v?.findViewById(R.id.search_edit_text)?.setOnKeyListener(onSearchKeyListener)
+        val searchView = v?.findViewById(R.id.search_edit_text) as AutoCompleteTextView
+        searchView.setOnKeyListener(onSearchKeyListener)
+        searchView.setAdapter(object : ArrayAdapter<String>(inflater!!.getContext(), R.layout.search_suggest_item, getSearchHistory()) {})
         return v
+    }
+
+    fun getSearchHistory(): Array<String?> {
+        val sp = getActivity()?.getSharedPreferences(SEARCH_HISTORY, Context.MODE_PRIVATE)
+        val count = sp?.getInt("count", 0) ?: 0
+        val arrayList = ArrayList<String>()
+        for (i in 1..count) {
+            val s = sp?.getString(i.toString(), null)
+            if (s != null) arrayList.add(s)
+        }
+        return arrayList.copyToArray()
+    }
+
+    val SEARCH_HISTORY = "searchHistory"
+
+    fun saveSearchHistory(key: String) {
+        val sp = getActivity()?.getSharedPreferences(SEARCH_HISTORY, Context.MODE_PRIVATE)
+        val count = sp?.getInt("count", 0)
+        sp?.edit()?.putString((count!!.toInt() + 1).toString(), key)?.putInt("count", count + 1)?.commit()
     }
 
     val onSearchKeyListener = {(v: View?, keyCode: Int, keyEvent: KeyEvent) ->
@@ -36,6 +61,7 @@ public class HomeFragment() : ListFragment() {
                 val keyWord = v.getText().toString().trim()
                 intent.putExtra(SearchManager.QUERY, keyWord)
                 v.clearFocus()
+                saveSearchHistory(keyWord)
                 val map = HashMap<String, String>()
                 map.put("searchKey", keyWord)
                 map.put("time", System.currentTimeMillis().toString())

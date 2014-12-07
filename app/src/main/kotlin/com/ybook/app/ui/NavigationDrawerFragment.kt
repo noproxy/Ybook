@@ -110,7 +110,7 @@ public class NavigationDrawerFragment : Fragment() {
         // between the navigation drawer and the action bar app icon.
         mDrawerToggle = object : ActionBarDrawerToggle(getActivity(), /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
-                R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+                R.drawable.ic_launcher, /* nav drawer image to replace 'Up' caret *///TODO
                 R.string.navigation_drawer_open, /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */) {
             override fun onDrawerClosed(drawerView: View?) {
@@ -143,7 +143,7 @@ public class NavigationDrawerFragment : Fragment() {
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
         if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-            mDrawerLayout!!.openDrawer(mFragmentContainerView)
+            //            mDrawerLayout!!.openDrawer(mFragmentContainerView)
         }
 
         // Defer code dependent on restoration of previous instance state.

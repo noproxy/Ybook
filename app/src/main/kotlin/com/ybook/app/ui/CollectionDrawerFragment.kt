@@ -212,7 +212,10 @@ public class CollectionDrawerFragment : ListFragment() {
             view.setTag(item)
             (view.findViewById(R.id.text_view_book_title) as TextView).setText(item.detailResponse.title)
             (view.findViewById(R.id.text_view_book_query_id) as TextView).setText(item.detailResponse.queryID)
-            view.findViewById(R.id.image_btn_book_available).setVisibility(View.INVISIBLE)
+            if (item.detailResponse.queryID.trim().size <= 0) {
+                view.findViewById(R.id.text_view_book_query_id).setVisibility(View.GONE)
+            }
+            view.findViewById(R.id.image_btn_book_available).setVisibility(View.GONE)
             return view
         }
 
@@ -223,7 +226,6 @@ public class CollectionDrawerFragment : ListFragment() {
             val type = MarkedList.getType(head)
             view.setTag(item)
             (view.findViewById(R.id.textView_head_type) as TextView).setText(type)
-            //TODO set the icon
             (view.findViewById(R.id.imageView_head_icon) as ImageView).setImageResource(MarkedList.getIconID(head))
             return view
         }

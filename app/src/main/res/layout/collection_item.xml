@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:paddingLeft="16dp"
               android:paddingStart="16dp"
               android:paddingEnd="8dp"
               android:paddingRight="8dp"
+              android:paddingTop="8dp"
+              android:paddingBottom="8dp"
               android:layout_width="match_parent"
               android:gravity="center_vertical"
-              android:layout_height="48dp">
+              android:layout_height="wrap_content"
+              android:minHeight="48dp">
 
     <TextView
             android:id="@+id/text_view_book_title"
@@ -24,8 +27,7 @@
 
     <TextView
             android:id="@+id/text_view_book_query_id"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/longTextTest"
             android:textSize="12sp"
@@ -43,6 +45,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:scaleType="fitCenter"
+            android:visibility="gone"
             android:contentDescription="@string/app_name"/>
 
 
