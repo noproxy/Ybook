@@ -17,21 +17,21 @@ import com.ybook.app.util.SEARCH_EVENT_ID
 import java.util.HashMap
 import android.widget.AutoCompleteTextView
 import android.content.Context
-import android.widget.ArrayAdapter
 import java.util.ArrayList
+import android.widget.ArrayAdapter
 
 /**
  * Created by carlos on 11/13/14.
  */
 
 public class HomeFragment() : ListFragment() {
+    var searchView: AutoCompleteTextView? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, s: Bundle?): View? {
         setListAdapter(HomeListAdapter)
         val v = inflater?.inflate(R.layout.fragment_home, container, false)
-        val searchView = v?.findViewById(R.id.search_edit_text) as AutoCompleteTextView
-        searchView.setOnKeyListener(onSearchKeyListener)
-        searchView.setAdapter(object : ArrayAdapter<String>(inflater!!.getContext(), R.layout.search_suggest_item, getSearchHistory()) {})
+        searchView = v?.findViewById(R.id.search_edit_text) as AutoCompleteTextView
+        searchView?.setOnKeyListener(onSearchKeyListener)
         return v
     }
 
@@ -50,8 +50,16 @@ public class HomeFragment() : ListFragment() {
 
     fun saveSearchHistory(key: String) {
         val sp = getActivity()?.getSharedPreferences(SEARCH_HISTORY, Context.MODE_PRIVATE)
-        val count = sp?.getInt("count", 0)
-        sp?.edit()?.putString((count!!.toInt() + 1).toString(), key)?.putInt("count", count + 1)?.commit()
+        val all = sp?.getAll()
+        if (!(all?.containsValue(key) ?: true)) {
+            val count = sp?.getInt("count", 0)
+            sp?.edit()?.putString((count!!.toInt() + 1).toString(), key)?.putInt("count", count + 1)?.commit()
+        }
+    }
+
+    override fun onResume() {
+        super<ListFragment>.onResume()
+        searchView?.setAdapter(object : ArrayAdapter<String>(getActivity(), R.layout.search_suggest_item, getSearchHistory()) {})
     }
 
     val onSearchKeyListener = {(v: View?, keyCode: Int, keyEvent: KeyEvent) ->
