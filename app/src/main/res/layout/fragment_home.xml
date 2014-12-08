@@ -1,73 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            >
-
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/search_edit_height"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:minLines="1"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:hint="@string/searchHintText"
-                    android:textColorHint="@color/lightGray"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:id="@+id/search_edit_text"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textAutoCorrect"
-                    android:selectAllOnFocus="true"
-                    android:background="@drawable/search_edit_selector"/>
+                <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/search_edit_height"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginEnd="28dp"
+                        android:minLines="1"
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:hint="@string/searchHintText"
+                        android:textColorHint="@color/lightGray"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:id="@+id/search_edit_text"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textAutoCorrect"
+                        android:selectAllOnFocus="true"
+                        android:background="@drawable/search_edit_selector"/>
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
+                android:orientation="horizontal"
+                android:paddingLeft="8dp"
+            android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_booklist_title"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:text="@string/homeSectionTitle1"/>
+        </LinearLayout>
+
+
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
                 android:requiresFadingEdge="horizontal">
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="@drawable/shadow_top"/>
+                <ImageView
+                        android:id="@+id/bookListCoverImage0"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher"/>
 
-            <View
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="@drawable/shadow_bottom"/>
-        </RelativeLayout>
+                <ImageView
+                        android:id="@+id/bookListCoverImage1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher"/>
+
+                <ImageView
+                        android:id="@+id/bookListCoverImage2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher"/>
+
+                <ImageView
+                        android:id="@+id/bookListCoverImage3"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/bookListTitle0"
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/loadingMessage"/>
+
+                <TextView
+                        android:id="@+id/bookListTitle1"
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loadingMessage"/>
+
+                <TextView
+                        android:id="@+id/bookListTitle2"
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loadingMessage"/>
+
+                <TextView
+                        android:id="@+id/bookListTitle3"
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loadingMessage"/>
+    </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_map_title"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:text="@string/homeSectionTitle2"/>
+        </LinearLayout>
 
         <!--android:layout_marginStart="24dp"-->
         <!--android:layout_marginEnd="24dp"-->
-        <ListView
+        <ExpandableListView
                 android:id="@android:id/list"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:divider="@color/lightGray"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-
-    </LinearLayout>
-</ScrollView>
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:overScrollFooter="@null"
+                android:overScrollHeader="@null"/>
+</LinearLayout>

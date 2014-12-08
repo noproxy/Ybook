@@ -12,6 +12,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_search" translatable="false">Search</string>
 
+    <string name="homeSectionTitle1">Recommend</string>
+    <string name="homeSectionTitle2">Map</string>
 
     <string name="text_about">Ybook from UniqueStudio</string>
 

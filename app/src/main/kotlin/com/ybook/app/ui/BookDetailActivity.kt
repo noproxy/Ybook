@@ -28,6 +28,7 @@ import android.widget.Toast
 import android.widget.Button
 import com.ybook.app.swipebacklayout.SwipeBackActivity
 import com.umeng.analytics.MobclickAgent
+import com.ybook.app.bean.BookListResponse
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -46,10 +47,11 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.book_details_activity)
 
-        val o = getIntent().getSerializableExtra(INTENT_SEARCH_OBJECT)
+        val o = getIntent().getSerializableExtra(INTENT_SEARCH_OBJECT) ?: getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (o) {
             is SearchObject -> mSearchObject = o
             is BookItem -> mBookItem = o
+            is BookListResponse.BookListObject -> mSearchObject = o.toSearchObject()
             else -> this.finish()
         }
         initViews()
@@ -68,7 +70,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
     private fun initViews() {
         mMarkBtn = findViewById(R.id.bookMarkBtn) as Button
         val imageView = findViewById(R.id.image_view_book_cover) as ImageView
-        val titleView = (findViewById(R.id.text_view_book_title) as TextView)
+        val titleView = findViewById(R.id.text_view_book_title) as TextView
         val viewPager = findViewById(R.id.detail_viewPager) as ViewPager
         val indicator = findViewById(R.id.detail_viewPager_indicator) as TabPageIndicator
 
@@ -97,6 +99,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             }
         }
         indicator.setViewPager(viewPager)
+        indicator.setBackgroundResource(R.drawable.indicator_bg_selector)
         if (title!!.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
         titleView.setText(title)
         setupActionBar()
@@ -104,56 +107,43 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
 
     private fun setupActionBar() {
         val bar = getActionBar()
-        if (bar != null) {
-            bar.setTitle(mSearchObject?.title ?: mBookItem?.detailResponse?.title)
-            bar.setDisplayShowTitleEnabled(true)
-        }
+        bar?.setTitle(mSearchObject?.title ?: mBookItem?.detailResponse?.title)
+        bar?.setDisplayShowTitleEnabled(true)
     }
 
     override fun onClick(v: View) {
         when (v.getId()) {
             R.id.bookMarkBtn -> {
-                if (mBookItem == null) {
-                    Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
-                } else {
+                if (mBookItem == null) Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
+                else {
                     mBookItem!!.markOrCancelMarked(mUtil)
-                    Crouton.makeText(this, getResources().getString(if (mBookItem!!.isMarked(mUtil)) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
-                    mMarkBtn?.setBackgroundResource(if (mBookItem!!.isMarked(mUtil)) R.drawable.detail_btn_selector else R.drawable.detail_btn_selector_collected)
-                    mMarkBtn?.setText(if (mBookItem!!.isMarked(mUtil)) R.string.cancelCollectBtnText else R.string.collectBtnText)
+                    val b = mBookItem!!.isMarked(mUtil)
+                    Crouton.makeText(this, getResources().getString(if (b) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
+                    mMarkBtn?.setBackgroundResource(if (b) R.drawable.detail_btn_selector else R.drawable.detail_btn_selector_collected)
+                    mMarkBtn?.setText(if (b) R.string.cancelCollectBtnText else R.string.collectBtnText)
                 }
             }
-        //            R.id.button_addToList -> {
-        //            }
         }
     }
-
+    //            R.id.button_addToList -> {
+    //            }
 
     inner class MyDetailPagerAdapter(fm: FragmentManager, searchObject: SearchObject?, bookItem: BookItem?) : FragmentPagerAdapter(fm) {
         {
             if (searchObject != null) PostHelper.detail(DetailRequest(searchObject.id, searchObject.idType, getLibCode()), object : Handler() {
                 override fun handleMessage(msg: Message) {
                     when (msg.what) {
-                        MSG_SUCCESS -> onRefresh(msg.obj as DetailResponse)
-                        MSG_ERROR -> onError()
+                        MSG_SUCCESS -> {
+                            mBookItem = (msg.obj as DetailResponse).toBookItem()
+                            pagers.forEach { p -> p.onRefresh(msg.obj as DetailResponse) }
+                        }
+                        MSG_ERROR -> pagers.forEach { p -> p.onError() }
                     }
                 }
             })
-
         }
         val pagers = array(DetailInfoFragment(searchObject, bookItem), DetailStoreFragment(searchObject, bookItem))
         val titleResId = array(R.string.detailTabTitleInfo, R.string.detailTabTitleStatus)
-
-        fun onRefresh(detail: DetailResponse) {
-            mBookItem = detail.toBookItem()
-            pagers[0].onRefresh(detail)
-            pagers[1].onRefresh(detail)
-        }
-
-        fun onError() {
-            pagers[0].onError()
-            pagers[1].onError()
-        }
-
         override fun getItem(i: Int) = pagers[i]
         override fun getCount() = 2
         override fun getPageTitle(position: Int) = getResources().getString(titleResId[position])

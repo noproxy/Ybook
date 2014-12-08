@@ -26,7 +26,6 @@ import com.ybook.app.util.BooksListUtil
 import android.widget.ListView
 import android.content.Intent
 import java.io.Serializable
-import android.view.View.OnClickListener
 import android.app.ProgressDialog
 import com.ybook.app.net.DetailRequest
 import com.ybook.app.bean.DetailResponse
@@ -36,11 +35,14 @@ import com.ybook.app.bean.BookItem
 import com.ybook.app.util.ListEndLoadUtil
 import com.ybook.app.swipebacklayout.SwipeBackActivity
 import com.umeng.analytics.MobclickAgent
+import android.app.Activity
+
+import com.ybook.app.id
+
 
 /**
  * Created by carlos on 11/14/14.
  */
-
 public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCallback {
     override fun onEndLoad() {
         if (nextPage > requestedPage && nextPage * 10 == listItems.size()) {
@@ -60,9 +62,9 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
     val TAG = "SearchAct"
     var requestedPage = -1
 
-    val loadError = { Toast.makeText(this, getResources().getString(R.string.loadSearchError), Toast.LENGTH_SHORT).show() }
-    val passError = { Toast.makeText(this, getResources().getString(R.string.passwordError), Toast.LENGTH_SHORT).show() }
-    val loading = {(page: Int) -> Toast.makeText(this, getResources().getString(R.string.loadingSearchMessagePrefix) + " " + (page + 1), Toast.LENGTH_SHORT).show() }
+    val loadError = { Toast.makeText(this, getResources() getString R.string.loadSearchError, Toast.LENGTH_SHORT).show() }
+    val passError = { Toast.makeText(this, getResources() getString R.string.passwordError, Toast.LENGTH_SHORT).show() }
+    val loading = {(page: Int) -> Toast.makeText(this, (getResources() getString R.string.loadingSearchMessagePrefix) + " " + (page + 1), Toast.LENGTH_SHORT).show() }
 
     val listItems = ArrayList<SearchObject>()
     var key: String? = null
@@ -71,30 +73,20 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
     var mListView: ListView ? = null
     var mAdapter: SearchListAdapter? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_search_result)
 
-
-        key = getIntent().getStringExtra(SearchManager.QUERY)
-        if (key == null) {
-            this.finish()
-        }
+        key = getIntent().getStringExtra(SearchManager.QUERY) ?: finish().toString()
 
         val actionBar = getActionBar()
-        if (actionBar != null) {
-            actionBar.setTitle(key)
-            actionBar.setDisplayShowTitleEnabled(true)
-        }
-        mListView = findViewById(android.R.id.list) as ListView
+        actionBar setTitle key
+        actionBar setDisplayShowTitleEnabled true
+        mListView = id(android.R.id.list) as ListView
         mAdapter = SearchListAdapter(this)
-        mListView!!.setAdapter(mAdapter)
-        mListView!!.setOnItemClickListener {(l, v, p, i) ->
-            val intent = Intent(this, javaClass<BookDetailActivity>())
-            intent.putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v?.getTag() as Serializable)
-            startActivity(intent)
-        }
+        mListView!! setAdapter mAdapter
+        mListView!! setOnItemClickListener {(l, v, p, i) -> startActivity(Intent(this, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v?.getTag() as Serializable)) }
         ListEndLoadUtil.setupEndLoad(this, mListView)
     }
 
@@ -111,7 +103,7 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
             when (msg.what) {
                 MSG_SUCCESS -> {
                     val r = msg.obj as SearchResponse
-                    listItems.addAll(r.objects)
+                    listItems addAll r.objects
                     nextPage++
                     mAdapter!!.notifyDataSetChanged()
                 }
@@ -130,19 +122,18 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
             val v = convertView ?: LayoutInflater.from(con).inflate(R.layout.search_result_item, parent, false)
             val item = getItem(position) as SearchObject
 
-            v.setTag(item)
-            v.findViewById(R.id.bookMarkBtn).setTag(item)
-            (v.findViewById(R.id.text_view_book_title) as TextView).setText(item.title)
-            (v.findViewById(R.id.text_view_book_query_id) as TextView).setText(item.id)
-            (v.findViewById(R.id.text_view_book_author) as TextView).setText(item.author)
-            (v.findViewById(R.id.text_view_book_publisher) as TextView).setText(item.press)
-            val coverImage = v.findViewById(R.id.image_view_book_cover) as ImageView
-            Picasso.with(con).load(item.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).into(coverImage)
-
-            val collectionBtn = v.findViewById(R.id.bookMarkBtn) as ImageView
-            collectionBtn.setImageResource(if (item.isMarked(mUtil)) R.drawable.ic_marked else R.drawable.ic_mark)
-            collectionBtn.setOnClickListener(object : OnClickListener {
-                override fun onClick(v: View): Unit = when (v.getId() ) {
+            v setTag item
+            v id(R.id.bookMarkBtn) setTag item
+            (v id R.id.text_view_book_title) as TextView setText item.title
+            (v id R.id.text_view_book_query_id) as TextView setText item.id
+            (v id R.id.text_view_book_author) as TextView setText item.author
+            (v id R.id.text_view_book_publisher) as TextView setText item.press
+            val coverImage = (v id R.id.image_view_book_cover) as ImageView
+            Picasso.with(con) load item.coverImgUrl error (getResources() getDrawable R.drawable.ic_error ) into coverImage
+            val collectionBtn = (v id R.id.bookMarkBtn) as ImageView
+            collectionBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
+            collectionBtn setOnClickListener { v ->
+                when (v.getId() ) {
                     R.id.bookMarkBtn -> {
                         if (item.isMarked(mUtil)) {
                             BookItem.cancelMarked(mUtil, item)
@@ -154,25 +145,24 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
                             dialog.setIndeterminate(true)
                             dialog.setCancelable(false)
                             dialog.show()
-                            PostHelper.detail(DetailRequest(item.id, item.idType, getLibCode()),
-                                    object : Handler() {
-                                        override fun handleMessage(msg: Message) {
-                                            dialog.dismiss()
-                                            when (msg.what) {
-                                                MSG_SUCCESS -> {
-                                                    val book = (msg.obj as DetailResponse).toBookItem()
-                                                    book.markOrCancelMarked(mUtil)
-                                                    (v as ImageView).setImageResource(R.drawable.ic_marked)
-                                                    Toast.makeText(this@SearchActivity, getResources().getString(R.string.toastMarked), Toast.LENGTH_SHORT).show()
-                                                }
-                                                MSG_ERROR -> Toast.makeText(this@SearchActivity, getResources().getString(R.string.collectFailErrorHint) + item.title, Toast.LENGTH_SHORT).show()
-                                            }
+                            PostHelper.detail(DetailRequest(item.id, item.idType, getLibCode()), object : Handler() {
+                                override fun handleMessage(msg: Message) {
+                                    dialog.dismiss()
+                                    when (msg.what) {
+                                        MSG_SUCCESS -> {
+                                            val book = (msg.obj as DetailResponse).toBookItem()
+                                            book.markOrCancelMarked(mUtil)
+                                            (v as ImageView).setImageResource(R.drawable.ic_marked)
+                                            Toast.makeText(this@SearchActivity, getResources().getString(R.string.toastMarked), Toast.LENGTH_SHORT).show()
                                         }
-                                    })
+                                        MSG_ERROR -> Toast.makeText(this@SearchActivity, getResources().getString(R.string.collectFailErrorHint) + item.title, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            })
                         }
                     }
                 }
-            })
+            }
             return v
         }
 

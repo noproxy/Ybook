@@ -5,6 +5,9 @@
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primaryDark</item>
         <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Translucent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

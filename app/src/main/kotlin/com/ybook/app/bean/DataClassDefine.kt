@@ -9,25 +9,29 @@ import com.ybook.app.bean.DetailResponse.LibInfo
 import com.ybook.app.util.BooksListUtil
 import com.ybook.app.bean.BookListResponse.BookListObject
 
-data class BookListResponse(
+data class BookListResponse (
         val title: String,
         val coverImgUrl: String,
         val comment: String,
         val books: Array<BookListObject>
-) {
+) : Serializable {
     data class BookListObject(
             val author: String,
             val press: String,
             val title: String,
             val coverImgUrl: String,
             val id: String
-    )
+    ) : Serializable {
+        fun toSearchObject(): SearchObject {
+            return SearchObject(author, press, "loading", "record", title, coverImgUrl, id)
+        }
+    }
 }
 
 data class LoginResponse(
         val status: Int,
         val msg: String
-)
+) : Serializable
 
 /**
  * store the data from search response json

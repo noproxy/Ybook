@@ -10,14 +10,11 @@ import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import com.umeng.analytics.MobclickAgent
 
+import com.ybook.app.id
+
+val ARG_SECTION_NUMBER: String = "section_number"
+
 public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-    class object {
-        public val ARG_SECTION_NUMBER: String = "section_number"
-    }
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -44,12 +41,11 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         super<FragmentActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mNavigationDrawerFragment = getSupportFragmentManager().findFragmentById(R.id.navigation_drawer) as NavigationDrawerFragment
-        mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
+        mNavigationDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.navigation_drawer ) as NavigationDrawerFragment
+        mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, id(R.id.drawer_layout) as DrawerLayout)
         mTitle = getTitle()
-
-        mCollectionDrawerFragment = getSupportFragmentManager().findFragmentById(R.id.collection_drawer) as CollectionDrawerFragment
-        mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, findViewById(R.id.drawer_layout) as DrawerLayout)
+        mCollectionDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.collection_drawer) as CollectionDrawerFragment
+        mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, id(R.id.drawer_layout) as DrawerLayout)
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
@@ -69,9 +65,9 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
 
     public fun restoreActionBar() {
         val actionBar = getActionBar()
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD)
-        actionBar.setDisplayShowTitleEnabled(true)
-        actionBar.setTitle(mTitle)
+        actionBar setNavigationMode ActionBar.NAVIGATION_MODE_STANDARD
+        actionBar setDisplayShowTitleEnabled true
+        actionBar setTitle mTitle
     }
 
 
@@ -92,7 +88,6 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item!!.getItemId()
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true

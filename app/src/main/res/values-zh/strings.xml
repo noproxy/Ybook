@@ -43,11 +43,13 @@
     <string name="queryIdText">索书号 : </string>
     <string name="searchHintText">搜书</string>
     <string name="skipLoginBtnText">游客</string>
-    <string name="text_about">有书 由UniqueStudio 提供</string>
+    <string name="text_about">有书仍然在开发测试中，存在很多不足和bug，如有影响到您的体验，请见谅。</string>
     <string name="toastCancelMark">已取消收藏!</string>
     <string name="toastCreateListSuccess">创建成功!</string>
     <string name="toastMarked">已收藏!</string>
     <string name="cancelCollectBtnText">移除</string>
     <string name="feedbackEmailHint">邮箱（可选）</string>
     <string name="feedbackHint">请告诉我们您的意见</string>
+    <string name="homeSectionTitle1">推荐书单</string>
+    <string name="homeSectionTitle2">馆藏地图</string>
 </resources>

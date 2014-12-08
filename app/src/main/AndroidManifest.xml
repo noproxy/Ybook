@@ -27,18 +27,26 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.FeedBackActivity"/>
+        <activity
+                android:name=".ui.FeedBackActivity"
+                android:theme="@style/AppTheme.Translucent"/>
         <activity
                 android:name=".ui.SearchActivity"
                 android:launchMode="singleTop"
+                android:theme="@style/AppTheme.Translucent"
                 />
-        <activity android:name=".ui.BookDetailActivity"/>
+        <activity
+                android:name=".ui.BookDetailActivity"
+                android:theme="@style/AppTheme.Translucent"/>
+        <activity
+                android:name=".ui.BookListActivity"
+                android:theme="@style/AppTheme.Translucent"/>
 
         <meta-data
                 android:value="5483e6cffd98c54236000670"
-                android:name="UMENG_APPKEY"></meta-data>
+                android:name="UMENG_APPKEY"/>
         <meta-data
-                android:value="github"
+                android:value="nubia"
                 android:name="UMENG_CHANNEL"/>
     </application>
 

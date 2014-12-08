@@ -11,12 +11,11 @@ public class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         mInstance = this
-        MobclickAgent.setDebugMode(true);
+        //        MobclickAgent.setDebugMode(true);
     }
 
     class object {
         public var mInstance: MyApplication? = null
-
         public fun getApplication(): MyApplication {
             return mInstance!!
         }
