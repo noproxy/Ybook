@@ -19,6 +19,12 @@ import android.widget.AutoCompleteTextView
 import android.content.Context
 import java.util.ArrayList
 import android.widget.ArrayAdapter
+import com.ybook.app.net.PostHelper
+import android.os.Handler
+import android.os.Message
+import com.ybook.app.net.MSG_SUCCESS
+import android.util.Log
+import com.ybook.app.net.MSG_ERROR
 
 /**
  * Created by carlos on 11/13/14.
@@ -32,6 +38,15 @@ public class HomeFragment() : ListFragment() {
         val v = inflater?.inflate(R.layout.fragment_home, container, false)
         searchView = v?.findViewById(R.id.search_edit_text) as AutoCompleteTextView
         searchView?.setOnKeyListener(onSearchKeyListener)
+        PostHelper.getBookList(object : Handler() {
+            override fun handleMessage(msg: Message) {
+                when (msg.what) {
+                    MSG_SUCCESS -> Log.i("HomeFragmet", "getBookList msg success")
+                //TODO solve data
+                    MSG_ERROR -> Log.i("HomeFragmet", "getBookList msg error")
+                }
+            }
+        })
         return v
     }
 
@@ -76,7 +91,6 @@ public class HomeFragment() : ListFragment() {
                 MobclickAgent.onEventValue(getActivity(), SEARCH_EVENT_ID, map, 0)//TODO the last code
                 v.setText(null)
                 startActivity(intent)
-
             }
         }
         false

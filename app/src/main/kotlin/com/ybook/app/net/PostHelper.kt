@@ -1,29 +1,64 @@
 package com.ybook.app.net
 
 import com.ybook.app.util.JSONHelper
+import android.os.Handler
+import org.apache.http.message.BasicNameValuePair
+import org.apache.http.impl.client.DefaultHttpClient
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.util.EntityUtils
+import org.apache.http.NameValuePair
 
 /**
  * Created by carlos on 11/11/14.
  */
 object PostHelper {
 
-    val detailClient = object : org.apache.http.impl.client.DefaultHttpClient() {}
-    val searchClient = object : org.apache.http.impl.client.DefaultHttpClient() {}
-    val loginClient = object : org.apache.http.impl.client.DefaultHttpClient() {}
+    val detailClient = object : DefaultHttpClient() {}
+    val searchClient = object : DefaultHttpClient() {}
+    val loginClient = object : DefaultHttpClient() {}
+    val bookListClient = object : DefaultHttpClient() {}
 
-    private fun newPost(s: String, data: java.util.ArrayList<org.apache.http.NameValuePair>?): org.apache.http.client.methods.HttpPost {
+    private fun newPost(s: String, data: java.util.ArrayList<NameValuePair>?): org.apache.http.client.methods.HttpPost {
         val p = org.apache.http.client.methods.HttpPost(s)
         p.addHeader("application", "x-www-form-urlencoded")
         p.setEntity(org.apache.http.client.entity.UrlEncodedFormEntity(data, org.apache.http.protocol.HTTP.UTF_8))
         return p
     }
 
-    fun login(req: LoginRequest, h: android.os.Handler) {
-        val data = java.util.ArrayList<org.apache.http.NameValuePair>()
-        data.add(org.apache.http.message.BasicNameValuePair("action", "login"))
-        data.add(org.apache.http.message.BasicNameValuePair("lib_code", req.libCode.toString()))
-        data.add(org.apache.http.message.BasicNameValuePair("username", req.username))
-        data.add(org.apache.http.message.BasicNameValuePair("password", req.password))
+    fun getBookList(h: Handler) {
+        val msg = h.obtainMessage()
+        Thread(object : Runnable {
+            override fun run() {
+                try {
+                    for (i in 1..4) {
+                        val rep = bookListClient.execute(HttpGet(mainUrl + "/static/temp/bookrec0" + i.toString() + ".json"))
+                        when (rep.getStatusLine().getStatusCode()) {
+                            org.apache.http.HttpStatus.SC_OK -> {
+                                msg.what = MSG_SUCCESS
+                                msg.obj = JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity()))
+                            }
+                            else -> msg.what = MSG_ERROR
+                        }
+                        rep.getEntity().consumeContent()
+                    }
+
+
+                } catch (e: Exception) {
+                    msg.what = MSG_ERROR
+                }
+                h.sendMessage(msg)
+
+
+            }
+        }).start()
+    }
+
+    fun login(req: LoginRequest, h: Handler) {
+        val data = java.util.ArrayList<NameValuePair>()
+        data.add(BasicNameValuePair("action", "login"))
+        data.add(BasicNameValuePair("lib_code", req.libCode.toString()))
+        data.add(BasicNameValuePair("username", req.username))
+        data.add(BasicNameValuePair("password", req.password))
         val msg = h.obtainMessage()
         Thread(object : Runnable {
             override fun run() {
@@ -32,7 +67,7 @@ object PostHelper {
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
-                            msg.obj = JSONHelper.readLoginResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
+                            msg.obj = JSONHelper.readLoginResponse(EntityUtils.toString(rep.getEntity()))
                         }
                         else -> msg.what = MSG_ERROR
                     }
@@ -46,22 +81,21 @@ object PostHelper {
     }
 
 
-    public fun search(req: SearchRequest, h: android.os.Handler) {
-        val data = java.util.ArrayList<org.apache.http.NameValuePair>()
-        data.add(org.apache.http.message.BasicNameValuePair("key", req.key))
-        data.add(org.apache.http.message.BasicNameValuePair("curr_page", req.currPage.toString()))
-        data.add(org.apache.http.message.BasicNameValuePair("se_type", req.searchType))
-        data.add(org.apache.http.message.BasicNameValuePair("lib_code", req.libCode.toString()))
+    public fun search(req: SearchRequest, h: Handler) {
+        val data = java.util.ArrayList<NameValuePair>()
+        data.add(BasicNameValuePair("key", req.key))
+        data.add(BasicNameValuePair("curr_page", req.currPage.toString()))
+        data.add(BasicNameValuePair("se_type", req.searchType))
+        data.add(BasicNameValuePair("lib_code", req.libCode.toString()))
         val msg = h.obtainMessage()
         Thread(object : Runnable {
             override fun run() {
                 try {
-                    println(mainUrl)
                     val rep = searchClient.execute(newPost(mainUrl + "/search", data))
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
-                            msg.obj = JSONHelper.readSearchResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
+                            msg.obj = JSONHelper.readSearchResponse(EntityUtils.toString(rep.getEntity()))
                         }
                         else -> msg.what = MSG_ERROR
                     }
@@ -75,11 +109,11 @@ object PostHelper {
         }).start()
     }
 
-    public fun detail(req: DetailRequest, h: android.os.Handler) {
-        val data = java.util.ArrayList<org.apache.http.NameValuePair>()
-        data.add(org.apache.http.message.BasicNameValuePair("id", req.id))
-        data.add(org.apache.http.message.BasicNameValuePair("id_type", req.idType))
-        data.add(org.apache.http.message.BasicNameValuePair("lib_code", req.libCode.toString()))
+    public fun detail(req: DetailRequest, h: Handler) {
+        val data = java.util.ArrayList<NameValuePair>()
+        data.add(BasicNameValuePair("id", req.id))
+        data.add(BasicNameValuePair("id_type", req.idType))
+        data.add(BasicNameValuePair("lib_code", req.libCode.toString()))
         val msg = h.obtainMessage()
         Thread(object : Runnable {
             override fun run() {
@@ -88,7 +122,7 @@ object PostHelper {
                     when (rep.getStatusLine().getStatusCode()) {
                         org.apache.http.HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
-                            msg.obj = JSONHelper.readDetailResponse(org.apache.http.util.EntityUtils.toString(rep.getEntity()))
+                            msg.obj = JSONHelper.readDetailResponse(EntityUtils.toString(rep.getEntity()))
                         }
                         else -> msg.what = MSG_ERROR
                     }

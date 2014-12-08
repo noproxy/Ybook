@@ -7,7 +7,22 @@ import com.ybook.app.bean.CurrentResponse.CurrentObject
 import java.io.Serializable
 import com.ybook.app.bean.DetailResponse.LibInfo
 import com.ybook.app.util.BooksListUtil
+import com.ybook.app.bean.BookListResponse.BookListObject
 
+data class BookListResponse(
+        val title: String,
+        val coverImgUrl: String,
+        val comment: String,
+        val books: Array<BookListObject>
+) {
+    data class BookListObject(
+            val author: String,
+            val press: String,
+            val title: String,
+            val coverImgUrl: String,
+            val id: String
+    )
+}
 
 data class LoginResponse(
         val status: Int,

@@ -17,6 +17,8 @@ import com.ybook.app.bean.HistoryResponse
 import com.ybook.app.bean.HistoryResponse.HistoryObject
 import com.ybook.app.bean.CurrentResponse
 import com.ybook.app.bean.CurrentResponse.CurrentObject
+import com.ybook.app.bean.BookListResponse.BookListObject
+import com.ybook.app.bean.BookListResponse
 
 /**
  * Created by carlos on 11/10/14.
@@ -80,6 +82,30 @@ object JSONHelper {
 
     fun JSONObject.a(key: String): Array<JSONObject> = this.getJSONArray(key).ls()
 
+
+    fun readBookListResponse(s: String): BookListResponse {
+        Log.d("bookListJson", s)
+        val j = JSONObject(s)
+        val a = ArrayList<BookListObject>()
+
+        for (i in j.a("books")) {
+            a.add(
+                    BookListObject(
+                            i.s("author"),
+                            i.s("press"),
+                            i.s("title"),
+                            i.s("cover_image_url"),
+                            i.s("id")
+                    )
+            )
+        }
+        return BookListResponse(
+                j.s("title"),
+                j.s("cover_image_url"),
+                j.s("comment"),
+                a.copyToArray()
+        )
+    }
 
     fun readLoginResponse(s: String): LoginResponse {
         val j = JSONObject(s)
