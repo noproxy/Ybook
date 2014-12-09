@@ -29,6 +29,7 @@ import android.widget.Button
 import com.ybook.app.swipebacklayout.SwipeBackActivity
 import com.umeng.analytics.MobclickAgent
 import com.ybook.app.bean.BookListResponse
+import com.ybook.app.id
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -47,7 +48,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.book_details_activity)
 
-        val o = getIntent().getSerializableExtra(INTENT_SEARCH_OBJECT) ?: getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (o) {
             is SearchObject -> mSearchObject = o
             is BookItem -> mBookItem = o
@@ -68,40 +69,40 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
     }
 
     private fun initViews() {
-        mMarkBtn = findViewById(R.id.bookMarkBtn) as Button
-        val imageView = findViewById(R.id.image_view_book_cover) as ImageView
-        val titleView = findViewById(R.id.text_view_book_title) as TextView
-        val viewPager = findViewById(R.id.detail_viewPager) as ViewPager
-        val indicator = findViewById(R.id.detail_viewPager_indicator) as TabPageIndicator
+        mMarkBtn = id(R.id.bookMarkBtn) as Button
+        val imageView = id(R.id.image_view_book_cover) as ImageView
+        val titleView = id(R.id.text_view_book_title) as TextView
+        val viewPager = id(R.id.detail_viewPager) as ViewPager
+        val indicator = id(R.id.detail_viewPager_indicator) as TabPageIndicator
 
         var title: String?
         if (mSearchObject == null) {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mBookItem!!.detailResponse.title.trim()
-            viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!))
-            if (mBookItem!!.isMarked(mUtil)) {
-                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected)
-                mMarkBtn!!.setText(R.string.cancelCollectBtnText)
+            viewPager setAdapter MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!)
+            if (mBookItem!! isMarked mUtil) {
+                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector_collected
+                mMarkBtn!! setText R.string.cancelCollectBtnText
             } else {
-                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
-                mMarkBtn!!.setText(R.string.collectBtnText)
+                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector
+                mMarkBtn!! setText R.string.collectBtnText
             }
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mSearchObject!!.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
-            if (mSearchObject!!.isMarked(mUtil)) {
-                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector_collected)
-                mMarkBtn!!.setText(R.string.cancelCollectBtnText)
+            if (mSearchObject!! isMarked mUtil ) {
+                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector_collected
+                mMarkBtn!! setText R.string.cancelCollectBtnText
             } else {
-                mMarkBtn!!.setBackgroundResource(R.drawable.detail_btn_selector)
-                mMarkBtn!!.setText(R.string.collectBtnText)
+                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector
+                mMarkBtn!! setText R.string.collectBtnText
             }
         }
-        indicator.setViewPager(viewPager)
-        indicator.setBackgroundResource(R.drawable.indicator_bg_selector)
-        if (title!!.trim().length() == 0) title = getResources().getString(R.string.noTitleHint)
-        titleView.setText(title)
+        indicator setViewPager viewPager
+        indicator setBackgroundResource R.drawable.indicator_bg_selector
+        if (title!!.trim().length() == 0) title = getString(R.string.noTitleHint)
+        titleView setText title
         setupActionBar()
     }
 
