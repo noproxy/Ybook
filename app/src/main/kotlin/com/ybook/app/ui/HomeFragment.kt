@@ -53,7 +53,7 @@ public class HomeFragment() : Fragment(), OnClickListener {
     fun initViews(mainView: View): View {
         val listView = (mainView id android.R.id.list) as ExpandableListView
         listView setAdapter HomeExpandableListAdapter()
-        listView setChildDivider null
+        listView setChildDivider getResources().getDrawable(android.R.color.transparent)
         listView setGroupIndicator null
         searchView = (mainView id R.id.search_edit_text) as AutoCompleteTextView
         searchView!! setOnKeyListener onSearchKeyListener

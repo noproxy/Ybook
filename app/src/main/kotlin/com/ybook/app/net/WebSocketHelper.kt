@@ -29,9 +29,9 @@ fun String.getToken(): Int {
  */
 object WebSocketHelper : StringCallback {
     override fun onStringAvailable(s: String?) {
-        Log.i(TAG,"response:"+s)
+        Log.i(TAG, "response:" + s)
         val hash = s?.getToken()
-        Log.i(TAG,hash.toString())
+        Log.i(TAG, hash.toString())
         val r = map.get(hash)
         if (r == null) {
             return
@@ -60,31 +60,34 @@ object WebSocketHelper : StringCallback {
      * set up connection.
      */
     val reConnect = {
-        val url = mainUrl + "/profile"
-        Log.i(TAG, "connect: " + url)
-        AsyncHttpClient.getDefaultInstance().websocket(url, "my-protocol", {(exception, webSocket) ->
-            Log.i(TAG, "webSocket is " + webSocket)
-            Log.i(TAG, "exception is " + exception?.getMessage())
-            w = webSocket
-            w?.setClosedCallback {(ex: Exception?) ->
-                Log.i(TAG, "closed")
-                w = null
-                isLogin = false
-                start()
-            }
-            w?.setStringCallback {(s: String) ->
-                val rep = JSONHelper.readLoginResponse(s)
-                Log.i(TAG, "login status:" + rep.status)
-                if (rep.status == 1) {
+        val mainUrl = getMainUrl()
+        if (mainUrl != null) {
+            val url = mainUrl + "/profile"
+            Log.i(TAG, "connect: " + url)
+            AsyncHttpClient.getDefaultInstance().websocket(url, "my-protocol", {(exception, webSocket) ->
+                Log.i(TAG, "webSocket is " + webSocket)
+                Log.i(TAG, "exception is " + exception?.getMessage())
+                w = webSocket
+                w?.setClosedCallback {(ex: Exception?) ->
+                    Log.i(TAG, "closed")
+                    w = null
                     isLogin = false
-                } else {
-                    isLogin = true
-                    w!!.setStringCallback(this)
+                    start()
                 }
-                start()
-            }
-            login()
-        })
+                w?.setStringCallback {(s: String) ->
+                    val rep = JSONHelper.readLoginResponse(s)
+                    Log.i(TAG, "login status:" + rep.status)
+                    if (rep.status == 1) {
+                        isLogin = false
+                    } else {
+                        isLogin = true
+                        w!!.setStringCallback(this)
+                    }
+                    start()
+                }
+                login()
+            })
+        }
     }
 
     val login = {
@@ -96,11 +99,11 @@ object WebSocketHelper : StringCallback {
     private fun start(): Unit {
         Log.i(TAG, "start, list size: " + list.size)
         if (list.empty) {
-            Log.i(TAG,"list is empty")
+            Log.i(TAG, "list is empty")
             return
         }
         if (w == null) {
-            Log.i(TAG,"websocket is null")
+            Log.i(TAG, "websocket is null")
             //fail connect again, network error
             for (req in list) {
                 req.handler.sendEmptyMessage(MSG_ERROR)
@@ -108,7 +111,7 @@ object WebSocketHelper : StringCallback {
             return
         }
         if (!isLogin) {
-            Log.i(TAG,"websocket not login")
+            Log.i(TAG, "websocket not login")
             for (req in list) {
                 req.handler.sendEmptyMessage(MSG_PASSWORD_WRONG)
                 break
@@ -198,7 +201,8 @@ data class CurrentRequest(val page: Int = 0, val libCode: Int = 0, val han: Hand
         j.put("token", this.hashCode())
         val s = j.toString()
         Log.i("data class CurrentRequest", s)
-        return s    }
+        return s
+    }
 }
 
 data class HistoryRequest(val page: Int = 0, val libCode: Int = 0, val han: Handler) : SocketRequest(han) {
@@ -210,5 +214,6 @@ data class HistoryRequest(val page: Int = 0, val libCode: Int = 0, val han: Hand
         j.put("token", this.hashCode())
         val s = j.toString()
         Log.i("data class HistoryRequest", s)
-        return s    }
+        return s
+    }
 }

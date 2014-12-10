@@ -35,7 +35,7 @@ object PostHelper {
             for (i in 1..4) {
                 val msg = h.obtainMessage()
                 try {
-                    val rep = bookListClient.execute(HttpGet(mainUrl + "/static/temp/bookrec0" + i.toString() + ".json"))
+                    val rep = bookListClient.execute(HttpGet(getMainUrl() + "/static/temp/bookrec0" + i.toString() + ".json"))
                     when (rep.getStatusLine().getStatusCode()) {
                         HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
@@ -63,7 +63,7 @@ object PostHelper {
         val msg = h.obtainMessage()
         Thread {
             try {
-                val rep = loginClient.execute(newPost(mainUrl + "/profile", data))
+                val rep = loginClient.execute(newPost(getMainUrl() + "/profile", data))
                 when (rep.getStatusLine().getStatusCode()) {
                     HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
@@ -89,7 +89,7 @@ object PostHelper {
         val msg = h.obtainMessage()
         Thread {
             try {
-                val rep = searchClient.execute(newPost(mainUrl + "/search", data))
+                val rep = searchClient.execute(newPost(getMainUrl() + "/search", data))
                 when (rep.getStatusLine().getStatusCode()) {
                     HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
@@ -114,7 +114,7 @@ object PostHelper {
         val msg = h.obtainMessage()
         Thread {
             try {
-                val rep = detailClient.execute(newPost(mainUrl + "/detail", data))
+                val rep = detailClient.execute(newPost(getMainUrl() + "/detail", data))
                 when (rep.getStatusLine().getStatusCode()) {
                     HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
