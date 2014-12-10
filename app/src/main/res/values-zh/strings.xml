@@ -43,7 +43,12 @@
     <string name="queryIdText">索书号 : </string>
     <string name="searchHintText">搜书</string>
     <string name="skipLoginBtnText">游客</string>
-    <string name="text_about">有书仍然在开发测试中，存在很多不足和bug，如有影响到您的体验，请见谅。</string>
+    <string name="text_about">创造更好的借阅体验
+我们会珍视您的每一份建议，
+我们正在根据您的期望努力改进
+关注微博@有书先森
+或直接 给个建议
+版本号：有书v0.9</string>
     <string name="toastCancelMark">已取消收藏!</string>
     <string name="toastCreateListSuccess">创建成功!</string>
     <string name="toastMarked">已收藏!</string>

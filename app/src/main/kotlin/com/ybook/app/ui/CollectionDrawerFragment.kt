@@ -21,6 +21,7 @@ import com.ybook.app.EmptyLayout
 import android.support.v4.app.ListFragment
 import android.widget.AdapterView
 import android.content.Intent
+import com.ybook.app.id
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -212,9 +213,8 @@ public class CollectionDrawerFragment : ListFragment() {
             view.setTag(item)
             (view.findViewById(R.id.text_view_book_title) as TextView).setText(item.detailResponse.title)
             (view.findViewById(R.id.text_view_book_query_id) as TextView).setText(item.detailResponse.queryID)
-            if (item.detailResponse.queryID.trim().size <= 0) {
-                view.findViewById(R.id.text_view_book_query_id).setVisibility(View.GONE)
-            }
+            if (item.detailResponse.queryID.trim().size <= 0) view id R.id.text_view_book_query_id setVisibility View.GONE
+            else view id R.id.text_view_book_query_id setVisibility View.VISIBLE
             view.findViewById(R.id.image_btn_book_available).setVisibility(View.GONE)
             return view
         }
