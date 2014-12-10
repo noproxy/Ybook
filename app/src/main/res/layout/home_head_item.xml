@@ -24,7 +24,7 @@
             android:id="@+id/homeHeadArrow"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingRight="16dp"
+            android:paddingRight="8dp"
             android:layout_gravity="right"
             android:src="@drawable/ic_arrow_drop_down"/>
 </LinearLayout>

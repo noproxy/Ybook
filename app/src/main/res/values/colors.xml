@@ -30,7 +30,7 @@
 
     <color name="collectionItemText">@android:color/black</color>
     <color name="collectionItemSubText">@color/lightGray</color>
-    <color name="headItemBackground">#bbffffff</color>
+    <color name="headItemBackground">#eeffffff</color>
     <color name="headItemText">#38b684</color>
 
 
