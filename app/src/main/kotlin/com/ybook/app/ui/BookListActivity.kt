@@ -27,7 +27,7 @@ public class BookListActivity() : SwipeBackActivity() {
             is BookListResponse -> {
                 val list = findViewById(android.R.id.list) as ListView
                 list.setAdapter(object : BaseAdapter() {
-                    override fun getCount(): Int = rep.books.size()
+                    override fun getCount(): Int = rep.books.size
 
                     override fun getItem(position: Int): Any? = rep.books.get(position)
                     override fun getItemId(position: Int) = position.toLong()

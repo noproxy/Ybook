@@ -46,7 +46,7 @@ public class HomeFragment() : Fragment(), OnClickListener {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, s: Bundle?) = initViews(inflater?.inflate(R.layout.fragment_home, container, false)!!)
     override fun onClick(v: View) {
         when (v.getTag() ) {
-            is BookListResponse -> startActivity(Intent(v.getContext(), javaClass<BookListActivity>()).putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, v.getTag() as BookListResponse))
+            is BookListResponse -> startActivity(Intent(v.getContext(), javaClass<NewBookListActivity>()).putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, v.getTag() as BookListResponse))
         }
     }
 

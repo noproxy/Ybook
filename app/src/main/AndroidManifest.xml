@@ -41,6 +41,8 @@
         <activity
                 android:name=".ui.BookListActivity"
                 android:theme="@style/AppTheme.Translucent"/>
+        <activity android:name=".ui.NewBookListActivity"
+                  android:theme="@style/AppTheme.Translucent"/>
 
         <meta-data
                 android:value="5483e6cffd98c54236000670"
