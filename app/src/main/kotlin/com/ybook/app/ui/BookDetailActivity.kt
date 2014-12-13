@@ -30,6 +30,7 @@ import com.ybook.app.swipebacklayout.SwipeBackActivity
 import com.umeng.analytics.MobclickAgent
 import com.ybook.app.bean.BookListResponse
 import com.ybook.app.id
+import android.view.MenuItem
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -110,6 +111,14 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         val bar = getActionBar()
         bar?.setTitle(mSearchObject?.title ?: mBookItem?.detailResponse?.title)
         bar?.setDisplayShowTitleEnabled(true)
+        getActionBar() setDisplayHomeAsUpEnabled true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.getItemId()) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super<SwipeBackActivity>.onOptionsItemSelected(item)
     }
 
     override fun onClick(v: View) {

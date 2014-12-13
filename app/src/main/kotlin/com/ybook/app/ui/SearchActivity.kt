@@ -38,6 +38,7 @@ import com.umeng.analytics.MobclickAgent
 import android.app.Activity
 
 import com.ybook.app.id
+import android.view.MenuItem
 
 
 /**
@@ -73,6 +74,12 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
     var mListView: ListView ? = null
     var mAdapter: SearchListAdapter? = null
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.getItemId()) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super<SwipeBackActivity>.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
@@ -83,6 +90,8 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
         val actionBar = getActionBar()
         actionBar setTitle key
         actionBar setDisplayShowTitleEnabled true
+        getActionBar() setDisplayHomeAsUpEnabled true
+
         mListView = id(android.R.id.list) as ListView
         mAdapter = SearchListAdapter(this)
         mListView!! setAdapter mAdapter

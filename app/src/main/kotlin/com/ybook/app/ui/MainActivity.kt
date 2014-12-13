@@ -67,6 +67,7 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         val actionBar = getActionBar()
         actionBar setNavigationMode ActionBar.NAVIGATION_MODE_STANDARD
         actionBar setDisplayShowTitleEnabled true
+        getActionBar() setDisplayHomeAsUpEnabled true
         actionBar setTitle mTitle
     }
 
