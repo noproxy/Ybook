@@ -142,10 +142,10 @@ public class HomeFragment() : Fragment(), OnClickListener {
                 "一层 F H J Q R S\n二层 I\n三层 A B C D E G K TN TQ TS TU TV\n四层 TP U V X Z\n五层 N O P T TB TD TE TF TG TH TJ TK TL TM TU",
                 "二层北 中文社科（二） H K G\n二层南 中文社科（一） A B C D F E\n三层南 自然科学（二） T.TB-TV(TP除外) U V X Z\n四层南 自然科学（一） N O P Q R S\n四层北 中文计算机图书 TP"
         )
-        val titles = array("主校区图书馆图书借阅室（流动书库）",
-                "主校区图书馆逸夫馆图书阅览室（C区）",
-                "东校区图书馆流动书库",
-                "东校区图书馆阅览室"
+        val titles = array("主校区借阅室（流动书库）",
+                "主校区逸夫馆阅览室（C区）",
+                "东校区流动书库",
+                "东校区阅览室"
         )
 
         override fun getGroupCount(): Int = 4

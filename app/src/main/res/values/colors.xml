@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--<color name="primary">#3ab582</color>-->
-    <color name="primary">#38b684</color>
-    <color name="primaryDark">#ff28896c</color>
+    <!--<color name="primary">#38b684</color>-->
+    <color name="primary">#009688</color>
+    <color name="primaryDark">#00796B</color>
+    <!--<color name="colorAccent">#EEFF41</color>-->
+    <color name="navigationBarColor">#009688</color>
+
+    <color name="primaryText">#000000</color>
 
     <color name="lightGray">#bfbfbf</color>
     <color name="veryLightGray">#f2f2f2</color>
