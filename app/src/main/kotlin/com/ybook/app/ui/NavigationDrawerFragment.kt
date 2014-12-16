@@ -88,6 +88,14 @@ public class NavigationDrawerFragment : Fragment() {
         return mDrawerLayout != null && mDrawerLayout!!.isDrawerOpen(mFragmentContainerView)
     }
 
+    var mOnDrawerOpenListener: OnDrawerListener? = null
+
+    trait OnDrawerListener : DrawerLayout.DrawerListener
+
+    public fun setOnDrawerListener(listener: OnDrawerListener) {
+        mOnDrawerOpenListener = listener
+    }
+
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
      *
@@ -108,26 +116,18 @@ public class NavigationDrawerFragment : Fragment() {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = object : ActionBarDrawerToggle(getActivity(), /* host Activity */
-                mDrawerLayout, /* DrawerLayout object */
-                R.drawable.ic_launcher, /* nav drawer image to replace 'Up' caret *///TODO
-                R.string.navigation_drawer_open, /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */) {
+        mDrawerToggle = object : ActionBarDrawerToggle(getActivity(), mDrawerLayout, R.drawable.ic_launcher, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             override fun onDrawerClosed(drawerView: View?) {
                 super.onDrawerClosed(drawerView)
-                if (!isAdded()) {
-                    return
-                }
-
+                if (!isAdded()) return
+                mOnDrawerOpenListener?.onDrawerClosed(drawerView)
                 getActivity().invalidateOptionsMenu() // calls onPrepareOptionsMenu()
             }
 
             override fun onDrawerOpened(drawerView: View?) {
                 super.onDrawerOpened(drawerView)
-                if (!isAdded()) {
-                    return
-                }
-
+                if (!isAdded()) return
+                mOnDrawerOpenListener?.onDrawerOpened(drawerView)
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
@@ -135,8 +135,17 @@ public class NavigationDrawerFragment : Fragment() {
                     val sp = PreferenceManager.getDefaultSharedPreferences(getActivity())
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply()
                 }
-
                 getActivity().invalidateOptionsMenu() // calls onPrepareOptionsMenu()
+            }
+
+            override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
+                super<ActionBarDrawerToggle>.onDrawerSlide(drawerView, slideOffset)
+                mOnDrawerOpenListener?.onDrawerSlide(drawerView, slideOffset)
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+                super<ActionBarDrawerToggle>.onDrawerStateChanged(newState)
+                mOnDrawerOpenListener?.onDrawerStateChanged(newState)
             }
         }
 
@@ -147,12 +156,7 @@ public class NavigationDrawerFragment : Fragment() {
         }
 
         // Defer code dependent on restoration of previous instance state.
-        mDrawerLayout!!.post(object : Runnable {
-            override fun run() {
-                mDrawerToggle!!.syncState()
-            }
-        })
-
+        mDrawerLayout!! post { mDrawerToggle!!.syncState() }
         mDrawerLayout!!.setDrawerListener(mDrawerToggle)
     }
 

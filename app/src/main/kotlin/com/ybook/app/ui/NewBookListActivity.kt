@@ -43,6 +43,8 @@ public class NewBookListActivity() : SwipeBackActivity() {
         setContentView(R.layout.activity_book_list)
 
         getActionBar() setDisplayHomeAsUpEnabled true
+        getActionBar() setDisplayUseLogoEnabled false
+
 
         val rep = getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (rep) {

@@ -1,103 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:fab="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+        >
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+    <RelativeLayout
+            android:orientation="vertical"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
 
-                android:gravity="center_horizontal"
-                android:weightSum="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-    <ImageView
-            android:id="@+id/image_view_book_cover"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher"/>
-
-    <TextView
-            android:id="@+id/text_view_book_title"
-            android:layout_below="@id/image_view_book_cover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:singleLine="true"
-            android:textColor="@color/collectionItemText"
-            android:text="Large Text"/>
-
-    <View
-            android:id="@+id/lineView"
-            android:layout_below="@id/text_view_book_title"
+            android:gravity="center_horizontal"
+            android:weightSum="1"
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/lightGray"/>
-
-    <com.ybook.app.viewpagerindicator.TabPageIndicator
-            style="@style/Widget.TabPageIndicator"
-            android:id="@+id/detail_viewPager_indicator"
-            android:layout_below="@id/lineView"
-            android:layout_width="240dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content">
-    </com.ybook.app.viewpagerindicator.TabPageIndicator>
-
-    <LinearLayout
-            android:id="@+id/bottom_btn"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="16dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-        <!--<Button-->
-        <!--android:id="@+id/button_addToList"-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="32dp"-->
-        <!--android:text="@string/add"-->
-        <!--android:paddingStart="8dp"-->
-        <!--android:paddingEnd="8dp"-->
-        <!--android:onClick="onClick"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_gravity="bottom|center_horizontal"-->
-        <!--android:textAppearance="@android:style/TextAppearance.Holo"-->
-        <!--android:textColor="@color/a_bit_light_gray"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--android:background="@drawable/detail_btn_selector"/>-->
-
-        <Button
-                android:id="@+id/bookMarkBtn"
-                android:layout_width="80dp"
-                android:layout_height="42dp"
-                android:text="@string/collectBtnText"
-                android:textColor="@color/detailCollectBtnText"
-                android:textAppearance="@android:style/TextAppearance.Holo"
-                android:gravity="center"
-                android:layout_gravity="bottom|center_horizontal"
-                android:onClick="onClick"
-                android:background="@drawable/detail_btn_selector"/>
-    </LinearLayout>
-
-    <android.support.v4.view.ViewPager
-            android:id="@+id/detail_viewPager"
-            android:layout_width="match_parent"
-            android:layout_below="@id/detail_viewPager_indicator"
-            android:layout_above="@id/bottom_btn"
             android:layout_height="match_parent"
             >
-    </android.support.v4.view.ViewPager>
+
+        <ImageView
+                android:id="@+id/image_view_book_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_launcher"
+                />
+
+        <TextView
+                android:id="@+id/text_view_book_title"
+                android:layout_below="@id/image_view_book_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:textColor="@color/collectionItemText"
+                android:text="Large Text"
+                />
+
+        <View
+                android:id="@+id/lineView"
+                android:layout_below="@id/text_view_book_title"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/lightGray"
+                />
+
+        <com.ybook.app.viewpagerindicator.TabPageIndicator
+                style="@style/Widget.TabPageIndicator"
+                android:id="@+id/detail_viewPager_indicator"
+                android:layout_below="@id/lineView"
+                android:layout_width="240dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                >
+        </com.ybook.app.viewpagerindicator.TabPageIndicator>
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/bottom_btn"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:padding="16dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!-->-->
+
+        <!--&lt;!&ndash;<Button&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/button_addToList"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="80dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="32dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="@string/add"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:paddingStart="8dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:paddingEnd="8dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:onClick="onClick"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_gravity="bottom|center_horizontal"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textAppearance="@android:style/TextAppearance.Holo"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textColor="@color/a_bit_light_gray"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginEnd="8dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginRight="8dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@drawable/detail_btn_selector"/>&ndash;&gt;-->
+
+        <!--<Button-->
+        <!--android:id="@+id/bookMarkBtn"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="42dp"-->
+        <!--android:text="@string/collectBtnText"-->
+        <!--android:textColor="@color/detailCollectBtnText"-->
+        <!--android:textAppearance="@android:style/TextAppearance.Holo"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_gravity="bottom|center_horizontal"-->
+        <!--android:onClick="onClick"-->
+        <!--android:background="@drawable/detail_btn_selector"-->
+        <!--/>-->
+        <!--</LinearLayout>-->
+
+        <android.support.v4.view.ViewPager
+                android:id="@+id/detail_viewPager"
+                android:layout_width="match_parent"
+                android:layout_below="@id/detail_viewPager_indicator"
+                android:layout_height="match_parent"
+                >
+        </android.support.v4.view.ViewPager>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+    <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_mark"
+            android:onClick="onClick"
+            fab:fab_colorNormal="@color/actionButton"
+            fab:fab_colorPressed="@color/actionButtonPressed"
+            />
+</FrameLayout>
+

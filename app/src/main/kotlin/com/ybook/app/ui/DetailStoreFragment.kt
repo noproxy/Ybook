@@ -13,6 +13,7 @@ import android.widget.ListView
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ybook.app.bean.BookItem
+import com.ybook.app.id
 
 /**
  * Created by carlos on 9/14/14.
@@ -28,37 +29,35 @@ public class DetailStoreFragment(val searchObject: SearchObject?, val bookItem: 
     }
 
     var mDetailResponse: DetailResponse? = bookItem?.detailResponse
-
+    var mNoHintView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.detail_store_pager_frag, container, false)
         mListView = view.findViewById(R.id.contentListView) as ListView
-        //        mEmptyLayout = EmptyLayout(inflater.getContext(), mListView)
+        mNoHintView = view id R.id.nothingHint
         mAdapter = object : BaseAdapter() {
-            override fun getCount() = mDetailResponse?.libInfo?.size() ?: 0
-
+            override fun getCount() = mDetailResponse?.libInfo?.size ?: 0
             override fun getItem(position: Int) = mDetailResponse?.libInfo?.get(position)
-
             override fun getItemId(position: Int) = position.toLong()
 
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-                val view = convertView ?: inflater.inflate(R.layout.detail_store_item, parent, false)
-                val ordBtn = view.findViewById(R.id.ordBtn)
+                val v = convertView ?: inflater.inflate(R.layout.detail_store_item, parent, false)
+                val ordBtn = v.findViewById(R.id.ordBtn)
                 if (mDetailResponse == null) {
                     ordBtn.setEnabled(false)
                 } else {
-                    (view.findViewById(R.id.textViewStoreLocation) as TextView).setText(getItem(position)!!.libLocation)
-                    (view.findViewById(R.id.textViewStoreStatus) as TextView).setText(getItem(position)!!.libStatus)
-                    ordBtn.setOnClickListener { v ->//TODO order
+                    (v id R.id.textViewStoreLocation) as TextView setText getItem(position)!!.libLocation
+                    (v id R.id.textViewStoreStatus ) as TextView setText getItem(position)!!.libStatus
+                    ordBtn setOnClickListener { v ->//TODO order
                     }
                 }
-                return view
+                return v
             }
 
         }
         mListView!!.setAdapter(mAdapter)
         refresh()
-        return mListView!!
+        return view
     }
 
     fun onLoad(detail: DetailResponse) {
@@ -75,12 +74,14 @@ public class DetailStoreFragment(val searchObject: SearchObject?, val bookItem: 
         refresh()
     }
 
+    fun showEmpty() = mNoHintView?.setVisibility(View.VISIBLE)
+    fun removeEmpty() = mNoHintView?.setVisibility(View.GONE)
+
     fun refresh() {
-        if (mDetailResponse == null)
-        //            mEmptyLayout?.showEmpty()
+        if (mDetailResponse == null || mAdapter?.isEmpty() ?: true) showEmpty()
         else {
-            //            mEmptyLayout?.showLoading()
             mAdapter?.notifyDataSetInvalidated()
+            removeEmpty()
         }
     }
 }

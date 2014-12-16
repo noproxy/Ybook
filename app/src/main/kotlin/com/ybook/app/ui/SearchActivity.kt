@@ -91,6 +91,7 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
         actionBar setTitle key
         actionBar setDisplayShowTitleEnabled true
         getActionBar() setDisplayHomeAsUpEnabled true
+        getActionBar() setDisplayUseLogoEnabled false
 
         mListView = id(android.R.id.list) as ListView
         mAdapter = SearchListAdapter(this)

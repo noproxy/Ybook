@@ -16,6 +16,7 @@ public class FeedBackActivity : SwipeBackActivity() {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         this.setContentView(R.layout.feedback_layout)
         getActionBar() setDisplayHomeAsUpEnabled true
+        getActionBar() setDisplayUseLogoEnabled false
     }
 
     public fun onClick(v: View) {

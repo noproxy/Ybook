@@ -2,10 +2,14 @@
 <resources>
     <!--<color name="primary">#3ab582</color>-->
     <!--<color name="primary">#38b684</color>-->
-    <color name="primary">#009688</color>
-    <color name="primaryDark">#00796B</color>
-    <!--<color name="colorAccent">#EEFF41</color>-->
-    <color name="navigationBarColor">#009688</color>
+    <color name="primary">#3ab582</color>
+    <color name="primaryDark">#ff36a375</color>
+    <color name="colorAccent">#00796B</color>
+    <color name="navigationBarColor">#3ab582</color>
+
+    <color name="actionButton">#3ab582</color>
+    <color name="actionButtonPressed">#ff36a375</color>
+    <color name="actionButtonRipple">#00796B</color>
 
     <color name="primaryText">#000000</color>
 

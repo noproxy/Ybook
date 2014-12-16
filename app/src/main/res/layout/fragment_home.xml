@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/AppTheme.DefaultHorizontalMargins"
-
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:layout_marginBottom="24dp"
         >
 
 
-        <AutoCompleteTextView
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.DefaultHorizontalMargins"
+
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+
+
+                <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/vertical_spacing_regular"
                 android:layout_marginTop="12dp"
@@ -36,7 +43,7 @@
 
         <LinearLayout
                 android:orientation="horizontal"
-            android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/vertical_spacing_regular"
                 >
 
@@ -110,7 +117,7 @@
                         android:gravity="center"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                android:layout_height="wrap_content"
+                        android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="@string/loadingMessage"
                         />
@@ -144,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loadingMessage"
                         />
-    </LinearLayout>
+        </LinearLayout>
 
         <Space
                 android:layout_width="match_parent"
@@ -165,25 +172,17 @@
                         />
 
                 <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                android:text="@string/homeSectionTitle2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:text="@string/homeSectionTitle2"
                         />
         </LinearLayout>
 
         <!--android:layout_marginStart="24dp"-->
         <!--android:layout_marginEnd="24dp"-->
-        <ExpandableListView
-                android:id="@android:id/list"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:groupIndicator="@drawable/map_list_group_indicator"
-                android:scrollbars="none"
-                android:overScrollFooter="@null"
-                android:overScrollHeader="@null"
-                />
-</LinearLayout>
+                <include layout="@layout/home_fragment_map"/>
+        </LinearLayout>
+</ScrollView>

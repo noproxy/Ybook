@@ -57,4 +57,5 @@
     <string name="feedbackHint">请告诉我们您的意见</string>
     <string name="homeSectionTitle1">推荐书单</string>
     <string name="homeSectionTitle2">馆藏地图</string>
+    <string name="detailNoStoreInfoHint">尚无信息</string>
 </resources>

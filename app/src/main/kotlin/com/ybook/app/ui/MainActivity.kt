@@ -11,6 +11,15 @@ import android.support.v4.app.FragmentActivity
 import com.umeng.analytics.MobclickAgent
 
 import com.ybook.app.id
+import com.balysv.materialmenu.MaterialMenuIcon
+import android.graphics.Color
+import com.balysv.materialmenu.MaterialMenuDrawable.Stroke
+import android.os.PersistableBundle
+import com.balysv.materialmenu.MaterialMenuDrawable.IconState
+import com.ybook.app.ui.NavigationDrawerFragment.OnDrawerListener
+import android.view.View
+import com.balysv.materialmenu.MaterialMenuDrawable.AnimationState
+import android.util.Log
 
 val ARG_SECTION_NUMBER: String = "section_number"
 
@@ -37,6 +46,8 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         MobclickAgent.onPause(this);
     }
 
+    var materialMenu: MaterialMenuIcon? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super<FragmentActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,6 +57,38 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         mTitle = getTitle()
         mCollectionDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.collection_drawer) as CollectionDrawerFragment
         mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, id(R.id.drawer_layout) as DrawerLayout)
+
+        materialMenu = MaterialMenuIcon(this, Color.WHITE, Stroke.THIN);
+        mNavigationDrawerFragment?.setOnDrawerListener(object : OnDrawerListener {
+            var isOpened = false
+
+            override fun onDrawerSlide(p0: View?, p1: Float) {
+                Log.d("onDrawerSlide", "float: " + p1)
+                materialMenu?.setTransformationOffset(if (isOpened) AnimationState.ARROW_CHECK else AnimationState.BURGER_ARROW, p1)
+            }
+
+            override fun onDrawerOpened(p0: View?) {
+                isOpened = true
+            }
+
+            override fun onDrawerClosed(p0: View?) {
+                isOpened = false
+            }
+
+            override fun onDrawerStateChanged(p0: Int) {
+            }
+
+        })
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super<FragmentActivity>.onPostCreate(savedInstanceState)
+        materialMenu?.syncState(savedInstanceState);
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super<FragmentActivity>.onSaveInstanceState(outState)
+        materialMenu?.onSaveInstanceState(outState);
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
@@ -66,8 +109,10 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
     public fun restoreActionBar() {
         val actionBar = getActionBar()
         actionBar setNavigationMode ActionBar.NAVIGATION_MODE_STANDARD
-        actionBar setDisplayShowTitleEnabled true
+        //        actionBar setDisplayShowTitleEnabled true
+        //        getActionBar() setDisplayUseLogoEnabled false
         getActionBar() setDisplayHomeAsUpEnabled true
+        //        getActionBar() setDisplayOptions ActionBar.DISPLAY_SHOW_TITLE
         actionBar setTitle mTitle
     }
 
@@ -85,15 +130,10 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item!!.getItemId()
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true
+        when (item?.getItemId()) {
+            android.R.id.home -> if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen())
+                materialMenu?.animatePressedState(IconState.ARROW) else materialMenu?.animatePressedState(IconState.BURGER)
         }
-
         return super<FragmentActivity>.onOptionsItemSelected(item)
     }
 }

@@ -31,6 +31,7 @@ import com.umeng.analytics.MobclickAgent
 import com.ybook.app.bean.BookListResponse
 import com.ybook.app.id
 import android.view.MenuItem
+import com.melnykov.fab.FloatingActionButton
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -39,7 +40,7 @@ import android.view.MenuItem
 public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
 
 
-    var mMarkBtn: Button? = null
+    var mMarkFAB: FloatingActionButton? = null
     private var mSearchObject: SearchObject? = null
     private var mBookItem: BookItem? = null
     private var mUtil = BooksListUtil.getInstance(this)
@@ -70,7 +71,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
     }
 
     private fun initViews() {
-        mMarkBtn = id(R.id.bookMarkBtn) as Button
+        mMarkFAB = id(R.id.fab) as FloatingActionButton
         val imageView = id(R.id.image_view_book_cover) as ImageView
         val titleView = id(R.id.text_view_book_title) as TextView
         val viewPager = id(R.id.detail_viewPager) as ViewPager
@@ -81,24 +82,15 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mBookItem!!.detailResponse.title.trim()
             viewPager setAdapter MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!)
-            if (mBookItem!! isMarked mUtil) {
-                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector_collected
-                mMarkBtn!! setText R.string.cancelCollectBtnText
-            } else {
-                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector
-                mMarkBtn!! setText R.string.collectBtnText
-            }
+            if (mBookItem!! isMarked mUtil) mMarkFAB!! setImageResource  R.drawable.ic_marked
+            else mMarkFAB!! setImageResource  R.drawable.ic_mark
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mSearchObject!!.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
-            if (mSearchObject!! isMarked mUtil ) {
-                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector_collected
-                mMarkBtn!! setText R.string.cancelCollectBtnText
-            } else {
-                mMarkBtn!! setBackgroundResource R.drawable.detail_btn_selector
-                mMarkBtn!! setText R.string.collectBtnText
-            }
+            if (mSearchObject!! isMarked mUtil ) mMarkFAB!! setImageResource  R.drawable.ic_marked
+            else mMarkFAB!! setImageResource  R.drawable.ic_mark
+
         }
         indicator setViewPager viewPager
         indicator setBackgroundResource R.drawable.indicator_bg_selector
@@ -112,6 +104,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         bar?.setTitle(mSearchObject?.title ?: mBookItem?.detailResponse?.title)
         bar?.setDisplayShowTitleEnabled(true)
         getActionBar() setDisplayHomeAsUpEnabled true
+        getActionBar() setDisplayUseLogoEnabled false
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -129,8 +122,8 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
                     mBookItem!!.markOrCancelMarked(mUtil)
                     val b = mBookItem!!.isMarked(mUtil)
                     Crouton.makeText(this, getResources().getString(if (b) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
-                    mMarkBtn?.setBackgroundResource(if (b) R.drawable.detail_btn_selector else R.drawable.detail_btn_selector_collected)
-                    mMarkBtn?.setText(if (b) R.string.cancelCollectBtnText else R.string.collectBtnText)
+                    if (b) mMarkFAB!! setImageResource  R.drawable.ic_marked
+                    else mMarkFAB!! setImageResource  R.drawable.ic_mark
                 }
             }
         }

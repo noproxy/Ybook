@@ -53,6 +53,7 @@
     <string name="noTitleHint">No title</string>
     <string name="detailTabTitleInfo">Book Info</string>
     <string name="detailTabTitleStatus">Library Status</string>
+    <string name="detailNoStoreInfoHint">no store info</string>
 
     <string name="loginBtnText">Sign in</string>
     <string name="skipLoginBtnText">Enter</string>
@@ -80,4 +81,14 @@
 
     <string name="feedbackEmailHint">Email</string>
     <string name="feedbackHint">Content</string>
+
+    <string name="homeMapHeadA" translatable="false">主校区借阅室（流动书库）</string>
+    <string name="homeMapHeadB" translatable="false">主校区逸夫馆阅览室（C区）</string>
+    <string name="homeMapHeadC" translatable="false">东校区流动书库</string>
+    <string name="homeMapHeadD" translatable="false">东校区阅览室</string>
+
+    <string name="homeMapContainA" translatable="false">一层 综合阅览室、借还书处、办证处\n二层 中文自科（TP TQ TS TU TV U V X Z）\n三层 中文自科（N O P T TB TD TE TF TG TH TJ TK TL TM TN）\n四层 中文社科（G H I J K）\n五层 外文图书、工具书、中文社科（A B C D E F）\n六层 外文图书阅览室</string>
+    <string name="homeMapContainB" translatable="false">一层 旧书报刊密集库\n二层 中文自科（TP TU） 中文自科（N O P TB TD TE TF TG TH TJ TK TL TM TS TV U V X Z）\n三层 中文社科（A B C D E） 中文社科（F G H）\n四层 中外文过刊阅览室\n五层 中文社科（I K）</string>
+    <string name="homeMapContainC" translatable="false">一层 F H J Q R S\n二层 I\n三层 A B C D E G K TN TQ TS TU TV\n四层 TP U V X Z\n五层 N O P T TB TD TE TF TG TH TJ TK TL TM TU</string>
+    <string name="homeMapContainD" translatable="false">二层北 中文社科（二） H K G\n二层南 中文社科（一） A B C D F E\n三层南 自然科学（二） T.TB-TV(TP除外) U V X Z\n四层南 自然科学（一） N O P Q R S\n四层北 中文计算机图书 TP</string>
 </resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_marginTop="4dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+        >
+
+    <LinearLayout
+            style="@style/HomeMapHeadLinearLayoutStyle"
+            android:id="@+id/mapHeadA"
+            >
+
+        <TextView
+                style="@style/HomeMapHeadTextViewStyle"
+                android:text="@string/homeMapHeadA"
+                />
+
+        <include layout="@layout/home_frag_arrow"/>
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapItemLinearLayoutStyle"
+            android:id="@+id/mapItemA"
+            >
+
+        <include layout="@layout/home_frag_view"/>
+
+        <TextView
+                android:text="@string/homeMapContainA"
+                style="@style/HomeMapItemTextViewStyle"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapHeadLinearLayoutStyle"
+            android:id="@+id/mapHeadB"
+            >
+
+        <TextView
+                style="@style/HomeMapHeadTextViewStyle"
+                android:text="@string/homeMapHeadB"
+                />
+
+        <include layout="@layout/home_frag_arrow"/>
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapItemLinearLayoutStyle"
+            android:id="@+id/mapItemB"
+            >
+
+        <include layout="@layout/home_frag_view"/>
+
+        <TextView
+                android:text="@string/homeMapContainB"
+                style="@style/HomeMapItemTextViewStyle"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapHeadLinearLayoutStyle"
+            android:id="@+id/mapHeadC"
+            >
+
+        <TextView
+                style="@style/HomeMapHeadTextViewStyle"
+                android:text="@string/homeMapHeadC"
+                />
+
+        <include layout="@layout/home_frag_arrow"/>
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapItemLinearLayoutStyle"
+            android:id="@+id/mapItemC"
+            >
+
+        <include layout="@layout/home_frag_view"/>
+
+        <TextView
+                android:text="@string/homeMapContainC"
+                style="@style/HomeMapItemTextViewStyle"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapHeadLinearLayoutStyle"
+            android:id="@+id/mapHeadD"
+            >
+
+        <TextView
+                style="@style/HomeMapHeadTextViewStyle"
+                android:text="@string/homeMapHeadD"
+                />
+
+        <include layout="@layout/home_frag_arrow"/>
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/HomeMapItemLinearLayoutStyle"
+            android:id="@+id/mapItemD"
+            >
+
+        <include layout="@layout/home_frag_view"/>
+
+        <TextView
+                android:text="@string/homeMapContainD"
+                style="@style/HomeMapItemTextViewStyle"
+                />
+    </LinearLayout>
+</LinearLayout>
