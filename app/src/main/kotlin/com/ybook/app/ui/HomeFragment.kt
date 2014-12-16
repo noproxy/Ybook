@@ -11,7 +11,7 @@ import android.app.SearchManager
 import com.ybook.app.R
 import android.app.Activity
 import com.umeng.analytics.MobclickAgent
-import com.ybook.app.util.SEARCH_EVENT_ID
+import com.ybook.app.util.EVENT_SEARCH
 import java.util.HashMap
 import android.widget.AutoCompleteTextView
 import android.content.Context
@@ -33,6 +33,8 @@ import android.widget.ExpandableListView
 import android.widget.BaseExpandableListAdapter
 import com.ybook.app.id
 import com.ybook.app.util.ListViewUtil
+import com.ybook.app.util.EVENT_ADD_FROM_DETAIL
+import com.ybook.app.util.EVENT_OPEN_RECOMMEND_LIST
 
 /**
  * Created by carlos on 11/13/14.
@@ -48,7 +50,10 @@ public class HomeFragment() : Fragment(), OnClickListener {
     override fun onClick(v: View) {
         val t = v.getTag()
         when (t ) {
-            is BookListResponse -> startActivity(Intent(v.getContext(), javaClass<NewBookListActivity>()).putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, v.getTag() as BookListResponse))
+            is BookListResponse -> {
+                MobclickAgent.onEvent(getActivity(), EVENT_OPEN_RECOMMEND_LIST)
+                startActivity(Intent(v.getContext(), javaClass<NewBookListActivity>()).putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, v.getTag() as BookListResponse))
+            }
             is View -> {
                 if (t.getVisibility() == View.VISIBLE) {
                     t setVisibility View.GONE
@@ -147,13 +152,14 @@ public class HomeFragment() : Fragment(), OnClickListener {
             is EditText -> if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 val intent = Intent(getActivity(), javaClass<SearchActivity>())
                 val keyWord = v.getText().toString().trim()
+                MobclickAgent.onEvent(getActivity(), EVENT_SEARCH)
                 intent.putExtra(SearchManager.QUERY, keyWord)
                 v.clearFocus()
                 saveSearchHistory(keyWord)
                 val map = HashMap<String, String>()
                 map.put("searchKey", keyWord)
                 map.put("time", System.currentTimeMillis().toString())
-                MobclickAgent.onEventValue(getActivity(), SEARCH_EVENT_ID, map, 0)//TODO the last code
+                MobclickAgent.onEventValue(getActivity(), EVENT_SEARCH, map, 0)
                 v.setText(null)
                 startActivity(intent)
             }

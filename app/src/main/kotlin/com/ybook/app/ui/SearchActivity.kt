@@ -39,6 +39,9 @@ import android.app.Activity
 
 import com.ybook.app.id
 import android.view.MenuItem
+import com.ybook.app.util.EVENT_OPEN_COLLECTION
+import com.ybook.app.util.EVENT_ADD_FROM_SEARCH
+import com.ybook.app.util.EVENT_DELETE_FROM_SEARCH
 
 
 /**
@@ -148,8 +151,10 @@ public class SearchActivity : SwipeBackActivity(), ListEndLoadUtil.OnEndLoadCall
                         if (item.isMarked(mUtil)) {
                             BookItem.cancelMarked(mUtil, item)
                             (v as ImageView).setImageResource(R.drawable.ic_mark)
+                            MobclickAgent.onEvent(this@SearchActivity, EVENT_DELETE_FROM_SEARCH)
                             Toast.makeText(this@SearchActivity, getResources().getString(R.string.toastCancelMark), Toast.LENGTH_SHORT).show()
                         } else {
+                            MobclickAgent.onEvent(this@SearchActivity, EVENT_ADD_FROM_SEARCH)
                             val dialog = ProgressDialog(this@SearchActivity)
                             dialog.setMessage(getResources().getString(R.string.loadingMessage))
                             dialog.setIndeterminate(true)

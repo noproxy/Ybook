@@ -22,6 +22,9 @@ import android.support.v4.app.ListFragment
 import android.widget.AdapterView
 import android.content.Intent
 import com.ybook.app.id
+import android.widget.Toast
+import com.umeng.analytics.MobclickAgent
+import com.ybook.app.util.EVENT_OPEN_COLLECTION
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -113,7 +116,7 @@ public class CollectionDrawerFragment : ListFragment() {
                 if (!isAdded()) {
                     return
                 }
-
+                MobclickAgent.onEvent(getActivity(), EVENT_OPEN_COLLECTION)
                 getActivity().invalidateOptionsMenu() // calls onPrepareOptionsMenu()
             }
         }

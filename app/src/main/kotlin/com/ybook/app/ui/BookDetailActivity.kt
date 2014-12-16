@@ -32,6 +32,9 @@ import com.ybook.app.bean.BookListResponse
 import com.ybook.app.id
 import android.view.MenuItem
 import com.melnykov.fab.FloatingActionButton
+import com.ybook.app.util.EVENT_DELETE_FROM_SEARCH
+import com.ybook.app.util.EVENT_ADD_FROM_DETAIL
+import com.ybook.app.util.EVENT_DELETE_FROM_DETAIL
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -120,10 +123,15 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
                 if (mBookItem == null) Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
                 else {
                     mBookItem!!.markOrCancelMarked(mUtil)
-                    val b = mBookItem!!.isMarked(mUtil)
-                    Crouton.makeText(this, getResources().getString(if (b) R.string.toastMarked else R.string.toastCancelMark), Style.INFO).show()
-                    if (b) mMarkFAB!! setImageResource  R.drawable.ic_marked
-                    else mMarkFAB!! setImageResource  R.drawable.ic_mark
+                    if (mBookItem!!.isMarked(mUtil)) {
+                        Crouton.makeText(this, getResources().getString(R.string.toastMarked), Style.INFO).show()
+                        mMarkFAB!! setImageResource  R.drawable.ic_marked
+                        MobclickAgent.onEvent(this, EVENT_ADD_FROM_DETAIL)
+                    } else {
+                        Crouton.makeText(this, getResources().getString(R.string.toastCancelMark), Style.INFO).show()
+                        mMarkFAB!! setImageResource  R.drawable.ic_mark
+                        MobclickAgent.onEvent(this, EVENT_DELETE_FROM_DETAIL)
+                    }
                 }
             }
         }
