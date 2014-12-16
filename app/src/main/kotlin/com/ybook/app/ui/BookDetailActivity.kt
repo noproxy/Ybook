@@ -116,7 +116,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.getId()) {
-            R.id.bookMarkBtn -> {
+            R.id.fab -> {
                 if (mBookItem == null) Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
                 else {
                     mBookItem!!.markOrCancelMarked(mUtil)
