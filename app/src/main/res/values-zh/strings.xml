@@ -59,4 +59,5 @@
     <string name="homeSectionTitle2">馆藏地图</string>
     <string name="detailNoStoreInfoHint">尚无信息</string>
     <string name="action_about">关于</string>
+    <string name="collectionNoItemHint">尚无收藏</string>
 </resources>

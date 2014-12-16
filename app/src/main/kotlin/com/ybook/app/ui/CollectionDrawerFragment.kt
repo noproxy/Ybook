@@ -44,11 +44,6 @@ public class CollectionDrawerFragment : ListFragment() {
     private var mFragmentContainerView: View? = null
     private var mAdapter: MyCollectionListAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         // Indicate that this fragment would like to influence the set of actions in the action bar.
@@ -64,6 +59,7 @@ public class CollectionDrawerFragment : ListFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_collection_drawer, container, false)
         mDrawerListView = view.findViewById(android.R.id.list) as  ListView
+        mNoHintView = view id R.id.nothingHint
         return view
     }
 
@@ -80,6 +76,10 @@ public class CollectionDrawerFragment : ListFragment() {
             }
         })
     }
+
+    var mNoHintView: View? = null
+    fun showEmpty() = mNoHintView?.setVisibility(View.VISIBLE)
+    fun removeEmpty() = mNoHintView?.setVisibility(View.GONE)
 
     public fun isDrawerOpen(): Boolean {
         return mDrawerLayout?.isDrawerOpen(mFragmentContainerView) ?: false
@@ -175,18 +175,20 @@ public class CollectionDrawerFragment : ListFragment() {
         {
             mUtil = BooksListUtil.getInstance(getActivity())
         }
-        private val mEmptyLayout = EmptyLayout(getActivity(), getListView())
+        //        private val mEmptyLayout = EmptyLayout(getActivity(), getListView())
 
 
         override public fun notifyDataSetChanged() {
-            mEmptyLayout.showLoading()
+            //            mEmptyLayout.showLoading()
             Log.i("MyCollectionListAdapter", "notifyDataSetChanged()")
             super.notifyDataSetChanged()
             if (MarkedList.getMarkedList().getBookItems(mUtil).size() == 0) {
-                mEmptyLayout.setEmptyViewRes(R.layout.empty_layout)
-                mEmptyLayout.setEmptyMessage("No books collected yet.", R.id.emptyMessageTextView)
-                mEmptyLayout.showEmpty()
-            }
+                //                mEmptyLayout.setEmptyViewRes(R.layout.empty_layout)
+                //                mEmptyLayout.setEmptyMessage("No books collected yet.", R.id.emptyMessageTextView)
+                //                mEmptyLayout.showEmpty()
+                //                Toast.makeText(getActivity(), "empty", Toast.LENGTH_SHORT).show()
+                showEmpty()
+            } else removeEmpty()
         }
 
 
