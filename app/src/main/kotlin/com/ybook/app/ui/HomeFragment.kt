@@ -35,6 +35,7 @@ import com.ybook.app.id
 import com.ybook.app.util.ListViewUtil
 import com.ybook.app.util.EVENT_ADD_FROM_DETAIL
 import com.ybook.app.util.EVENT_OPEN_RECOMMEND_LIST
+import com.ybook.app.ui.search.SearchActivity
 
 /**
  * Created by carlos on 11/13/14.

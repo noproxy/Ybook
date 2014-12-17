@@ -31,7 +31,7 @@
                 android:name=".ui.FeedBackActivity"
                 android:theme="@style/AppTheme.Translucent"/>
         <activity
-                android:name=".ui.SearchActivity"
+                android:name=".ui.search.SearchActivity"
                 android:launchMode="singleTop"
                 android:theme="@style/AppTheme.Translucent"
                 />

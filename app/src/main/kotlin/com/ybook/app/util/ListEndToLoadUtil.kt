@@ -10,15 +10,15 @@ import java.util.HashMap
  * <p/>
  * You should realise the {@link com.ybook.app.util.ListEndLoadUtil.OnEndLoadCallback} and call {@link #setupEndLoad(com.ybook.app.util.ListEndLoadUtil.OnEndLoadCallback, android.widget.AbsListView)}
  */
-public class ListEndLoadUtil {
+public class ListEndToLoadUtil {
 
-    public trait OnEndLoadCallback {
-        public fun onEndLoad()
+    public trait OnListEndCallback {
+        public fun onListEnd()
     }
 
     class object {
         private val TAG = "ListEndLoadUtil"
-        private var mMaps: HashMap<AbsListView, OnEndLoadCallback>? = null
+        private var mMaps: HashMap<AbsListView, OnListEndCallback>? = null
         private val mListener = object : AbsListView.OnScrollListener {
             deprecated("")
             override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {
@@ -26,7 +26,7 @@ public class ListEndLoadUtil {
 
             override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
                 if (firstVisibleItem + visibleItemCount >= totalItemCount) {
-                    mMaps!!.get(view)?.onEndLoad()
+                    mMaps!!.get(view)?.onListEnd()
                 }
                 //                Log.i(TAG, "firstVisibleItem,visibleItemCount,totalItemCount:" + firstVisibleItem + "," + visibleItemCount + "," + totalItemCount)
             }
@@ -38,7 +38,7 @@ public class ListEndLoadUtil {
          * @param callback    to be called when scroll to end.
          * @param absListView the view to enable loading more when end.
          */
-        public fun setupEndLoad(callback: OnEndLoadCallback?, absListView: AbsListView?) {
+        public fun setupListEndToLoad(callback: OnListEndCallback?, absListView: AbsListView?) {
             if (absListView != null && callback != null) {
                 checkInit()
                 if (mMaps!!.containsKey(absListView)) {
@@ -51,14 +51,14 @@ public class ListEndLoadUtil {
             }
         }
 
-        public fun removeEndLoad(absListView: AbsListView) {
+        public fun removeListEndToLoad(absListView: AbsListView) {
             absListView.setOnScrollListener(null)
             mMaps!!.remove(absListView)
         }
 
         private fun checkInit() {
             if (mMaps == null) {
-                mMaps = HashMap<AbsListView, OnEndLoadCallback>(2)
+                mMaps = HashMap<AbsListView, OnListEndCallback>(2)
             }
         }
     }
