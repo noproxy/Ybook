@@ -37,14 +37,16 @@ import android.app.ProgressDialog
 import com.ybook.app.net.SearchRequest
 import com.ybook.app.net.DetailRequest
 import com.ybook.app.ui.search.SearchView.MessageType
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.LinearLayoutManager
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
+    override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
 
 
     private val mPresenter: SearchPresenter = SearchPresenterImpl(this)
-    var mListView: ListView ? = null
-
-
+    var mRecyclerView: RecyclerView ? = null
+    private var mLayoutManager: RecyclerView.LayoutManager ? = null
     override fun setTitle(title: String): SearchView {
         getActionBar() setTitle title
         return this
@@ -76,10 +78,13 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        mListView = id(android.R.id.list) as ListView
-        mListView!! setAdapter mPresenter.getAdapter()
-        mListView!! setOnItemClickListener mPresenter
-        ListEndToLoadUtil.setupListEndToLoad(mPresenter, mListView)
+        mRecyclerView = id(android.R.id.list) as RecyclerView
+
+        mRecyclerView!!.setHasFixedSize(true);
+        mLayoutManager = LinearLayoutManager(this);
+        mRecyclerView?.setLayoutManager(mLayoutManager);
+        mRecyclerView!! setAdapter mPresenter.getAdapter()
+        mRecyclerView!! setOnScrollListener mPresenter
         mPresenter.onCreate(savedInstanceState)
     }
 

@@ -8,14 +8,15 @@ import android.content.Context
 import android.view.MenuItem
 import android.os.Bundle
 import android.widget.ListAdapter
+import android.support.v7.widget.RecyclerView
 
 /**
  * Created by Carlos on 2014/12/17.
  */
-public trait SearchPresenter : OnItemClickListener, ListEndToLoadUtil.OnListEndCallback, View.OnClickListener {
+public trait SearchPresenter : OnItemClickListener, RecyclerView.OnScrollListener, View.OnClickListener {
     public fun onCreate(savedInstanceState: Bundle?)
     public fun onResume()
     public fun onPause()
-    public fun getAdapter(): ListAdapter
+    public fun getAdapter(): RecyclerView.Adapter<SearchViewHolder>
     public fun onOptionsItemSelected(item: MenuItem?): Boolean
 }
