@@ -125,11 +125,11 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
                     mBookItem!!.markOrCancelMarked(mUtil)
                     if (mBookItem!!.isMarked(mUtil)) {
                         Crouton.makeText(this, getResources().getString(R.string.toastMarked), Style.INFO).show()
-                        mMarkFAB!! setImageResource  R.drawable.ic_marked
+                        mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
                         MobclickAgent.onEvent(this, EVENT_ADD_FROM_DETAIL)
                     } else {
                         Crouton.makeText(this, getResources().getString(R.string.toastCancelMark), Style.INFO).show()
-                        mMarkFAB!! setImageResource  R.drawable.ic_mark
+                        mMarkFAB!! setImageResource  R.drawable.fab_star_like
                         MobclickAgent.onEvent(this, EVENT_DELETE_FROM_DETAIL)
                     }
                 }

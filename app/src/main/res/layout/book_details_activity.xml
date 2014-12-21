@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_mark"
+            android:src="@drawable/fab_star_like"
             android:onClick="onClick"
             fab:fab_colorNormal="@color/actionButton"
             fab:fab_colorPressed="@color/actionButtonPressed"
