@@ -119,6 +119,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:src="@drawable/fab_star_like"
+            android:scaleType="centerInside"
             android:onClick="onClick"
             fab:fab_colorNormal="@color/actionButton"
             fab:fab_colorPressed="@color/actionButtonPressed"

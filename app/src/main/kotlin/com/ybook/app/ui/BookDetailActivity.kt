@@ -85,14 +85,14 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             Picasso.with(this).load(mBookItem!!.detailResponse.coverImageUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mBookItem!!.detailResponse.title.trim()
             viewPager setAdapter MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!)
-            if (mBookItem!! isMarked mUtil) mMarkFAB!! setImageResource  R.drawable.ic_marked
-            else mMarkFAB!! setImageResource  R.drawable.ic_mark
+            if (mBookItem!! isMarked mUtil) mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
+            else mMarkFAB!! setImageResource  R.drawable.fab_star_like
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mSearchObject!!.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
-            if (mSearchObject!! isMarked mUtil ) mMarkFAB!! setImageResource  R.drawable.ic_marked
-            else mMarkFAB!! setImageResource  R.drawable.ic_mark
+            if (mSearchObject!! isMarked mUtil ) mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
+            else mMarkFAB!! setImageResource  R.drawable.fab_star_like
 
         }
         indicator setViewPager viewPager
