@@ -18,7 +18,7 @@
 
     <string name="collectionNoItemHint">Nothing</string>
 
-    <string name="text_about">Ybook from UniqueStudio</string>
+    <string name="text_about">Ybook from UniqueStudio\n\nsina weibo @有书先森\n</string>
 
     <string name="ordBtnText">order</string>
     <string name="loadingContentHint">loading</string>
