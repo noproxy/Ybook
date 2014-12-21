@@ -133,7 +133,7 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         when (item?.getItemId()) {
             android.R.id.home -> if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen())
                 materialMenu?.animatePressedState(IconState.ARROW) else materialMenu?.animatePressedState(IconState.BURGER)
-            R.id.action_about -> startActivity(Intent(this, javaClass<FeedBackActivity>()))
+            R.id.action_about -> startActivity(Intent(this, javaClass<AboutActivity>()))
         }
         return super<FragmentActivity>.onOptionsItemSelected(item)
     }
