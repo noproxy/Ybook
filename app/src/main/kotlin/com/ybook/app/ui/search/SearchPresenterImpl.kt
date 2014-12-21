@@ -41,6 +41,8 @@ import com.ybook.app.util.ListEndToLoadUtil
 import com.ybook.app.ui.search.SearchView.MessageType
 import android.support.v7.widget.RecyclerView
 import com.ybook.app.bean.SearchResponse.SearchObject
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 
 /**
  * Created by Carlos on 2014/12/17.
@@ -170,6 +172,8 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
     }
 
     private val mRecyclerAdapter = object : RecyclerView.Adapter<SearchViewHolder>() {
+        var lastPosition: Int = -1
+
         override fun onCreateViewHolder(parent: ViewGroup?, p1: Int): SearchViewHolder? {
             return SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false))
         }
@@ -186,10 +190,20 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
             holder.markBtn setTag item
             holder.markBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
             holder.markBtn setOnClickListener this@SearchPresenterImpl
+            setAnimation(holder.view, position)
         }
 
         override fun getItemCount(): Int = listItems.size
 
+
+        private fun setAnimation(viewToAnimate: View, position: Int) {
+            // If the bound view wasn't previously displayed on screen, it's animated
+            if (position > lastPosition) {
+                val animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.fade_in);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
+            }
+        }
     }
 
 
