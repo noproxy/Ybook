@@ -96,8 +96,9 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 net.MSG_ONE_SEARCH_RESULT -> {
-                    searchView.startActivity(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, (msg.obj as DetailResponse).toBookItem()))
-                    searchView.showMessage()
+                    if (msg.obj is DetailResponse)
+                        searchView.startActivity(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, (msg.obj as DetailResponse).toBookItem()))
+                    searchView.showMessage(searchView.getResources().getString(R.string.onlyOneResultMessage), MessageType.INFO)
                     searchView.finish()
                 }
                 net.MSG_SUCCESS -> {
@@ -127,7 +128,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
             (v id R.id.text_view_book_author) as TextView setText item.author
             (v id R.id.text_view_book_publisher) as TextView setText item.press
             val coverImage = (v id R.id.image_view_book_cover) as ImageView
-            Picasso.with(searchView) load item.coverImgUrl error (searchView getDrawable R.drawable.ic_error ) into coverImage
+            Picasso.with(searchView) load item.coverImgUrl error (searchView.getResources().getDrawable(R.drawable.ic_error) ) into coverImage
             val collectionBtn = (v id R.id.bookMarkBtn) as ImageView
             collectionBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
             collectionBtn setOnClickListener { v ->

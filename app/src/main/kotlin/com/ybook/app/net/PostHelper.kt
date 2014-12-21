@@ -94,11 +94,12 @@ object PostHelper {
                 when (rep.getStatusLine().getStatusCode()) {
                     HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
+                        val str = EntityUtils.toString(rep.getEntity())
                         try {
-                            msg.obj = JSONHelper.readSearchResponse(EntityUtils.toString(rep.getEntity()))
+                            msg.obj = JSONHelper.readSearchResponse(str)
                         } catch(e: OneResultException) {
                             msg.what = MSG_ONE_SEARCH_RESULT
-                            msg.obj = JSONHelper.readDetailResponse(EntityUtils.toString(rep.getEntity()))
+                            msg.obj = JSONHelper.readDetailResponse(str)
                         }
                     }
                     else -> msg.what = MSG_ERROR

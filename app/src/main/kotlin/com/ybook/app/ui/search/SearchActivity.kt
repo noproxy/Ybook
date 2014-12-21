@@ -41,7 +41,7 @@ import com.ybook.app.ui.search.SearchView.MessageType
 public class SearchActivity : SwipeBackActivity(), SearchView {
 
 
-    private val mPresenter: SearchPresenter = SearchPresenterImpl(this)
+    private var mPresenter: SearchPresenter? = null
     var mListView: ListView ? = null
 
 
@@ -76,26 +76,27 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+        mPresenter = SearchPresenterImpl(this)
         mListView = id(android.R.id.list) as ListView
-        mListView!! setAdapter mPresenter.getAdapter()
+        mListView!! setAdapter mPresenter!!.getAdapter()
         mListView!! setOnItemClickListener mPresenter
         ListEndToLoadUtil.setupListEndToLoad(mPresenter, mListView)
-        mPresenter.onCreate(savedInstanceState)
+        mPresenter!!.onCreate(savedInstanceState)
     }
 
 
     override fun onResume() {
         super<SwipeBackActivity>.onResume()
-        mPresenter.onResume()
+        mPresenter!!.onResume()
     }
 
     override fun onPause() {
         super<SwipeBackActivity>.onPause()
-        mPresenter.onPause()
+        mPresenter!!.onPause()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        mPresenter.onOptionsItemSelected(item)
+        mPresenter!!.onOptionsItemSelected(item)
         return super<SwipeBackActivity>.onOptionsItemSelected(item)
     }
 
