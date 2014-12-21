@@ -95,6 +95,11 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
     private val mHandler = object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
+                net.MSG_ONE_SEARCH_RESULT -> {
+                    searchView.startActivity(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, (msg.obj as DetailResponse).toBookItem()))
+                    searchView.showMessage()
+                    searchView.finish()
+                }
                 net.MSG_SUCCESS -> {
                     val r = msg.obj as SearchResponse
                     listItems addAll r.objects

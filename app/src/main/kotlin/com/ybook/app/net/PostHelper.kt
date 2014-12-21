@@ -12,6 +12,7 @@ import java.util.ArrayList
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.protocol.HTTP
 import org.apache.http.client.entity.UrlEncodedFormEntity
+import com.ybook.app.util.OneResultException
 
 /**
  * Created by carlos on 11/11/14.
@@ -93,14 +94,18 @@ object PostHelper {
                 when (rep.getStatusLine().getStatusCode()) {
                     HttpStatus.SC_OK -> {
                         msg.what = MSG_SUCCESS
-                        msg.obj = JSONHelper.readSearchResponse(EntityUtils.toString(rep.getEntity()))
+                        try {
+                            msg.obj = JSONHelper.readSearchResponse(EntityUtils.toString(rep.getEntity()))
+                        } catch(e: OneResultException) {
+                            msg.what = MSG_ONE_SEARCH_RESULT
+                            msg.obj = JSONHelper.readDetailResponse(EntityUtils.toString(rep.getEntity()))
+                        }
                     }
                     else -> msg.what = MSG_ERROR
                 }
                 rep.getEntity().consumeContent()
             } catch (e: Exception) {
                 e.printStackTrace()
-                //msg.what = MSG_ERROR TODO produce lots of msg
             }
             h.sendMessage(msg)
         }.start()

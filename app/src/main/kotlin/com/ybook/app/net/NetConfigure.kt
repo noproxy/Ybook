@@ -8,6 +8,9 @@ import java.net.InetAddress
 val MSG_ERROR = 0
 val MSG_SUCCESS = 1
 val MSG_PASSWORD_WRONG = 2
+val MSG_ONE_SEARCH_RESULT = 3
+
+
 val oldUrl = "http://whitepanda.org:2333"//TODO add url
 fun getMainUrl(): String? {
     var s: String? = null

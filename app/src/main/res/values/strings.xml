@@ -82,6 +82,8 @@
     <string name="loadSearchError">Load Error!</string>
     <string name="loadingSearchMessagePrefix">Loading page  </string>
     <string name="unknownError">Unknown Error</string>
+    <string name="onlyOneResultMessage">Only one book found!</string>
+
 
     <string name="feedbackEmailHint">Email</string>
     <string name="feedbackHint">Content</string>
