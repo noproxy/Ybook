@@ -60,47 +60,6 @@
                 >
         </com.ybook.app.viewpagerindicator.TabPageIndicator>
 
-        <!--<LinearLayout-->
-        <!--android:id="@+id/bottom_btn"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:padding="16dp"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!-->-->
-
-        <!--&lt;!&ndash;<Button&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/button_addToList"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="80dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="32dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:text="@string/add"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:paddingStart="8dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:paddingEnd="8dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:onClick="onClick"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_gravity="bottom|center_horizontal"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:textAppearance="@android:style/TextAppearance.Holo"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:textColor="@color/a_bit_light_gray"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_marginEnd="8dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_marginRight="8dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:background="@drawable/detail_btn_selector"/>&ndash;&gt;-->
-
-        <!--<Button-->
-        <!--android:id="@+id/bookMarkBtn"-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="42dp"-->
-        <!--android:text="@string/collectBtnText"-->
-        <!--android:textColor="@color/detailCollectBtnText"-->
-        <!--android:textAppearance="@android:style/TextAppearance.Holo"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_gravity="bottom|center_horizontal"-->
-        <!--android:onClick="onClick"-->
-        <!--android:background="@drawable/detail_btn_selector"-->
-        <!--/>-->
-        <!--</LinearLayout>-->
-
         <android.support.v4.view.ViewPager
                 android:id="@+id/detail_viewPager"
                 android:layout_width="match_parent"
@@ -118,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/fab_star_like"
+            android:src="@drawable/fab_drawable_star_like"
             android:scaleType="centerInside"
             android:onClick="onClick"
             fab:fab_colorNormal="@color/actionButton"

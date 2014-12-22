@@ -15,5 +15,6 @@ public class AboutActivity : SwipeBackActivity() {
         setContentView(R.layout.activity_about)
         getSupportFragmentManager().beginTransaction().replace(R.id.container, AboutFragment()).commit()
         getActionBar() setTitle (getString(R.string.action_about))
+        getActionBar() setDisplayHomeAsUpEnabled true
     }
 }

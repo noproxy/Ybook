@@ -86,13 +86,13 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             title = mBookItem!!.detailResponse.title.trim()
             viewPager setAdapter MyDetailPagerAdapter(getSupportFragmentManager(), null, mBookItem!!)
             if (mBookItem!! isMarked mUtil) mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
-            else mMarkFAB!! setImageResource  R.drawable.fab_star_like
+            else mMarkFAB!! setImageResource  R.drawable.fab_drawable_star_like
         } else {
             Picasso.with(this).load(mSearchObject!!.coverImgUrl).error(getResources().getDrawable(R.drawable.ic_error)).resizeDimen(R.dimen.cover_height, R.dimen.cover_width).into(imageView)
             title = mSearchObject!!.title.trim()
             viewPager.setAdapter(MyDetailPagerAdapter(getSupportFragmentManager(), mSearchObject!!, null))
             if (mSearchObject!! isMarked mUtil ) mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
-            else mMarkFAB!! setImageResource  R.drawable.fab_star_like
+            else mMarkFAB!! setImageResource  R.drawable.fab_drawable_star_like
 
         }
         indicator setViewPager viewPager
@@ -129,7 +129,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
                         MobclickAgent.onEvent(this, EVENT_ADD_FROM_DETAIL)
                     } else {
                         Crouton.makeText(this, getResources().getString(R.string.toastCancelMark), Style.INFO).show()
-                        mMarkFAB!! setImageResource  R.drawable.fab_star_like
+                        mMarkFAB!! setImageResource  R.drawable.fab_drawable_star_like
                         MobclickAgent.onEvent(this, EVENT_DELETE_FROM_DETAIL)
                     }
                 }
