@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.ybook.app.R
 import android.support.v4.app.FragmentActivity
 import com.ybook.app.swipebacklayout.SwipeBackActivity
+import android.view.MenuItem
 
 /**
  * Created by Carlos on 2014/12/21.
@@ -16,5 +17,12 @@ public class AboutActivity : SwipeBackActivity() {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, AboutFragment()).commit()
         getActionBar() setTitle (getString(R.string.action_about))
         getActionBar() setDisplayHomeAsUpEnabled true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super<SwipeBackActivity>.onOptionsItemSelected(item)
     }
 }
