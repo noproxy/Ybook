@@ -46,7 +46,7 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         MobclickAgent.onPause(this);
     }
 
-    var materialMenu: MaterialMenuIcon? = null
+    //    var materialMenu: MaterialMenuIcon? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<FragmentActivity>.onCreate(savedInstanceState)
@@ -58,37 +58,38 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
         mCollectionDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.collection_drawer) as CollectionDrawerFragment
         mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, id(R.id.drawer_layout) as DrawerLayout)
 
-        materialMenu = MaterialMenuIcon(this, Color.WHITE, Stroke.THIN);
-        mNavigationDrawerFragment?.setOnDrawerListener(object : OnDrawerListener {
-            var isOpened = false
-
-            override fun onDrawerSlide(p0: View?, p1: Float) {
-                Log.d("onDrawerSlide", "float: " + p1)
-                materialMenu?.setTransformationOffset(if (isOpened) AnimationState.ARROW_CHECK else AnimationState.BURGER_ARROW, p1)
-            }
-
-            override fun onDrawerOpened(p0: View?) {
-                isOpened = true
-            }
-
-            override fun onDrawerClosed(p0: View?) {
-                isOpened = false
-            }
-
-            override fun onDrawerStateChanged(p0: Int) {
-            }
-
-        })
+        //        materialMenu = MaterialMenuIcon(this, Color.WHITE, Stroke.THIN);
+        //        mNavigationDrawerFragment?.setOnDrawerListener(object : OnDrawerListener {
+        //            var isOpened = false
+        //
+        //            override fun onDrawerSlide(p0: View?, p1: Float) {
+        //                Log.d("onDrawerSlide", "float: " + p1)
+        //                materialMenu?.setTransformationOffset(if (isOpened) AnimationState.ARROW_CHECK else AnimationState.BURGER_ARROW, p1)
+        //            }
+        //
+        //            override fun onDrawerOpened(p0: View?) {
+        //                isOpened = true
+        //            }
+        //
+        //            override fun onDrawerClosed(p0: View?) {
+        //                isOpened = false
+        //            }
+        //
+        //            override fun onDrawerStateChanged(p0: Int) {
+        //            }
+        //
+        //        })
+        onNavigationDrawerItemSelected(0)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super<FragmentActivity>.onPostCreate(savedInstanceState)
-        materialMenu?.syncState(savedInstanceState);
+        //        materialMenu?.syncState(savedInstanceState);
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super<FragmentActivity>.onSaveInstanceState(outState)
-        materialMenu?.onSaveInstanceState(outState);
+        //        materialMenu?.onSaveInstanceState(outState);
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
@@ -131,8 +132,8 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
-            android.R.id.home -> if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen())
-                materialMenu?.animatePressedState(IconState.ARROW) else materialMenu?.animatePressedState(IconState.BURGER)
+        //            android.R.id.home -> if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen())
+        ////                materialMenu?.animatePressedState(IconState.ARROW) else materialMenu?.animatePressedState(IconState.BURGER)
             R.id.action_about -> startActivity(Intent(this, javaClass<AboutActivity>()))
         }
         return super<FragmentActivity>.onOptionsItemSelected(item)
