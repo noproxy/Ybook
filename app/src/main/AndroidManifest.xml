@@ -63,6 +63,13 @@
                 android:value="pre release"
                 android:name="UMENG_CHANNEL"
                 />
+
+        <uses-library android:name="android.test.runner"/>
+        <instrumentation
+                android:name="android.test.InstrumentationTestRunner"
+                android:targetPackage="com.ybook.app"
+                android:label="Tests for Ybook"
+                />
     </application>
 
 </manifest>
