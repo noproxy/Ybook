@@ -153,7 +153,6 @@ public class HomeFragment() : Fragment(), OnClickListener {
             is EditText -> if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 val intent = Intent(getActivity(), javaClass<SearchActivity>())
                 val keyWord = v.getText().toString().trim()
-                MobclickAgent.onEvent(getActivity(), EVENT_SEARCH)
                 intent.putExtra(SearchManager.QUERY, keyWord)
                 v.clearFocus()
                 saveSearchHistory(keyWord)

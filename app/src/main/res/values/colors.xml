@@ -7,9 +7,9 @@
     <color name="colorAccent">#00796B</color>
     <color name="navigationBarColor">#3ab582</color>
 
-    <color name="actionButton">#3ab582</color>
-    <color name="actionButtonPressed">#ff36a375</color>
-    <color name="actionButtonRipple">#00796B</color>
+    <color name="actionButton">#ff6733</color>
+    <color name="actionButtonPressed">#ff6733</color>
+    <color name="actionButtonRipple">#ff8d3d1c</color>
 
     <color name="primaryText">#000000</color>
 

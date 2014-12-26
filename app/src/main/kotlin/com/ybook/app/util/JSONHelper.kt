@@ -113,29 +113,33 @@ object JSONHelper {
     }
 
     fun readSearchResponse(s: String): SearchResponse {
-        val j = JSONObject(s)
-        val a = ArrayList<SearchObject> ()
+        try {
+            val j = JSONObject(s)
+            val a = ArrayList<SearchObject> ()
 
-        for (i in j.a(keyObjects)) {
-            a.add(
-                    SearchObject(
-                            i.s(keyAuthor),
-                            i.s(keyPress),
-                            i.s(keyDetail),
-                            i.s(keyIDType),
-                            i.s(keyTitle),
-                            i.s(keyCoverImgUrl),
-                            i.s(keyID)
-                    )
+            for (i in j.a(keyObjects)) {
+                a.add(
+                        SearchObject(
+                                i.s(keyAuthor),
+                                i.s(keyPress),
+                                i.s(keyDetail),
+                                i.s(keyIDType),
+                                i.s(keyTitle),
+                                i.s(keyCoverImgUrl),
+                                i.s(keyID)
+                        )
+                )
+            }
+            return SearchResponse(
+                    j.i(keyStatus),
+                    j.i(keyObjectCount),
+                    j.i(keyCurrPage),
+                    j.b(keyHasMore),
+                    a.copyToArray()
             )
+        } catch(e: Exception) {
+            throw OneResultException()
         }
-        return SearchResponse(
-                j.i(keyStatus),
-                j.i(keyObjectCount),
-                j.i(keyCurrPage),
-                j.b(keyHasMore),
-                a.copyToArray()
-        )
     }
 
     fun readDetailResponse(s: String): DetailResponse {

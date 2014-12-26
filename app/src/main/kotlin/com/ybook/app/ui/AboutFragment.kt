@@ -23,6 +23,8 @@ public class AboutFragment() : Fragment() {
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
-        (activity as MainActivity).onSectionAttached(1)
+        when (activity) {
+            is MainActivity -> activity.onSectionAttached(1)
+        }
     }
 }

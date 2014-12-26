@@ -7,5 +7,5 @@
         android:layout_height="match_parent"
         android:paddingRight="8dp"
         android:layout_gravity="right"
-        android:src="@drawable/map_list_group_indicator"
+        android:src="@drawable/ic_arrow_drop_up"
         />
