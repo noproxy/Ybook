@@ -50,4 +50,9 @@
     <color name="searchViewBackground">#f6f6f6</color>
     <color name="searchViewBackgroundPressed">@color/lightGray</color>
 
+    <color name="searchActivityBackground">#bfbfbf</color>
+    <color name="searchActivityItemBackground">@color/veryLightGray</color>
+    <color name="searchActivityItemBackgroundPressed">@color/lightGray</color>
+
+
 </resources>

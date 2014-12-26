@@ -47,7 +47,7 @@ import android.view.animation.AnimationUtils
 /**
  * Created by Carlos on 2014/12/17.
  */
-public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, OnItemClickListener, RecyclerView.OnScrollListener() {
+public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, RecyclerView.OnScrollListener() {
     val SEARCH_BY_KEY = "key"
     val TAG = "SearchAct"
     val mUtil = BooksListUtil.getInstance(searchView)
@@ -90,10 +90,6 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
         MobclickAgent.onPause(searchView);
     }
 
-    override fun onItemClick(parent: AdapterView<out Adapter>, v: View, position: Int, id: Long) {
-        searchView.startActivity(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v.getTag() as Serializable))
-    }
-
     override fun onClick(v: View) {
         when (v.getId() ) {
             R.id.bookMarkBtn -> {
@@ -126,6 +122,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
                     })
                 }
             }
+            R.id.card_view -> searchView.startActivity(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v.getTag() as Serializable))
         }
     }
 
@@ -175,7 +172,10 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
         var lastPosition: Int = -1
 
         override fun onCreateViewHolder(parent: ViewGroup?, p1: Int): SearchViewHolder? {
-            return SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false))
+            val holder = SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false))
+            holder.view setOnClickListener this@SearchPresenterImpl
+            holder.markBtn setOnClickListener this@SearchPresenterImpl
+            return holder
         }
 
         override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
@@ -189,8 +189,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
             holder.view setTag item
             holder.markBtn setTag item
             holder.markBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
-            holder.markBtn setOnClickListener this@SearchPresenterImpl
-            setAnimation(holder.view, position)
+            //            setAnimation(holder.view, position)
         }
 
         override fun getItemCount(): Int = listItems.size
@@ -199,7 +198,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
         private fun setAnimation(viewToAnimate: View, position: Int) {
             // If the bound view wasn't previously displayed on screen, it's animated
             if (position > lastPosition) {
-                val animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.fade_in);
+                val animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
                 viewToAnimate.startAnimation(animation);
                 lastPosition = position;
             }

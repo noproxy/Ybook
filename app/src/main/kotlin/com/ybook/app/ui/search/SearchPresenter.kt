@@ -13,7 +13,7 @@ import android.support.v7.widget.RecyclerView
 /**
  * Created by Carlos on 2014/12/17.
  */
-public trait SearchPresenter : OnItemClickListener, RecyclerView.OnScrollListener, View.OnClickListener {
+public trait SearchPresenter : RecyclerView.OnScrollListener, View.OnClickListener {
     public fun onCreate(savedInstanceState: Bundle?)
     public fun onResume()
     public fun onPause()
