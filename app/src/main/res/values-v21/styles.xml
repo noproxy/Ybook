@@ -7,6 +7,7 @@
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="android:windowBackground">@color/windowsBackground</item>
     </style>
 
     <style name="AppTheme.Translucent" parent="AppTheme">

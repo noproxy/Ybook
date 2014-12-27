@@ -43,6 +43,7 @@ import android.support.v7.widget.RecyclerView
 import com.ybook.app.bean.SearchResponse.SearchObject
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.Window
 
 /**
  * Created by Carlos on 2014/12/17.
