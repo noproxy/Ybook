@@ -122,6 +122,10 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         mPresenter.onCreate(savedInstanceState)
     }
 
+    override fun scrollTo(p: Int) {
+        mRecyclerView?.smoothScrollToPosition(p)
+    }
+
     override fun onNewIntent(intent: Intent) {
         super<SearchView>.onNewIntent(intent)
         mPresenter.onNewIntent(intent)

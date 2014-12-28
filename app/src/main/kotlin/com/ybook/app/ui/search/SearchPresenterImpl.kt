@@ -174,6 +174,9 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
                     mSearchStatus!!.listItems addAll r.objects
                     mSearchStatus!!.nextPage++
                     mRecyclerAdapter.notifyDataSetChanged()
+                    if ((mSearchStatus!!.totalItemCount - mSearchStatus!!.visibleItemCount) <= (mSearchStatus!!.firstVisibleItem + mSearchStatus!!.visibleThreshold)) {
+                        searchView.scrollTo(mSearchStatus!!.listItems.size() - r.objects.size() + 1)
+                    }
                 }
                 net.MSG_ERROR -> searchView.showLoadErrorMessage()
                 else -> searchView.showUnknownMessage()
@@ -184,6 +187,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
 
     private val mRecyclerAdapter = object : RecyclerView.Adapter<SearchViewHolder>() {
         var lastPosition: Int = -1
+
 
         override fun onCreateViewHolder(parent: ViewGroup?, p1: Int): SearchViewHolder? {
             val holder = SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false))

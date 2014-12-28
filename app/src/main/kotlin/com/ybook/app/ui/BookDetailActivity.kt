@@ -35,6 +35,8 @@ import com.melnykov.fab.FloatingActionButton
 import com.ybook.app.util.EVENT_DELETE_FROM_SEARCH
 import com.ybook.app.util.EVENT_ADD_FROM_DETAIL
 import com.ybook.app.util.EVENT_DELETE_FROM_DETAIL
+import android.support.v7.widget.Toolbar
+import com.ybook.app.ui.detail
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -52,6 +54,8 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.book_details_activity)
+        setSupportActionBar(this.id(R.id.toolBar) as Toolbar)
+
 
         val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (o) {
@@ -73,10 +77,11 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         MobclickAgent.onPause(this);
     }
 
+    var titleView: TextView ? = null
     private fun initViews() {
         mMarkFAB = id(R.id.fab) as FloatingActionButton
         val imageView = id(R.id.image_view_book_cover) as ImageView
-        val titleView = id(R.id.text_view_book_title) as TextView
+        titleView = id(R.id.text_view_book_title) as TextView
         val viewPager = id(R.id.detail_viewPager) as ViewPager
         val indicator = id(R.id.detail_viewPager_indicator) as TabPageIndicator
 
@@ -98,16 +103,16 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         indicator setViewPager viewPager
         indicator setBackgroundResource R.drawable.indicator_bg_selector
         if (title!!.trim().length() == 0) title = getString(R.string.noTitleHint)
-        titleView setText title
+        titleView!! setText title
         setupActionBar()
     }
 
     private fun setupActionBar() {
-        val bar = getActionBar()
-        bar?.setTitle(mSearchObject?.title ?: mBookItem?.detailResponse?.title)
-        bar?.setDisplayShowTitleEnabled(true)
-        getActionBar() setDisplayHomeAsUpEnabled true
-        getActionBar() setDisplayUseLogoEnabled false
+        val bar = getSupportActionBar()
+        bar.setTitle(mSearchObject?.title ?: mBookItem?.detailResponse?.title)
+        bar.setDisplayShowTitleEnabled(true)
+        bar setDisplayHomeAsUpEnabled true
+        bar setDisplayUseLogoEnabled false
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -136,6 +141,10 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             }
         }
     }
+
+    fun onRefresh(detail: DetailResponse) {
+        titleView!! setText detail.title
+    }
     //            R.id.button_addToList -> {
     //            }
 
@@ -144,9 +153,10 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
             if (searchObject != null) PostHelper.detail(DetailRequest(searchObject.id, searchObject.idType, getLibCode()), object : Handler() {
                 override fun handleMessage(msg: Message) {
                     when (msg.what) {
-                        MSG_SUCCESS -> {
-                            mBookItem = (msg.obj as DetailResponse).toBookItem()
-                            pagers.forEach { p -> p.onRefresh(msg.obj as DetailResponse) }
+                        MSG_SUCCESS -> (msg.obj as DetailResponse).let {
+                            mBookItem = it.toBookItem()
+                            pagers.forEach { p -> p.onRefresh(it) }
+                            this@BookDetailActivity.onRefresh(it)
                         }
                         MSG_ERROR -> pagers.forEach { p -> p.onError() }
                     }

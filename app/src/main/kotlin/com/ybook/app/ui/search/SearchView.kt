@@ -19,7 +19,8 @@ public trait SearchView : SwipeBackActivity {
     public fun showUnknownMessage(): SearchView
     public fun showMessage(msg: String, type: MessageType): SearchView
     public fun getLayoutManager(): LinearLayoutManager
+    public fun scrollTo(position: Int)
     public enum class MessageType {
-        ERROR;ALERT;INFO
+        ERROR; ALERT; INFO
     }
 }

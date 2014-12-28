@@ -7,23 +7,24 @@
         >
 
 
-        <com.ybook.app.pinnedheaderlistview.PinnedHeaderListView
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:divider="@null"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                />
+    <com.ybook.app.pinnedheaderlistview.PinnedHeaderListView
+            android:layout_marginTop="12dp"
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:divider="@null"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            />
 
-        <TextView
-                android:id="@+id/nothingHint"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="@android:color/white"
-                android:text="@string/collectionNoItemHint"
-                />
+    <TextView
+            android:id="@+id/nothingHint"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@android:color/white"
+            android:text="@string/collectionNoItemHint"
+            />
 </FrameLayout>
