@@ -1,6 +1,6 @@
 package com.ybook.app.ui.detail
 
-import com.ybook.app.ui.KEY_BOOK_LIST_RESPONSE_EXTRA
+import com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA
 
 /**
  * Created by Carlos on 2014/12/24.

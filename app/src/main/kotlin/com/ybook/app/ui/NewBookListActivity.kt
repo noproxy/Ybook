@@ -46,7 +46,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
         getActionBar() setDisplayUseLogoEnabled false
 
 
-        val rep = getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val rep = getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (rep) {
             is BookListResponse -> {
                 setTitle(rep.title)
@@ -59,7 +59,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
                         when (tag) {
                             is SearchObject -> {
                                 val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
-                                intent.putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
+                                intent.putExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                                 startActivity(intent)
                             }
                         }

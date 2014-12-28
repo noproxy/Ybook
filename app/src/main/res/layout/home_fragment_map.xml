@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_marginTop="4dp"
+              android:layout_margin="16dp"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         >
+
 
     <LinearLayout
             style="@style/HomeMapHeadLinearLayoutStyle"
@@ -22,6 +23,7 @@
     <LinearLayout
             style="@style/HomeMapItemLinearLayoutStyle"
             android:id="@+id/mapItemA"
+            android:visibility="gone"
             >
 
         <include layout="@layout/home_frag_view"/>
@@ -31,6 +33,7 @@
                 style="@style/HomeMapItemTextViewStyle"
                 />
     </LinearLayout>
+
 
     <LinearLayout
             style="@style/HomeMapHeadLinearLayoutStyle"
@@ -48,6 +51,7 @@
     <LinearLayout
             style="@style/HomeMapItemLinearLayoutStyle"
             android:id="@+id/mapItemB"
+            android:visibility="gone"
             >
 
         <include layout="@layout/home_frag_view"/>
@@ -74,6 +78,7 @@
     <LinearLayout
             style="@style/HomeMapItemLinearLayoutStyle"
             android:id="@+id/mapItemC"
+            android:visibility="gone"
             >
 
         <include layout="@layout/home_frag_view"/>
@@ -100,6 +105,7 @@
     <LinearLayout
             style="@style/HomeMapItemLinearLayoutStyle"
             android:id="@+id/mapItemD"
+            android:visibility="gone"
             >
 
         <include layout="@layout/home_frag_view"/>

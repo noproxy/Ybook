@@ -3,185 +3,196 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         >
 
 
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
+
+
+        <!--<AutoCompleteTextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/vertical_spacing_regular"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginStart="28dp"-->
+        <!--android:layout_marginEnd="28dp"-->
+        <!--android:minLines="1"-->
+        <!--android:maxLines="1"-->
+        <!--android:padding="8dp"-->
+        <!--android:hint="@string/searchHintText"-->
+        <!--android:textColorHint="@color/lightGray"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textSize="16sp"-->
+        <!--android:id="@+id/search_edit_text"-->
+        <!--android:imeOptions="actionSearch"-->
+        <!--android:inputType="textAutoCorrect"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:background="@drawable/search_edit_selector"-->
+        <!--/>-->
+
+
         <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/vertical_spacing_regular"
+                >
+
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_booklist_title"
+                    />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:text="@string/homeSectionTitle1"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/AppTheme.DefaultHorizontalMargins"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                >
-
-
-                <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vertical_spacing_regular"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginEnd="28dp"
-                android:minLines="1"
-                android:maxLines="1"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/bookListCardContainer"
                 android:padding="8dp"
-                android:hint="@string/searchHintText"
-                android:textColorHint="@color/lightGray"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:id="@+id/search_edit_text"
-                android:imeOptions="actionSearch"
-                android:inputType="textAutoCorrect"
-                android:selectAllOnFocus="true"
-                android:background="@drawable/search_edit_selector"
-                />
-
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vertical_spacing_regular"
+                android:background="@android:color/holo_blue_dark"
                 >
 
-                <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:src="@drawable/ic_booklist_title"
-                        />
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:requiresFadingEdge="horizontal"-->
+            <!-->-->
 
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/primary"
-                        android:textStyle="bold"
-                        android:text="@string/homeSectionTitle1"
-                        />
+            <!--<ImageView-->
+            <!--android:id="@+id/bookListCoverImage0"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/ic_launcher"-->
+            <!--/>-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/bookListCoverImage1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/ic_launcher"-->
+            <!--/>-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/bookListCoverImage2"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/ic_launcher"-->
+            <!--/>-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/bookListCoverImage3"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/ic_launcher"-->
+            <!--/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!-->-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/bookListTitle0"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="@string/loadingMessage"-->
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/bookListTitle1"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:singleLine="true"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/loadingMessage"-->
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/bookListTitle2"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:singleLine="true"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/loadingMessage"-->
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/bookListTitle3"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:singleLine="true"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/loadingMessage"-->
+            <!--/>-->
+            <!--</LinearLayout>-->
         </LinearLayout>
 
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
-                android:requiresFadingEdge="horizontal"
-                >
-
-                <ImageView
-                        android:id="@+id/bookListCoverImage0"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_launcher"
-                        />
-
-                <ImageView
-                        android:id="@+id/bookListCoverImage1"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_launcher"
-                        />
-
-                <ImageView
-                        android:id="@+id/bookListCoverImage2"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_launcher"
-                        />
-
-                <ImageView
-                        android:id="@+id/bookListCoverImage3"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_launcher"
-                        />
-
-        </LinearLayout>
-
-        <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 >
 
-                <TextView
-                        android:id="@+id/bookListTitle0"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="@string/loadingMessage"
-                        />
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_map_title"
+                    />
 
-                <TextView
-                        android:id="@+id/bookListTitle1"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:singleLine="true"
-                        android:layout_height="wrap_content"
-                        android:text="@string/loadingMessage"
-                        />
-
-                <TextView
-                        android:id="@+id/bookListTitle2"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:singleLine="true"
-                        android:layout_height="wrap_content"
-                        android:text="@string/loadingMessage"
-                        />
-
-                <TextView
-                        android:id="@+id/bookListTitle3"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:singleLine="true"
-                        android:layout_height="wrap_content"
-                        android:text="@string/loadingMessage"
-                        />
-        </LinearLayout>
-
-        <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vertical_spacing_slim"
-                />
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vertical_spacing_regular"
-                >
-
-                <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:src="@drawable/ic_map_title"
-                        />
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/primary"
-                        android:textStyle="bold"
-                        android:text="@string/homeSectionTitle2"
-                        />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:text="@string/homeSectionTitle2"
+                    />
         </LinearLayout>
 
         <!--android:layout_marginStart="24dp"-->
         <!--android:layout_marginEnd="24dp"-->
-                <include layout="@layout/home_fragment_map"/>
-        </LinearLayout>
+        <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                >
+
+            <include layout="@layout/home_fragment_map"/>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </ScrollView>

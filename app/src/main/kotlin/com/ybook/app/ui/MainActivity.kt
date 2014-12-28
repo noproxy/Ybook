@@ -20,6 +20,9 @@ import com.ybook.app.ui.NavigationDrawerFragment.OnDrawerListener
 import android.view.View
 import com.balysv.materialmenu.MaterialMenuDrawable.AnimationState
 import android.util.Log
+import android.support.v7.widget.SearchView
+import android.app.SearchManager
+import android.content.Context
 
 val ARG_SECTION_NUMBER: String = "section_number"
 
@@ -94,7 +97,7 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
 
     override fun onNavigationDrawerItemSelected(position: Int) {
         when (position) {
-            0 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, HomeFragment()).commit()
+            0 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, com.ybook.app.ui.home.HomeFragment()).commit()
             1 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, com.ybook.app.ui.AboutFragment()).commit()
             2 -> startActivity(Intent(this, javaClass<FeedBackActivity>()))
         }
@@ -109,12 +112,12 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
 
     public fun restoreActionBar() {
         val actionBar = getActionBar()
-        actionBar setNavigationMode ActionBar.NAVIGATION_MODE_STANDARD
+        //        actionBar setNavigationMode ActionBar.NAVIGATION_MODE_STANDARD
         //        actionBar setDisplayShowTitleEnabled true
         //        getActionBar() setDisplayUseLogoEnabled false
-        getActionBar() setDisplayHomeAsUpEnabled true
+        //        getActionBar() setDisplayHomeAsUpEnabled true
         //        getActionBar() setDisplayOptions ActionBar.DISPLAY_SHOW_TITLE
-        actionBar setTitle mTitle
+        //        actionBar setTitle mTitle
     }
 
 
@@ -123,7 +126,13 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu)
+            getMenuInflater().inflate(R.menu.global, menu)
+
+            // Associate searchable configuration with the SearchView
+            val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            val searchView = menu?.findItem(R.id.action_search)?.getActionView() as? SearchView
+            searchView?.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()))
+
             restoreActionBar()
             return true
         }

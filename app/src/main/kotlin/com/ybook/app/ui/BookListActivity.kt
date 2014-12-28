@@ -22,7 +22,7 @@ public class BookListActivity() : SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_list)
-        val rep = getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val rep = getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (rep) {
             is BookListResponse -> {
                 val list = findViewById(android.R.id.list) as ListView
@@ -44,7 +44,7 @@ public class BookListActivity() : SwipeBackActivity() {
                     when (tag) {
                         is BookListResponse.BookListObject -> {
                             val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
-                            intent.putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
+                            intent.putExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                             startActivity(intent)
                         }
                     }

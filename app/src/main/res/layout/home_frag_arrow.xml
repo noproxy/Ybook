@@ -7,5 +7,5 @@
         android:layout_height="match_parent"
         android:paddingRight="8dp"
         android:layout_gravity="right"
-        android:src="@drawable/ic_arrow_drop_up"
+        android:src="@drawable/ic_arrow_drop_down"
         />

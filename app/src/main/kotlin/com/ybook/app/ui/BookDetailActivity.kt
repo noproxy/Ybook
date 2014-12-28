@@ -53,7 +53,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.book_details_activity)
 
-        val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (o) {
             is SearchObject -> mSearchObject = o
             is BookItem -> mBookItem = o

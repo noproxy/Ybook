@@ -27,6 +27,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data
+                    android:name="android.app.searchable"
+                    android:resource="@xml/searchable"
+                    />
         </activity>
 
         <activity
@@ -37,7 +41,11 @@
                 android:name=".ui.search.SearchActivity"
                 android:launchMode="singleTop"
                 android:theme="@style/AppTheme.Translucent"
-                />
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+        </activity>
         <activity
                 android:name=".ui.BookDetailActivity"
                 android:theme="@style/AppTheme.Translucent"
