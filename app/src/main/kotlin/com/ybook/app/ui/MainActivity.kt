@@ -59,7 +59,10 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, Home
 
     override fun onResume() {
         super<ActionBarActivity>.onResume()
-        MobclickAgent.onResume(this);
+        MobclickAgent.onResume(this)
+        if (!(mSearchView?.isIconified() ?: true)) {
+            this@MainActivity.onBackPressed()
+        }
     }
 
     override fun onPause() {
@@ -139,7 +142,7 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, Home
         //        actionBar setTitle mTitle
     }
 
-
+    var mSearchView: SearchView ? = null
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
@@ -149,22 +152,22 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, Home
 
             // Associate searchable configuration with the SearchView
             val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            val searchView = menu!!.findItem(R.id.action_search)?.getActionView() as SearchView
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(ComponentName(this, javaClass<SearchActivity>())))
-            searchView.setOnQueryTextListener(object : OnQueryTextListener {
-                override fun onQueryTextSubmit(p0: String?): Boolean {
-                    searchView.setQuery("", false)
-                    searchView.clearFocus()
-                    searchView.setIconified(true)
-                    this@MainActivity.onBackPressed()
-                    return false
-                }
-
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    return false
-                }
-
-            })
+            mSearchView = menu!!.findItem(R.id.action_search)?.getActionView() as SearchView
+            mSearchView!!.setSearchableInfo(searchManager.getSearchableInfo(ComponentName(this, javaClass<SearchActivity>())))
+            //            mSearchView.setOnQueryTextListener(object : OnQueryTextListener {
+            //                override fun onQueryTextSubmit(p0: String?): Boolean {
+            //                    mSearchView.setQuery("", false)
+            //                    mSearchView.clearFocus()
+            //                    mSearchView.setIconified(true)
+            //                    this@MainActivity.onBackPressed()
+            //                    return false
+            //                }
+            //
+            //                override fun onQueryTextChange(p0: String?): Boolean {
+            //                    return false
+            //                }
+            //
+            //            })
             restoreActionBar()
             return true
         }

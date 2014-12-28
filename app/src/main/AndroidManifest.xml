@@ -66,6 +66,11 @@
                 android:theme="@style/AppTheme.Translucent"
                 />
 
+        <provider
+                android:authorities="com.ybook.app.SearchSuggestionProvider"
+                android:name=".data.SearchSuggestionProvider"
+                />
+
         <meta-data
                 android:value="5483e6cffd98c54236000670"
                 android:name="UMENG_APPKEY"

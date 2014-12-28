@@ -44,6 +44,8 @@ import com.ybook.app.bean.SearchResponse.SearchObject
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.Window
+import android.provider.SearchRecentSuggestions
+import com.ybook.app.data.SearchSuggestionProvider
 
 /**
  * Created by Carlos on 2014/12/17.
@@ -67,6 +69,8 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
 
     private fun handleIntent(intent: Intent) {
         mSearchStatus = SearchStatus(intent.getStringExtra(SearchManager.QUERY))
+        val suggestions = SearchRecentSuggestions(searchView, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE)
+        suggestions.saveRecentQuery(mSearchStatus!!.key, null);
         searchView.setTitle(mSearchStatus!!.key)
         onScrollEnd()
     }
