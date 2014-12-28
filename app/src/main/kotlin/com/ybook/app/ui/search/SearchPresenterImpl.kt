@@ -140,7 +140,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
                     })
                 }
             }
-            R.id.card_view -> searchView.startActivity(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v.getTag() as Serializable))
+            R.id.card_view -> searchView.startActivityForResult(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v.getTag() as Serializable).putExtra(SearchActivity.EXTRA_POSITION, mSearchStatus!!.listItems.indexOf(v.getTag())), SearchActivity.REQUEST_CODE_IS_COLLECTION_CHANGED)
         }
     }
 

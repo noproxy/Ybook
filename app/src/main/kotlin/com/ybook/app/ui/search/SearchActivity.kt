@@ -52,6 +52,11 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     private val mPresenter: SearchPresenter = SearchPresenterImpl(this)
     var mRecyclerView: RecyclerView ? = null
     private var mLayoutManager: RecyclerView.LayoutManager ? = null
+    class object {
+        val REQUEST_CODE_IS_COLLECTION_CHANGED = 0
+        val EXTRA_POSITION = "position"
+    }
+
     override fun setTitle(title: String): SearchView {
         getSupportActionBar() setTitle title
         return this
@@ -75,6 +80,18 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     }
 
     var searchView: android.support.v7.widget.SearchView ? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super<SearchView>.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_IS_COLLECTION_CHANGED && data != null) {
+            val p = data.getIntExtra(EXTRA_POSITION, 0)
+            mPresenter.getAdapter().notifyItemChanged(p)
+        }
+        if (data != null) {
+            val p = data.getIntExtra(EXTRA_POSITION, -1)
+            if (p > 0) scrollTo(p)
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         getMenuInflater().inflate(R.menu.global, menu)

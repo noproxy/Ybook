@@ -37,6 +37,9 @@ import com.ybook.app.util.EVENT_ADD_FROM_DETAIL
 import com.ybook.app.util.EVENT_DELETE_FROM_DETAIL
 import android.support.v7.widget.Toolbar
 import com.ybook.app.ui.detail
+import android.content.Intent
+import android.app.Activity
+import com.ybook.app.ui.search.SearchActivity
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -55,6 +58,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.book_details_activity)
         setSupportActionBar(this.id(R.id.toolBar) as Toolbar)
+        setResult(RESULT_CODE_UNCHANGED, getIntent())
 
 
         val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
@@ -128,6 +132,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
                 if (mBookItem == null) Toast.makeText(this, "loading, please try again when loaded.", Toast.LENGTH_SHORT).show()
                 else {
                     mBookItem!!.markOrCancelMarked(mUtil)
+                    setResult(RESULT_CODE_CHANGED, getIntent())
                     if (mBookItem!!.isMarked(mUtil)) {
                         Crouton.makeText(this, getResources().getString(R.string.toastMarked), Style.INFO).show()
                         mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
@@ -173,6 +178,8 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
 
     class object {
         public val INTENT_SEARCH_OBJECT: String = "searchObject"
+        public val RESULT_CODE_UNCHANGED: Int = Activity.RESULT_FIRST_USER
+        public val RESULT_CODE_CHANGED: Int = Activity.RESULT_FIRST_USER + 1
     }
 
     trait OnDetail : Fragment {
