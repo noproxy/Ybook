@@ -10,14 +10,14 @@
         <item name="android:windowBackground">@color/windowsBackground</item>
         <item name="windowActionBarOverlay">true</item>
 
-        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="android:toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
-    <style name="AppTheme.Translucent">
+    <style name="AppTheme.Translucent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="AppTheme.ActionBar">
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@drawable/bg_main</item>
     </style>
 

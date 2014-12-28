@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.os.Bundle
 import android.widget.ListAdapter
 import android.support.v7.widget.RecyclerView
+import android.content.Intent
 
 /**
  * Created by Carlos on 2014/12/17.
@@ -19,4 +20,5 @@ public trait SearchPresenter : RecyclerView.OnScrollListener, View.OnClickListen
     public fun onPause()
     public fun getAdapter(): RecyclerView.Adapter<SearchViewHolder>
     public fun onOptionsItemSelected(item: MenuItem?): Boolean
+    public fun onNewIntent(intent: Intent)
 }

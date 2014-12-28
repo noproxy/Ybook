@@ -38,7 +38,12 @@ import com.ybook.app.net.SearchRequest
 import com.ybook.app.net.DetailRequest
 import com.ybook.app.ui.search.SearchView.MessageType
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.content.ComponentName
+import android.widget
+import android.support.v7.widget.SearchView.OnQueryTextListener
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
@@ -48,7 +53,7 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     var mRecyclerView: RecyclerView ? = null
     private var mLayoutManager: RecyclerView.LayoutManager ? = null
     override fun setTitle(title: String): SearchView {
-        getActionBar() setTitle title
+        getSupportActionBar() setTitle title
         return this
     }
 
@@ -69,6 +74,34 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         return this
     }
 
+    var searchView: android.support.v7.widget.SearchView ? = null
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.global, menu)
+
+        // Associate searchable configuration with the SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu!!.findItem(R.id.action_search)?.getActionView() as android.support.v7.widget.SearchView
+        searchView!!.setSearchableInfo(searchManager.getSearchableInfo(ComponentName(this, javaClass<SearchActivity>())))
+        searchView!!.setOnFocusChangeListener {(view, b) -> if (!b) this@SearchActivity.onBackPressed() }
+        searchView!!.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                searchView!!.clearFocus()
+                searchView!!.setIconified(true)
+                this@SearchActivity.onBackPressed()
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+
+        })
+
+        return super<SearchView>.onCreateOptionsMenu(menu)
+    }
+
+
     override fun showUnknownMessage(): SearchView = showMessage(getResources() getString R.string.unknownError, MessageType.ERROR)
 
 
@@ -78,8 +111,9 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        mRecyclerView = id(android.R.id.list) as RecyclerView
+        setSupportActionBar(this.id(R.id.toolBar) as Toolbar)
 
+        mRecyclerView = id(android.R.id.list) as RecyclerView
         mRecyclerView!!.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(this)
         mRecyclerView?.setLayoutManager(mLayoutManager)
@@ -88,6 +122,10 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         mPresenter.onCreate(savedInstanceState)
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super<SearchView>.onNewIntent(intent)
+        mPresenter.onNewIntent(intent)
+    }
 
     override fun onResume() {
         super<SwipeBackActivity>.onResume()

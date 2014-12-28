@@ -3,9 +3,10 @@ package com.ybook.app.swipebacklayout;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
-public class SwipeBackActivity extends FragmentActivity implements SwipeBackActivityBase {
+public class SwipeBackActivity extends ActionBarActivity implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;
 
     @Override

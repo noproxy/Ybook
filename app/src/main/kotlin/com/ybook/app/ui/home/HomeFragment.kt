@@ -93,6 +93,11 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
                 Pair(R.id.mapHeadD, R.id.mapItemD)).
                 forEach { pair -> (mainView id pair.first).let { it.setTag(mainView id pair.second);it.setOnClickListener(this) } }
 
+        //TODO no animation        if (mActivity is OnFragmentScrollChangedListener) {
+        //            Log.i("HomeFragment", "listener" + mScrollView)
+        //            mScrollView?.getViewTreeObserver()?.addOnScrollChangedListener(this)
+        //        }
+
         return mainView
     }
 
@@ -149,11 +154,11 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
         super<Fragment>.onAttach(activity)
         (activity as MainActivity).onSectionAttached(0)
         mActivity = activity
-        if (activity is OnFragmentScrollChangedListener)
-            mScrollView?.getViewTreeObserver()?.addOnScrollChangedListener(this)
     }
 
+
     override fun onScrollChanged() {
+        Log.i("HomeFragment", "onScrollChanged:${mScrollView!!.getScrollY()}")
         (mActivity as? OnFragmentScrollChangedListener )?.onScrollChanged(mScrollView!!.getScrollY())
     }
 

@@ -28,6 +28,9 @@ import android.view.ViewTreeObserver
 import com.ybook.app.ui.home.HomeFragment
 import android.support.v7.app.ActionBarActivity
 import android.support.v7.widget.Toolbar
+import android.content.ComponentName
+import com.ybook.app.ui.search.SearchActivity
+import android.support.v7.widget.SearchView.OnQueryTextListener
 
 val ARG_SECTION_NUMBER: String = "section_number"
 
@@ -146,9 +149,22 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, Home
 
             // Associate searchable configuration with the SearchView
             val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            val searchView = menu?.findItem(R.id.action_search)?.getActionView() as? SearchView
-            searchView?.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()))
+            val searchView = menu!!.findItem(R.id.action_search)?.getActionView() as SearchView
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(ComponentName(this, javaClass<SearchActivity>())))
+            searchView.setOnQueryTextListener(object : OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    searchView.setQuery("", false)
+                    searchView.clearFocus()
+                    searchView.setIconified(true)
+                    this@MainActivity.onBackPressed()
+                    return false
+                }
 
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    return false
+                }
+
+            })
             restoreActionBar()
             return true
         }
@@ -157,6 +173,7 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, Home
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
+            R.id.action_search -> (item!!.getActionView() as android.support.v7.widget.SearchView).let { it.setQuery("", false);it.setIconified(true) }
         //            android.R.id.home -> if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen())
         ////                materialMenu?.animatePressedState(IconState.ARROW) else materialMenu?.animatePressedState(IconState.BURGER)
         //            R.id.action_about -> startActivity(Intent(this, javaClass<AboutActivity>()))
