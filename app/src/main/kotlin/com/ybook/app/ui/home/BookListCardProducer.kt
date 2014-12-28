@@ -20,10 +20,11 @@ import android.view.LayoutInflater
 /**
  * Created by Carlos on 2014/12/28.
  */
-object BookListCardProducer {
+class BookListCardProducer() {
     private val mHandler = Handler()
+    var mViewGroup: ViewGroup? = null
 
-    fun addListCardsInto(parent: ViewGroup) {
+    private fun syncCard() {
         val bookListClient = object : DefaultHttpClient() {}
         Thread {
             var c = 0
@@ -35,7 +36,7 @@ object BookListCardProducer {
                     val rep = bookListClient.execute(HttpGet(getMainUrl() + "/static/temp/bookrec0" + (c + 1).toString() + ".json"))
                     if (rep.getStatusLine().getStatusCode().equals(HttpStatus.SC_OK)) {
                         val bookListResponse = JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8))
-                        parent.post { parent.addView(makeBookListCardView(bookListResponse, parent)) }
+                        //                        parent.post { parent.addView(makeBookListCardView(bookListResponse, parent)) }
                         c++
                     }
                     rep.getEntity().consumeContent()
@@ -44,12 +45,6 @@ object BookListCardProducer {
                 }
                 c++
             }
-        }
-    }
-
-    fun makeBookListCardView(bookListResponse: BookListResponse, parent: ViewGroup): View {
-        val card = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false) as CardView
-
-        return card
+        }.start()
     }
 }

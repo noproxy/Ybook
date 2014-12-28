@@ -1,7 +1,6 @@
 package com.ybook.app.ui
 
 
-import android.app.ActionBar
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.ActionBarDrawerToggle
@@ -25,6 +24,8 @@ import com.ybook.app.id
 import android.widget.Toast
 import com.umeng.analytics.MobclickAgent
 import com.ybook.app.util.EVENT_OPEN_COLLECTION
+import android.support.v7.app.ActionBarActivity
+import android.support.v7.app.ActionBar
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -167,7 +168,7 @@ public class CollectionDrawerFragment : ListFragment() {
     }
 
     private fun getActionBar(): ActionBar {
-        return getActivity().getActionBar()
+        return (getActivity() as ActionBarActivity).getSupportActionBar()
     }
 
     public inner class MyCollectionListAdapter : SectionedBaseAdapter() {

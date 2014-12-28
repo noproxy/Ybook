@@ -1,17 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="android:windowBackground">@color/windowsBackground</item>
+        <item name="windowActionBarOverlay">true</item>
+
+        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
     </style>
 
-    <style name="AppTheme.Translucent" parent="AppTheme">
+    <style name="AppTheme.Translucent">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="AppTheme.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="AppTheme.ActionBar">
         <item name="android:background">@drawable/bg_main</item>
     </style>
 

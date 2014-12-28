@@ -15,6 +15,14 @@
             android:focusableInTouchMode="true"
             >
 
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/primary"
+                android:clickable="false"
+                android:focusable="false"
+                />
+
 
         <!--<AutoCompleteTextView-->
         <!--android:layout_width="match_parent"-->
@@ -38,133 +46,85 @@
         <!--/>-->
 
 
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vertical_spacing_regular"
-                >
+        <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/vertical_spacing_regular"-->
+        <!-->-->
 
-            <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_booklist_title"
-                    />
+        <!--<ImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="center"-->
+        <!--android:src="@drawable/ic_booklist_title"-->
+        <!--/>-->
 
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    android:text="@string/homeSectionTitle1"
-                    />
-        </LinearLayout>
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/primary"-->
+        <!--android:textStyle="bold"-->
+        <!--android:text="@string/homeSectionTitle1"-->
+        <!--/>-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
+        <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp"
-                android:id="@+id/bookListCardContainer"
-                android:padding="8dp"
-                android:background="@android:color/holo_blue_dark"
+                android:paddingBottom="16dp"
                 >
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="100dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:requiresFadingEdge="horizontal"-->
-            <!-->-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/primary"
+                    >
+            </LinearLayout>
 
-            <!--<ImageView-->
-            <!--android:id="@+id/bookListCoverImage0"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@drawable/ic_launcher"-->
-            <!--/>-->
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="24dp"
+                    >
 
-            <!--<ImageView-->
-            <!--android:id="@+id/bookListCoverImage1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@drawable/ic_launcher"-->
-            <!--/>-->
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="It's good time to have reading"
+                        android:paddingLeft="16dp"
+                        android:textColor="@android:color/black"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        />
 
-            <!--<ImageView-->
-            <!--android:id="@+id/bookListCoverImage2"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@drawable/ic_launcher"-->
-            <!--/>-->
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Look these we recommend"
+                        android:paddingLeft="16dp"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:paddingBottom="24dp"
+                        />
 
-            <!--<ImageView-->
-            <!--android:id="@+id/bookListCoverImage3"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@drawable/ic_launcher"-->
-            <!--/>-->
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!-->-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/bookListTitle0"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:singleLine="true"-->
-            <!--android:text="@string/loadingMessage"-->
-            <!--/>-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/bookListTitle1"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:singleLine="true"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/loadingMessage"-->
-            <!--/>-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/bookListTitle2"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:singleLine="true"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/loadingMessage"-->
-            <!--/>-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/bookListTitle3"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:singleLine="true"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/loadingMessage"-->
-            <!--/>-->
-            <!--</LinearLayout>-->
-        </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cover_height"
+                        android:layout_marginLeft="8dp"
+                        android:background="@android:color/transparent"
+                        />
+            </LinearLayout>
+        </FrameLayout>
 
 
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:layout_marginBottom="8dp"
                 >
 
             <ImageView

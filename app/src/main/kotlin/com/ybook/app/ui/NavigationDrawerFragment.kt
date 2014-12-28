@@ -2,7 +2,7 @@ package com.ybook.app.ui
 
 
 import android.app.Activity
-import android.app.ActionBar
+import android.support.v7.app.ActionBar
 import android.support.v4.app.Fragment
 import android.support.v4.app.ActionBarDrawerToggle
 import android.support.v4.view.GravityCompat
@@ -23,6 +23,7 @@ import com.ybook.app.R
 import android.widget.BaseAdapter
 import android.widget.TextView
 import android.widget.ImageView
+import android.support.v7.app.ActionBarActivity
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -228,7 +229,7 @@ public class NavigationDrawerFragment : Fragment() {
     }
 
     private fun getActionBar(): ActionBar {
-        return getActivity().getActionBar()
+        return (getActivity() as ActionBarActivity).getSupportActionBar()
     }
 
     /**

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--<color name="primary">#3ab582</color>-->
-    <!--<color name="primary">#38b684</color>-->
-    <color name="primary">#3ab582</color>
-    <color name="primaryDark">#ff36a375</color>
+    <color name="primary">#3F51B5</color>
+    <color name="primaryDark">#303F9F</color>
     <color name="colorAccent">#00796B</color>
-    <color name="navigationBarColor">#3ab582</color>
+    <color name="navigationBarColor">#000</color>
 
     <color name="actionButton">#ff6733</color>
     <color name="actionButtonPressed">#ff6733</color>

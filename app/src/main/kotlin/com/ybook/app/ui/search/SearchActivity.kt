@@ -80,9 +80,9 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         setContentView(R.layout.activity_search_result)
         mRecyclerView = id(android.R.id.list) as RecyclerView
 
-        mRecyclerView!!.setHasFixedSize(true);
-        mLayoutManager = LinearLayoutManager(this);
-        mRecyclerView?.setLayoutManager(mLayoutManager);
+        mRecyclerView!!.setHasFixedSize(true)
+        mLayoutManager = LinearLayoutManager(this)
+        mRecyclerView?.setLayoutManager(mLayoutManager)
         mRecyclerView!! setAdapter mPresenter.getAdapter()
         mRecyclerView!! setOnScrollListener mPresenter
         mPresenter.onCreate(savedInstanceState)

@@ -19,4 +19,6 @@
     <dimen name="search_edit_height">42dp</dimen>
     <dimen name="cover_height">180dp</dimen>
     <dimen name="cover_width">180dp</dimen>
+
+    <dimen name="book_list_card_height">160dp</dimen>
 </resources>

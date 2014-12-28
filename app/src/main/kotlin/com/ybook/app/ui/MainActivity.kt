@@ -23,10 +23,25 @@ import android.util.Log
 import android.support.v7.widget.SearchView
 import android.app.SearchManager
 import android.content.Context
+import com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks
+import android.view.ViewTreeObserver
+import com.ybook.app.ui.home.HomeFragment
+import android.support.v7.app.ActionBarActivity
+import android.support.v7.widget.Toolbar
 
 val ARG_SECTION_NUMBER: String = "section_number"
 
-public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, HomeFragment.OnFragmentScrollChangedListener {
+    override fun onScrollChanged(y: Int) {
+        Log.i("MainActivity", "onScroll, scrollY:${y}")
+        val actionBar = getSupportActionBar()
+        if (y >= actionBar.getHeight() && actionBar.isShowing()) {
+            actionBar.hide();
+        } else if ( y == 0 && !actionBar.isShowing()) {
+            actionBar.show();
+        }
+    }
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -40,20 +55,21 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
     private var mTitle: CharSequence? = null
 
     override fun onResume() {
-        super<FragmentActivity>.onResume()
+        super<ActionBarActivity>.onResume()
         MobclickAgent.onResume(this);
     }
 
     override fun onPause() {
-        super<FragmentActivity>.onPause()
+        super<ActionBarActivity>.onPause()
         MobclickAgent.onPause(this);
     }
 
     //    var materialMenu: MaterialMenuIcon? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<FragmentActivity>.onCreate(savedInstanceState)
+        super<ActionBarActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolBar) as Toolbar)
 
         mNavigationDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.navigation_drawer ) as NavigationDrawerFragment
         mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, id(R.id.drawer_layout) as DrawerLayout)
@@ -86,12 +102,12 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
-        super<FragmentActivity>.onPostCreate(savedInstanceState)
+        super<ActionBarActivity>.onPostCreate(savedInstanceState)
         //        materialMenu?.syncState(savedInstanceState);
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        super<FragmentActivity>.onSaveInstanceState(outState)
+        super<ActionBarActivity>.onSaveInstanceState(outState)
         //        materialMenu?.onSaveInstanceState(outState);
     }
 
@@ -136,15 +152,15 @@ public class MainActivity : FragmentActivity(), com.ybook.app.ui.NavigationDrawe
             restoreActionBar()
             return true
         }
-        return super<FragmentActivity>.onCreateOptionsMenu(menu)
+        return super<ActionBarActivity>.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
         //            android.R.id.home -> if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen())
         ////                materialMenu?.animatePressedState(IconState.ARROW) else materialMenu?.animatePressedState(IconState.BURGER)
-            R.id.action_about -> startActivity(Intent(this, javaClass<AboutActivity>()))
+        //            R.id.action_about -> startActivity(Intent(this, javaClass<AboutActivity>()))
         }
-        return super<FragmentActivity>.onOptionsItemSelected(item)
+        return super<ActionBarActivity>.onOptionsItemSelected(item)
     }
 }
