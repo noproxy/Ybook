@@ -35,6 +35,7 @@ import android.support.v7.widget.SearchView.OnQueryTextListener
 val ARG_SECTION_NUMBER: String = "section_number"
 
 public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, HomeFragment.OnFragmentScrollChangedListener {
+
     override fun onScrollChanged(y: Int) {
         Log.i("MainActivity", "onScroll, scrollY:${y}")
         val actionBar = getSupportActionBar()
@@ -43,6 +44,15 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, Home
         } else if ( y == 0 && !actionBar.isShowing()) {
             actionBar.show();
         }
+    }
+
+    override fun onBackPressed() {
+        if (mNavigationDrawerFragment?.isDrawerOpen() ?: false) {
+            mNavigationDrawerFragment!!.close()
+        } else if (mCollectionDrawerFragment?.isDrawerOpen() ?: false) {
+            mCollectionDrawerFragment!!.close()
+        } else super<ActionBarActivity>.onBackPressed()
+
     }
 
 
