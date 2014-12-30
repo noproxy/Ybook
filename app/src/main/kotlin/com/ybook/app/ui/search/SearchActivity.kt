@@ -44,6 +44,8 @@ import android.view.Menu
 import android.content.ComponentName
 import android.widget
 import android.support.v7.widget.SearchView.OnQueryTextListener
+import android.support.v4.widget.SwipeRefreshLayout
+import android.util.TypedValue
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
@@ -52,6 +54,7 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     private val mPresenter: SearchPresenter = SearchPresenterImpl(this)
     var mRecyclerView: RecyclerView ? = null
     private var mLayoutManager: RecyclerView.LayoutManager ? = null
+    private var mSwipeRefreshLayout: SwipeRefreshLayout? = null
     class object {
         val REQUEST_CODE_IS_COLLECTION_CHANGED = 0
         val EXTRA_POSITION = "position"
@@ -62,9 +65,15 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         return this
     }
 
-    override fun showProgress() = this
+    override fun showProgress(): SearchActivity {
+        mSwipeRefreshLayout?.setRefreshing(true)
+        return this
+    }
 
-    override fun hideProgress() = this
+    override fun hideProgress(): SearchActivity {
+        mSwipeRefreshLayout?.setRefreshing(false)
+        return this
+    }
 
     override fun showEmpty(): SearchView = this
 
@@ -125,17 +134,33 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun showLoadErrorMessage(): SearchView = showMessage(getResources() getString R.string.loadSearchError, MessageType.ERROR)
 
     override fun showLoadPageMessage(page: Int) = showMessage((getResources() getString R.string.loadingSearchMessagePrefix) + " " + (page + 1), MessageType.INFO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
         setSupportActionBar(this.id(R.id.toolBar) as Toolbar)
 
-        mRecyclerView = id(android.R.id.list) as RecyclerView
-        mRecyclerView!!.setHasFixedSize(true)
-        mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView?.setLayoutManager(mLayoutManager)
-        mRecyclerView!! setAdapter mPresenter.getAdapter()
-        mRecyclerView!! setOnScrollListener mPresenter
+        mRecyclerView = (id(android.R.id.list) as RecyclerView).let {
+            it setHasFixedSize true
+            it setLayoutManager LinearLayoutManager(this).let { mLayoutManager = it;it }
+            it setAdapter mPresenter.getAdapter()
+            it setOnScrollListener mPresenter
+            it
+        }
+
+        mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayout).let {
+            with(TypedValue(), {
+                getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, this, true)
+                (getResources() getDimensionPixelSize this.resourceId).let { aInt ->
+                    it.setProgressViewOffset(false, aInt, 2 * aInt)
+                    println(aInt)
+                }
+            })
+            it setOnRefreshListener mPresenter
+            it setSoundEffectsEnabled true
+            it.setColorSchemeResources(android.R.color.holo_green_light, android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light)
+            it
+        }
         mPresenter.onCreate(savedInstanceState)
     }
 

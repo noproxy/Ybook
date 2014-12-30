@@ -87,11 +87,17 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
 
 
         array(
-                Pair(R.id.mapHeadA, R.id.mapItemA),
-                Pair(R.id.mapHeadB, R.id.mapItemB),
-                Pair(R.id.mapHeadC, R.id.mapItemC),
-                Pair(R.id.mapHeadD, R.id.mapItemD)).
-                forEach { pair -> (mainView id pair.first).let { it.setTag(mainView id pair.second);it.setOnClickListener(this) } }
+                R.id.mapHeadA to R.id.mapItemA,
+                R.id.mapHeadB to R.id.mapItemB,
+                R.id.mapHeadC to R.id.mapItemC,
+                R.id.mapHeadD to R.id.mapItemD
+        ).forEach { pair ->
+            (mainView id pair.first).let {
+                it.setTag(mainView id pair.second)
+                it.setOnClickListener(this)
+            }
+        }
+
 
         //TODO no animation        if (mActivity is OnFragmentScrollChangedListener) {
         //            Log.i("HomeFragment", "listener" + mScrollView)

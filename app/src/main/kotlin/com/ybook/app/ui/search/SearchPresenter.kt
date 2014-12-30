@@ -10,11 +10,12 @@ import android.os.Bundle
 import android.widget.ListAdapter
 import android.support.v7.widget.RecyclerView
 import android.content.Intent
+import android.support.v4.widget.SwipeRefreshLayout
 
 /**
  * Created by Carlos on 2014/12/17.
  */
-public trait SearchPresenter : RecyclerView.OnScrollListener, View.OnClickListener {
+public trait SearchPresenter : RecyclerView.OnScrollListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     public fun onCreate(savedInstanceState: Bundle?)
     public fun onResume()
     public fun onPause()

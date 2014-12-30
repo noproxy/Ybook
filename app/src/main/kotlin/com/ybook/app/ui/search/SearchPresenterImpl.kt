@@ -52,6 +52,7 @@ import com.ybook.app.data.SearchSuggestionProvider
  */
 public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, RecyclerView.OnScrollListener() {
 
+
     val SEARCH_BY_KEY = "key"
     val TAG = "SearchAct"
     val mUtil = BooksListUtil.getInstance(searchView)
@@ -106,6 +107,10 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
 
     override fun onPause() {
         MobclickAgent.onPause(searchView);
+    }
+
+    override fun onRefresh() {
+        onNewIntent(Intent().putExtra(SearchManager.QUERY, mSearchStatus!!.key))
     }
 
     override fun onClick(v: View) {
@@ -166,6 +171,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
             PostHelper.search(SearchRequest(mSearchStatus!!.key, mSearchStatus!!.nextPage, SEARCH_BY_KEY, bean.getLibCode()), mHandler)
             mSearchStatus!!.requestedPage++
             mSearchStatus!!.isLoading = true
+            searchView.showProgress()
             searchView.showLoadPageMessage(mSearchStatus!!.nextPage)
         }
     }
@@ -186,6 +192,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
                 else -> searchView.showUnknownMessage()
             }
             mSearchStatus!!.isLoading = false;
+            searchView.hideProgress()
         }
     }
 
