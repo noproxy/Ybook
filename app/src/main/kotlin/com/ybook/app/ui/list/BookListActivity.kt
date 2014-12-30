@@ -1,17 +1,18 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.list
 
 import com.ybook.app.swipebacklayout.SwipeBackActivity
 import android.os.Bundle
-import com.umeng.analytics.MobclickAgent
 import com.ybook.app.bean.BookListResponse
-import com.ybook.app.R
 import android.widget.ListView
 import android.widget.BaseAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.ybook.app.ui.detail.BookDetailActivity
+import com.ybook.app.R
+import com.ybook.app.ui.home
 import android.content.Intent
-
+import com.umeng.analytics.MobclickAgent
 
 /**
  * Created by carlos on 12/8/14.
@@ -22,13 +23,12 @@ public class BookListActivity() : SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_list)
-        val rep = getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val rep = getIntent().getSerializableExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (rep) {
             is BookListResponse -> {
                 val list = findViewById(android.R.id.list) as ListView
                 list.setAdapter(object : BaseAdapter() {
                     override fun getCount(): Int = rep.books.size
-
                     override fun getItem(position: Int): Any? = rep.books.get(position)
                     override fun getItemId(position: Int) = position.toLong()
                     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
@@ -44,7 +44,7 @@ public class BookListActivity() : SwipeBackActivity() {
                     when (tag) {
                         is BookListResponse.BookListObject -> {
                             val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
-                            intent.putExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
+                            intent.putExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                             startActivity(intent)
                         }
                     }
@@ -64,4 +64,3 @@ public class BookListActivity() : SwipeBackActivity() {
         MobclickAgent.onPause(this);
     }
 }
-

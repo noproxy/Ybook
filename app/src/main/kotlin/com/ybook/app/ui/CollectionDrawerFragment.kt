@@ -26,6 +26,7 @@ import com.umeng.analytics.MobclickAgent
 import com.ybook.app.util.EVENT_OPEN_COLLECTION
 import android.support.v7.app.ActionBarActivity
 import android.support.v7.app.ActionBar
+import com.ybook.app.ui.detail.BookDetailActivity
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

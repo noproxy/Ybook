@@ -31,6 +31,7 @@ import com.ybook.app.net.MSG_ERROR
 import java.util.ArrayList
 import com.ybook.app.util.BooksListUtil
 import android.view.MenuItem
+import com.ybook.app.ui.detail.BookDetailActivity
 
 /**
  * Created by carlos on 12/8/14.

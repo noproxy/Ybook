@@ -1,45 +1,40 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.detail
 
-import android.os.Bundle
+import com.ybook.app.id
+import com.ybook.app.swipebacklayout.SwipeBackActivity
 import android.view.View
-import android.widget.ImageView
+import com.melnykov.fab.FloatingActionButton
+import com.ybook.app.bean.SearchResponse
+import com.ybook.app.bean.BookItem
+import android.os.Bundle
+import android.support.v7.widget.Toolbar
+import com.ybook.app.bean.BookListResponse
 import android.widget.TextView
-import com.squareup.picasso.Picasso
-import com.ybook.app.R
-import com.ybook.app.util.BooksListUtil
+import android.widget.ImageView
+import android.support.v4.view.ViewPager
 import com.ybook.app.viewpagerindicator.TabPageIndicator
+import android.view.MenuItem
+import com.ybook.app.bean.DetailResponse
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import com.ybook.app.bean.SearchResponse.SearchObject
-import com.ybook.app.net.PostHelper
-import com.ybook.app.net.DetailRequest
-import com.ybook.app.bean.getLibCode
 import android.os.Handler
 import android.os.Message
-import com.ybook.app.net.MSG_SUCCESS
-import com.ybook.app.bean.DetailResponse
-import com.ybook.app.net.MSG_ERROR
 import android.support.v4.app.Fragment
-import com.ybook.app.bean.BookItem
-import de.keyboardsurfer.android.widget.crouton.Crouton
-import de.keyboardsurfer.android.widget.crouton.Style
-import android.widget.Toast
-import android.widget.Button
-import com.ybook.app.swipebacklayout.SwipeBackActivity
+import com.ybook.app.util.BooksListUtil
+import com.ybook.app.R
+import com.ybook.app.ui.home
 import com.umeng.analytics.MobclickAgent
-import com.ybook.app.bean.BookListResponse
-import com.ybook.app.id
-import android.view.MenuItem
-import com.melnykov.fab.FloatingActionButton
-import com.ybook.app.util.EVENT_DELETE_FROM_SEARCH
-import com.ybook.app.util.EVENT_ADD_FROM_DETAIL
-import com.ybook.app.util.EVENT_DELETE_FROM_DETAIL
-import android.support.v7.widget.Toolbar
-import com.ybook.app.ui.detail
-import android.content.Intent
+import com.squareup.picasso.Picasso
+import android.widget.Toast
+import de.keyboardsurfer.android.widget.crouton.Style
+import de.keyboardsurfer.android.widget.crouton.Crouton
+import com.ybook.app
+import com.ybook.app.bean
+import com.ybook.app.net
+import com.ybook.app.net.PostHelper
+import com.ybook.app.ui
 import android.app.Activity
-import com.ybook.app.ui.search.SearchActivity
+import com.ybook.app.net.DetailRequest
 
 /**
  * This activity is to display the detail of book of the search results.
@@ -49,7 +44,7 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
 
 
     var mMarkFAB: FloatingActionButton? = null
-    private var mSearchObject: SearchObject? = null
+    private var mSearchObject: SearchResponse.SearchObject? = null
     private var mBookItem: BookItem? = null
     private var mUtil = BooksListUtil.getInstance(this)
     //http://ftp.lib.hust.edu.cn/record=b2673698~S0*chx
@@ -61,9 +56,9 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
         setResult(RESULT_CODE_UNCHANGED, getIntent())
 
 
-        val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val o = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (o) {
-            is SearchObject -> mSearchObject = o
+            is SearchResponse.SearchObject -> mSearchObject = o
             is BookItem -> mBookItem = o
             is BookListResponse.BookListObject -> mSearchObject = o.toSearchObject()
             else -> this.finish()
@@ -136,11 +131,11 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
                     if (mBookItem!!.isMarked(mUtil)) {
                         Crouton.makeText(this, getResources().getString(R.string.toastMarked), Style.INFO).show()
                         mMarkFAB!! setImageResource  R.drawable.fab_star_unlike
-                        MobclickAgent.onEvent(this, EVENT_ADD_FROM_DETAIL)
+                        MobclickAgent.onEvent(this, app.util.EVENT_ADD_FROM_DETAIL)
                     } else {
                         Crouton.makeText(this, getResources().getString(R.string.toastCancelMark), Style.INFO).show()
                         mMarkFAB!! setImageResource  R.drawable.fab_drawable_star_like
-                        MobclickAgent.onEvent(this, EVENT_DELETE_FROM_DETAIL)
+                        MobclickAgent.onEvent(this, app.util.EVENT_DELETE_FROM_DETAIL)
                     }
                 }
             }
@@ -153,17 +148,17 @@ public class BookDetailActivity : SwipeBackActivity(), View.OnClickListener {
     //            R.id.button_addToList -> {
     //            }
 
-    inner class MyDetailPagerAdapter(fm: FragmentManager, searchObject: SearchObject?, bookItem: BookItem?) : FragmentPagerAdapter(fm) {
+    inner class MyDetailPagerAdapter(fm: FragmentManager, searchObject: SearchResponse.SearchObject?, bookItem: BookItem?) : FragmentPagerAdapter(fm) {
         {
-            if (searchObject != null) PostHelper.detail(DetailRequest(searchObject.id, searchObject.idType, getLibCode()), object : Handler() {
+            if (searchObject != null) PostHelper.detail(DetailRequest(searchObject.id, searchObject.idType, bean.getLibCode()), object : Handler() {
                 override fun handleMessage(msg: Message) {
                     when (msg.what) {
-                        MSG_SUCCESS -> (msg.obj as DetailResponse).let {
+                        net.MSG_SUCCESS -> (msg.obj as DetailResponse).let {
                             mBookItem = it.toBookItem()
                             pagers.forEach { p -> p.onRefresh(it) }
                             this@BookDetailActivity.onRefresh(it)
                         }
-                        MSG_ERROR -> pagers.forEach { p -> p.onError() }
+                        net.MSG_ERROR -> pagers.forEach { p -> p.onError() }
                     }
                 }
             })

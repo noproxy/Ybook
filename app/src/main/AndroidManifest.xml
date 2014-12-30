@@ -50,11 +50,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ui.BookDetailActivity"
+                android:name=".ui.detail.BookDetailActivity"
                 android:theme="@style/AppTheme.Translucent"
                 />
         <activity
-                android:name=".ui.BookListActivity"
+                android:name=".ui.list.BookListActivity"
                 android:theme="@style/AppTheme.Translucent"
                 />
         <activity

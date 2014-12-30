@@ -35,7 +35,7 @@ import android.view.MenuItem
 import android.os.Bundle
 import android.app.SearchManager
 import android.content.Intent
-import com.ybook.app.ui.BookDetailActivity
+import com.ybook.app.ui.detail.BookDetailActivity
 import java.io.Serializable
 import com.ybook.app.util.ListEndToLoadUtil
 import com.ybook.app.ui.search.SearchView.MessageType

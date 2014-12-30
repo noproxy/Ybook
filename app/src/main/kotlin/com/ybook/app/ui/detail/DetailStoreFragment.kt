@@ -1,24 +1,24 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.detail
 
-import android.os.Bundle
+import com.ybook.app.id
+import com.ybook.app.bean.SearchResponse
+import com.ybook.app.bean.BookItem
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.ybook.app.R
-import com.ybook.app.bean.SearchResponse.SearchObject
-import com.ybook.app.bean.DetailResponse
-import com.ybook.app.ui.BookDetailActivity.OnDetail
 import android.widget.ListView
 import android.widget.BaseAdapter
+import com.ybook.app.bean.DetailResponse
+import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.os.Bundle
 import android.widget.TextView
-import com.ybook.app.bean.BookItem
-import com.ybook.app.id
+import com.ybook.app.R
+import com.ybook.app.ui.detail.BookDetailActivity.OnDetail
 
 /**
  * Created by carlos on 9/14/14.
  */
-public class DetailStoreFragment(val searchObject: SearchObject?, val bookItem: BookItem?) : Fragment(), OnDetail {
+public class DetailStoreFragment(val searchObject: SearchResponse.SearchObject?, val bookItem: BookItem?) : Fragment(), OnDetail {
     var mListView: ListView? = null
     //    var mEmptyLayout: EmptyLayout? = null
     var mAdapter: BaseAdapter? = null
