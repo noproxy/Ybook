@@ -11,6 +11,7 @@ import android.util.Log
 import com.koushikdutta.async.http.WebSocket.StringCallback
 import com.ybook.app.util.AccountHelper
 import com.ybook.app.util.JSONHelper
+import me.toxz.kotlin.makeTag
 
 /**
  *  read Token of json string
@@ -23,6 +24,7 @@ fun String.getToken(): Int {
         return this.hashCode()
     }
 }
+
 
 /**
  *

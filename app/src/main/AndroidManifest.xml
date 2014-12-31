@@ -7,10 +7,14 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
             android:allowBackup="true"
@@ -26,12 +30,12 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
             <meta-data
                     android:name="android.app.searchable"
                     android:resource="@xml/searchable"
                     />
         </activity>
-
         <activity
                 android:name=".ui.FeedBackActivity"
                 android:theme="@style/AppTheme.Translucent"
@@ -45,6 +49,7 @@
                     android:name="android.app.searchable"
                     android:resource="@xml/searchable"
                     />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -67,25 +72,38 @@
                 />
 
         <provider
-                android:authorities="com.ybook.app.SearchSuggestionProvider"
                 android:name=".data.SearchSuggestionProvider"
+                android:authorities="com.ybook.app.SearchSuggestionProvider"
                 />
 
         <meta-data
-                android:value="5483e6cffd98c54236000670"
                 android:name="UMENG_APPKEY"
+                android:value="5483e6cffd98c54236000670"
                 />
         <meta-data
-                android:value="pre release"
                 android:name="UMENG_CHANNEL"
+                android:value="pre release"
                 />
 
         <uses-library android:name="android.test.runner"/>
+
         <instrumentation
                 android:name="android.test.InstrumentationTestRunner"
-                android:targetPackage="com.ybook.app"
                 android:label="Tests for Ybook"
+                android:targetPackage="com.ybook.app"
                 />
+
+        <activity
+                android:name=".ui.LoginActivity"
+                android:label="@string/title_activity_login"
+                android:windowSoftInputMode="adjustResize|stateVisible"
+                android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

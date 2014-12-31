@@ -13,13 +13,14 @@ val MSG_ONE_SEARCH_RESULT = 3
 
 val oldUrl = "http://whitepanda.org:2333"//TODO add url
 fun getMainUrl(): String? {
-    var s: String? = null
     try {
-        s = "http://" + InetAddress.getByName("www.ybook.me").getHostAddress() + ":2333"
+        val s = "http://" + InetAddress.getByName("www.ybook.me").getHostAddress() + ":2333"
+        return s
     } catch (e: Exception) {
         e.printStackTrace()
     }
-    return s
+    return null
 }
+
 
 
