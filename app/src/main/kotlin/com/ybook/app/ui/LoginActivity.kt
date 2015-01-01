@@ -42,6 +42,8 @@ import com.ybook.app.bean.getLibCode
 import me.toxz.kotlin.makeTag
 import android.os.Handler
 import com.koushikdutta.async.http.WebSocket
+import me.toxz.kotlin.from
+import com.ybook.app.net.getMainUrl
 
 
 /**
@@ -183,35 +185,69 @@ public class LoginActivity : SwipeBackActivity() {
     fun login(failed: () -> Unit, succeed: (request: LoginRequest) -> Unit, request: LoginRequest) {
 
         Log.i(TAG, "Login start")
-        val mainUrl = "//TODO"
-        val url = mainUrl + "/profile"
-        Log.i(TAG, "url: " + url)
-        var isEnd = false
-        AsyncHttpClient.getDefaultInstance().websocket(url, "my-protocol", {
-            (exception, webSocket) ->
-            Log.i(TAG, "socket get:" + webSocket)
-            if (webSocket == null) {
-                this@LoginActivity.runOnUiThread(failed)
-            } else {
-                webSocket.setClosedCallback {
-                    Log.i(TAG, "closed")
-                    if (!isEnd)
-                        this@LoginActivity.runOnUiThread (failed)
+        from { getMainUrl() }
+                .supposing { it != null }
+                .then {
+                    var isEnd = false
+                    val url = it + "/profile"
+                    Log.i(TAG, "url: " + it)
+                    AsyncHttpClient.getDefaultInstance().websocket(url, "my-protocol", {
+                        (exception, webSocket) ->
+                        Log.i(TAG, "socket get:" + webSocket)
+                        if (webSocket == null) {
+                            this@LoginActivity.runOnUiThread(failed)
+                        } else {
+                            webSocket.setClosedCallback {
+                                Log.i(TAG, "closed")
+                                if (!isEnd)
+                                    this@LoginActivity.runOnUiThread (failed)
+                            }
+
+                            webSocket.setStringCallback {
+                                val rep = JSONHelper.readLoginResponse(it)
+                                Log.i(TAG, "login status:" + rep.status)
+                                if (rep.status == 0)
+                                    this@LoginActivity.runOnUiThread { succeed(request) }
+                                else
+                                    this@LoginActivity.runOnUiThread(failed)
+                                isEnd = true
+                            }
+                            webSocket.send(request.getJSONStr())
                 }
 
-                webSocket.setStringCallback {
-                    val rep = JSONHelper.readLoginResponse(it)
-                    Log.i(TAG, "login status:" + rep.status)
-                    if (rep.status == 0)
-                        this@LoginActivity.runOnUiThread { succeed(request) }
-                    else
-                        this@LoginActivity.runOnUiThread(failed)
-                    isEnd = true
-                }
-                webSocket.send(request.getJSONStr())
-            }
+                    })
+                }.or { failed() }.exec()
 
-        })
+
+        //        val mainUrl = "//TODO"
+        //        val url = mainUrl + "/profile"
+        //        Log.i(TAG, "url: " + url)
+        //        var isEnd = false
+        //        AsyncHttpClient.getDefaultInstance().websocket(url, "my-protocol", {
+        //            (exception, webSocket) ->
+        //            Log.i(TAG, "socket get:" + webSocket)
+        //            if (webSocket == null) {
+        //                this@LoginActivity.runOnUiThread(failed)
+        //            } else {
+        //                webSocket.setClosedCallback {
+        //                    Log.i(TAG, "closed")
+        //                    if (!isEnd)
+        //                        this@LoginActivity.runOnUiThread (failed)
+        //                }
+        //
+        //                webSocket.setStringCallback {
+        //                    val rep = JSONHelper.readLoginResponse(it)
+        //                    Log.i(TAG, "login status:" + rep.status)
+        //                    if (rep.status == 0)
+        //                        this@LoginActivity.runOnUiThread { succeed(request) }
+        //                    else
+        //                        this@LoginActivity.runOnUiThread(failed)
+        //                    isEnd = true
+        //                }
+        //                webSocket.send(request.getJSONStr())
+        //            }
+        //
+        //        })
         Log.i(TAG, "Task over")
     }
 

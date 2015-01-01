@@ -4,6 +4,7 @@ import com.koushikdutta.async.http.WebSocket
 import kotlin.reflect.KMemberFunction0
 import com.ybook.app.net.getMainUrl
 import java.util.ArrayList
+import kotlin.jvm.internal.Intrinsic
 
 /**
  * Created by Carlos on 2014/12/31.
@@ -30,56 +31,57 @@ public fun makeTag(str: String): String {
     return LOG_PREFIX + str
 }
 
-//
-//public fun <T : Any?> T.from(judge: () -> T): FluentCallbackImpl<T> {
-//    return FluentCallbackImpl(judge)
-//}
-//
-//
-//public class FluentCallbackImpl<T : Any?>(val judge: () -> T) {
-//    var succeed: ((T) -> Unit)? = null
-//    var fail: ((T) -> Unit)? = null
-//    var answer: T = null
-//    var result: Boolean = false
-//
-//    fun supposing(whether: (T) -> Boolean): FluentCallbackImpl<T> {
-//        result = whether(answer)
-//        return this
-//    }
-//
-//    fun then(f: (T) -> Unit): FluentCallbackImpl<T> {
-//        succeed = f
-//        return this
-//    }
-//
-//    fun or(f: (T) -> Unit): FluentCallbackImpl<T> {
-//        fail = f
-//        return this
-//    }
-//
-//    fun addCondition(condition: Any, f: () -> Unit): FluentCallbackImpl<T> {
-//        return this
-//    }
-//
-//    fun exec() {
-//        Thread {
-//            answer = judge()
-//            if (result)
-//                succeed?.invoke(answer)
-//            else
-//                fail?.invoke(answer)
-//        }.start()
-//    }
-//
-//}
+
+public fun <T : Any?> from(calculate: () -> T): FluentCallback1<T> {
+    return FluentCallback1(calculate)
+}
+
+
+public class FluentCallback1<T : Any?>(protected val calculate: () -> T) {
+    protected var succeedFunction: ((T) -> Unit)? = null
+    protected var failFunction: ((T) -> Unit)? = null
+    protected var data: T = null
+    protected var result: Boolean = false
+    protected var supposing: ((T) -> Boolean)? = null
+
+    fun supposing(whether: (T) -> Boolean): FluentCallback1<T> {
+        this.supposing = whether
+        return this
+    }
+
+    fun then(f: (T) -> Unit): FluentCallback1<T> {
+        succeedFunction = f
+        return this
+    }
+
+    fun or(f: (T) -> Unit): FluentCallback1<T> {
+        failFunction = f
+        return this
+    }
+
+    //    fun addCondition(condition: Any, f: () -> Unit): FluentCallback1<T> {
+    //        return this
+    //    }
+
+    fun exec() {
+        Thread {
+            data = calculate()
+            if (supposing!!(data))
+                succeedFunction?.invoke(data)
+            else
+                failFunction?.invoke(data)
+        }.start()
+    }
+
+}
 
 fun test() {
     var url: String? = null
 
-    //    url.from { getMainUrl() }.supposing { it != null }.then { println("url is: " + it) }.or { println("get url fail!") }.exec()
+    from { getMainUrl() }.supposing { it != null }.then { println("url is: " + it) }.or { println("get url fail!") }.exec()
 
     object : FluentCallback <String?, Boolean>() {}
-            .from { getMainUrl() }
+            .by { getMainUrl() }
             .supposing { it != null }
             .then (true to { it -> LoginWith(it!!) })
             .either(false to { it -> println("failed") })
@@ -99,7 +101,7 @@ public abstract class FluentCallback <D, C> {
     var from: (() -> D)? = null
     var result: C? = null
 
-    public fun from(f: () -> D): FluentCallback<D, C> {
+    public fun by(f: () -> D): FluentCallback<D, C> {
         from = f
         return this
     }
@@ -153,5 +155,3 @@ public abstract class FluentCallback <D, C> {
     }
 
 }
-
-public class UrlFluentCallBack : FluentCallback <String, Boolean>()
