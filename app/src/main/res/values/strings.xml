@@ -2,101 +2,76 @@
 <resources>
 
     <string name="app_name">Ybook</string>
-
     <string name="navigationHome">Home</string>
     <string name="navigationAbout">About</string>
     <string name="navigationFeedback">Feedback</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_about">About</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
-
     <string name="homeSectionTitle1">Recommend</string>
     <string name="homeSectionTitle2">Map</string>
-
     <string name="collectionNoItemHint">Nothing</string>
-
     <string name="text_about">Ybook from UniqueStudio\n\nsina weibo @有书先森\n</string>
-
     <string name="ordBtnText">order</string>
     <string name="loadingContentHint">loading</string>
     <string name="collectFailErrorHint">collected failed: </string>
     <string name="isCollectionHint">Collection</string>
-
-
     <string name="availableHint">avai</string>
     <string name="bookCoverHint">Cover Image</string>
-
     <string name="authorText">Author :</string>
     <string name="publisherText">Publish :</string>
     <string name="queryIdText">Query :</string>
     <string name="isbnText" translatable="false">ISBN :</string>
     <string name="detailText">Intro :</string>
-
     <string name="searchHintText">Search by book name</string>
-
     <string name="collectBtnText">Collect</string>
     <string name="cancelCollectBtnText">Remove</string>
     <string name="toastMarked">Collected!</string>
     <string name="toastCancelMark">Remove from collection!</string>
     <string name="noDetailHintText">No detail available</string>
-
     <string name="ok">OK</string>
     <string name="cancel">@android:string/cancel</string>
     <string name="createListDialogTitle">New book list?</string>
     <string name="listNameHintText">List name</string>
     <string name="toastCreateListSuccess">Success!</string>
-
     <string name="longTextTestCN" translatable="false">的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款的哈付款</string>
     <string name="longTextTest" translatable="false">ksadhfkahsdjkfhaskhdfskahfkhaskjhfafuiwqfhkdasssfsdddddddddddddddddddddddddd</string>
     <string name="longTextTestDig" translatable="false">83172648146790002348</string>
-
     <string name="noTitleHint">No title</string>
     <string name="detailTabTitleInfo">Book Info</string>
     <string name="detailTabTitleStatus">Library Status</string>
     <string name="detailNoStoreInfoHint">no store info</string>
-
     <string name="loginBtnText">Sign in</string>
     <string name="skipLoginBtnText">Enter</string>
     <string name="nameHintText">Account</string>
     <string name="passwordHintText">Password</string>
-
-
     <string name="feedbackCommit">Commit</string>
-
-
     <string name="emptyMessage">No items yet</string>
     <string name="loadingMessage">Please wait…</string>
     <string name="errorMessage">Oops! Something wrong happened</string>
-
     <string name="emptyButton">Try again</string>
     <string name="loadingButton">Cancel</string>
     <string name="errorButton">Try again</string>
-
     <string name="loadHistoryError">Load Error!</string>
     <string name="passwordError">Your account is wrong! Please login again</string>
     <string name="loadingHistoryMessagePrefix">Loading page </string>
-
     <string name="loadSearchError">Load Error!</string>
     <string name="loadingSearchMessagePrefix">Loading page  </string>
     <string name="unknownError">Unknown Error</string>
     <string name="onlyOneResultMessage">Only one book found!</string>
-
-
     <string name="feedbackEmailHint">Email</string>
     <string name="feedbackHint">Content</string>
-
     <string name="homeMapHeadA" translatable="false">主校区借阅室（流动书库）</string>
     <string name="homeMapHeadB" translatable="false">主校区逸夫馆阅览室（C区）</string>
     <string name="homeMapHeadC" translatable="false">东校区流动书库</string>
     <string name="homeMapHeadD" translatable="false">东校区阅览室</string>
-
     <string name="homeMapContainA" translatable="false">一层 综合阅览室、借还书处、办证处\n二层 中文自科（TP TQ TS TU TV U V X Z）\n三层 中文自科（N O P T TB TD TE TF TG TH TJ TK TL TM TN）\n四层 中文社科（G H I J K）\n五层 外文图书、工具书、中文社科（A B C D E F）\n六层 外文图书阅览室</string>
     <string name="homeMapContainB" translatable="false">一层 旧书报刊密集库\n二层 中文自科（TP TU） 中文自科（N O P TB TD TE TF TG TH TJ TK TL TM TS TV U V X Z）\n三层 中文社科（A B C D E） 中文社科（F G H）\n四层 中外文过刊阅览室\n五层 中文社科（I K）</string>
     <string name="homeMapContainC" translatable="false">一层 F H J Q R S\n二层 I\n三层 A B C D E G K TN TQ TS TU TV\n四层 TP U V X Z\n五层 N O P T TB TD TE TF TG TH TJ TK TL TM TU</string>
     <string name="homeMapContainD" translatable="false">二层北 中文社科（二） H K G\n二层南 中文社科（一） A B C D F E\n三层南 自然科学（二） T.TB-TV(TP除外) U V X Z\n四层南 自然科学（一） N O P Q R S\n四层北 中文计算机图书 TP</string>
-
     <string name="suggestedBook">Suggested book</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

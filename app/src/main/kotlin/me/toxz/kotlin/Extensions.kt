@@ -59,10 +59,6 @@ public class FluentCallback1<T : Any?>(protected val calculate: () -> T) {
         return this
     }
 
-    //    fun addCondition(condition: Any, f: () -> Unit): FluentCallback1<T> {
-    //        return this
-    //    }
-
     fun exec() {
         Thread {
             data = calculate()

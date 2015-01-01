@@ -44,6 +44,9 @@ import android.os.Handler
 import com.koushikdutta.async.http.WebSocket
 import me.toxz.kotlin.from
 import com.ybook.app.net.getMainUrl
+import android.widget.Toast
+import android.app.AlertDialog
+import android.app.Dialog
 
 
 /**
@@ -213,7 +216,7 @@ public class LoginActivity : SwipeBackActivity() {
                                 isEnd = true
                             }
                             webSocket.send(request.getJSONStr())
-                }
+                        }
 
                     })
                 }.or { failed() }.exec()
