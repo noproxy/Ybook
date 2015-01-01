@@ -83,7 +83,7 @@ object JSONHelper {
     fun JSONObject.a(key: String): Array<JSONObject> = this.getJSONArray(key).ls()
 
 
-    fun readBookListResponse(s: String): BookListResponse {
+    fun readBookListResponse(s: String, id: Int): BookListResponse {
         Log.d("bookListJson", s)
         val j = JSONObject(s)
         val a = ArrayList<BookListObject>()
@@ -103,7 +103,8 @@ object JSONHelper {
                 j.s("title"),
                 j.s("cover_image_url"),
                 j.s("comment"),
-                a.copyToArray()
+                a.copyToArray(),
+                id
         )
     }
 

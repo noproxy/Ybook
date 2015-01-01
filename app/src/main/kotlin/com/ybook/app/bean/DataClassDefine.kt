@@ -13,8 +13,10 @@ data class BookListResponse (
         val title: String,
         val coverImgUrl: String,
         val comment: String,
-        val books: Array<BookListObject>
+        val books: Array<BookListObject>,
+        val id: Int
 ) : Serializable {
+
     data class BookListObject(
             val author: String,
             val press: String,
@@ -234,5 +236,6 @@ data class CurrentResponse(
 }
 
 
-
-
+trait DataReceiver <T : Any> {
+    public fun receive(data: T)
+}

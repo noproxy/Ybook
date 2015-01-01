@@ -31,7 +31,7 @@ object PostHelper {
         return p
     }
 
-    fun getBookList(h: Handler) {
+    deprecated("use AsyncTask") fun getBookList(h: Handler) {
         Thread {
             for (i in 1..4) {
                 val msg = h.obtainMessage()
