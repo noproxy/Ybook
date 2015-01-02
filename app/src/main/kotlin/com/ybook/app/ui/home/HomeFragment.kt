@@ -1,7 +1,6 @@
 package com.ybook.app.ui.home
 
 import android.view.LayoutInflater
-import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.EditText
 import android.content.Intent
@@ -54,25 +53,39 @@ import org.apache.http.util.EntityUtils
 import org.apache.http.protocol.HTTP
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
-import android.content.AsyncTaskLoader
+import android.support.v4.content.AsyncTaskLoader
+import me.toxz.kotlin.after
+import android.os.Bundle
 
 /**
  * Created by carlos on 11/13/14.
  */
-
+//TODO show one BookList at once it loaded
 public val KEY_BOOK_LIST_RESPONSE_EXTRA: String = "bookList"
 
-public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedListener, LoaderManager.LoaderCallbacks<BookListResponse> {
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<BookListResponse>? {
-        throw UnsupportedOperationException()
+public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedListener, LoaderManager.LoaderCallbacks<List<BookListResponse>> {
+
+    val BUNDLE_KEY_POSITION = "position"
+    val mListData = HashMap<Int, BookListResponse>(4)
+    var mAdapter: BookListRecyclerViewAdapter? = null
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<BookListResponse>>? {
+        Log.d(TAG, "load is created: " + id)
+        return when ( id ) {
+            BOOK_LIST_LOADER_ID -> BookListsLoader(mActivity!!)
+            SINGLE_BOOK_LIST_LOADER_ID -> SingleBookListLoader(mActivity!!, args!!.getInt(BUNDLE_KEY_POSITION))
+            else -> null
+        }
     }
 
-    override fun onLoadFinished(loader: Loader<BookListResponse>?, data: BookListResponse?) {
-        throw UnsupportedOperationException()
+    override fun onLoadFinished(loader: Loader<List<BookListResponse>>?, data: List<BookListResponse>?) {
+        Log.i(TAG, "onLoadFinished,data: " + data + ", adapter: " + mAdapter)
+        data?.forEach { mListData.put(it.id, it);Log.d(TAG, it.toString()) }
+        mAdapter?.notifyDataSetChanged()
     }
 
-    override fun onLoaderReset(loader: Loader<BookListResponse>?) {
-        throw UnsupportedOperationException()
+    override fun onLoaderReset(loader: Loader<List<BookListResponse>>?) {
+        mListData.clear()
     }
 
     val TAG: String = makeTag()
@@ -110,7 +123,7 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
         mRecyclerView.setHasFixedSize(true)
         val mLayoutManager = LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.setLayoutManager(mLayoutManager)
-        mRecyclerView setAdapter BookListRecyclerViewAdapter()
+        mRecyclerView setAdapter BookListRecyclerViewAdapter().after { mAdapter = it }
 
 
         array(
@@ -162,25 +175,6 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
         //        searchView?.setAdapter(object : ArrayAdapter<String>(getActivity(), R.layout.search_suggest_item, getSearchHistory()) {})
     }
 
-
-    //    val onSearchKeyListener = {(v: View?, keyCode: Int, keyEvent: KeyEvent) ->
-    //        when (v) {
-    //            is EditText -> if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-    //                val intent = Intent(getActivity(), javaClass<SearchActivity>())
-    //                val keyWord = v.getText().toString().trim()
-    //                intent.putExtra(SearchManager.QUERY, keyWord)
-    //                v.clearFocus()
-    //                saveSearchHistory(keyWord)
-    //                val map = HashMap<String, String>()
-    //                map.put("searchKey", keyWord)
-    //                map.put("time", System.currentTimeMillis().toString())
-    //                MobclickAgent.onEventValue(getActivity(), EVENT_SEARCH, map, 0)
-    //                v.setText(null)
-    //                startActivity(intent)
-    //            }
-    //        }
-    //        false
-    //    }
     var mActivity: Activity? = null
 
     override fun onAttach(activity: android.app.Activity?) {
@@ -189,11 +183,13 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
         mActivity = activity
     }
 
-    val BookListLoaderID = 0
+    val BOOK_LIST_LOADER_ID = 0
+    val SINGLE_BOOK_LIST_LOADER_ID = 1
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<Fragment>.onActivityCreated(savedInstanceState)
-        getLoaderManager().initLoader(BookListLoaderID, null, this)
+        Log.i(TAG, "activity created")
+        getLoaderManager().initLoader(BOOK_LIST_LOADER_ID, Bundle().after { it.putInt(BUNDLE_KEY_POSITION, 0) }, this)
     }
 
     override fun onScrollChanged() {
@@ -225,41 +221,28 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
 
         override fun onBindViewHolder(holder: BookListCardHolder, position: Int) {
             holder.coverImage.setImageResource(R.drawable.ic_empty)
-            holder.titleText.setText(holder.cardView.getContext().getResources().getString(R.string.suggestedBook))
+            holder.titleText.setText("")
+            holder.cardView setTag null
+            if (mListData.size() > position) {
+                mListData.get(position + 1)?.into(holder)
+            }
+        }
 
-
-            //TODO async task to load net or read cache
+        private fun BookListResponse.into(holder: BookListCardHolder) {
+            Picasso.with(holder.cardView.getContext()).load(this.coverImgUrl).into(holder.coverImage)
+            holder.titleText.setText(this.title)
+            holder.cardView.setTag(this)
         }
 
         override fun getItemCount(): Int = 4
 
     }
 
-    private inner class MyBookListLoadTask() : AsyncTask<Int, Void, BookListResponse>() {
-        override fun doInBackground(vararg params: Int?): BookListResponse? {
-            val num = params.get(0)
-            val url = getMainUrl() + "/static/temp/bookrec0" + num.toString() + ".json"
-            Log.i(TAG, "url: " + url)
-            try {
-                val rep = DefaultHttpClient().execute(HttpGet(url))
-                if (rep.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                    return JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8))
-                }
-            } catch(e: Exception) {
-                e.printStackTrace()
-            }
-            return null
+    private class BookListsLoader(con: Context) : AsyncTaskLoader<List<BookListResponse>>(con) {
+        {
+            onContentChanged()
         }
-
-        SuppressWarnings("UnusedDeclaration")
-        override fun onPostExecute(result: BookListResponse?) {
-            super.onPostExecute(result)
-            if (result == null || result.receiver == null) return
-            result.receiver!!.receive(result)
-        }
-    }
-
-    private inner class BookListsLoader(con: Context) : AsyncTaskLoader<List<BookListResponse>>(con) {
+        val TAG = makeTag()
         override fun loadInBackground(): List<BookListResponse>? {
             val result = ArrayList<BookListResponse>(4)
             for (num in 1..4) {
@@ -276,22 +259,43 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
             }
             return result
         }
+
+        override fun onStartLoading() {
+            if (takeContentChanged())
+                forceLoad();
+        }
+
+        override fun onStopLoading() {
+            cancelLoad();
+        }
     }
 
-    private inner class SingleBookListLoader(con: Context, val listId: Int) : AsyncTaskLoader<BookListResponse>(con) {
-
-        override fun loadInBackground(): BookListResponse? {
+    private class SingleBookListLoader(con: Context, val listId: Int) : AsyncTaskLoader<List<BookListResponse>>(con) {
+        {
+            onContentChanged()
+        }
+        val TAG = makeTag()
+        override fun loadInBackground(): List<BookListResponse>? {
             val url = getMainUrl() + "/static/temp/bookrec0" + listId.toString() + ".json"
             Log.i(TAG, "url: " + url)
             try {
                 val rep = DefaultHttpClient().execute(HttpGet(url))
                 if (rep.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                    return JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8), listId)
+                    return arrayListOf(JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8), listId))
                 }
             } catch(e: Exception) {
                 e.printStackTrace()
             }
             return null
+        }
+
+        override fun onStartLoading() {
+            if (takeContentChanged())
+                forceLoad();
+        }
+
+        override fun onStopLoading() {
+            cancelLoad();
         }
     }
 

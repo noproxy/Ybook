@@ -17,6 +17,16 @@ data class BookListResponse (
         val id: Int
 ) : Serializable {
 
+    override fun toString(): String {
+        return ("BookListResponse: {"
+                + " title: " + title
+                + "; coverImgUrl: " + coverImgUrl
+                + "; comment: " + comment
+                + "; id: " + id
+                + "; books: " + books.toString()
+                )
+    }
+
     data class BookListObject(
             val author: String,
             val press: String,
@@ -26,6 +36,16 @@ data class BookListResponse (
     ) : Serializable {
         fun toSearchObject(): SearchObject {
             return SearchObject(author, press, "loading", "record", title, coverImgUrl, id)
+        }
+
+        override fun toString(): String {
+            return ("Book: {"
+                    + " author: " + author
+                    + "; press: " + press
+                    + "; title: " + title
+                    + "; coverImgUrl: " + coverImgUrl
+                    + "; id: " + id
+                    )
         }
     }
 }

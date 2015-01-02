@@ -35,7 +35,7 @@ class BookListCardProducer() {
                     if (all > 10 || c > 3) break
                     val rep = bookListClient.execute(HttpGet(getMainUrl() + "/static/temp/bookrec0" + (c + 1).toString() + ".json"))
                     if (rep.getStatusLine().getStatusCode().equals(HttpStatus.SC_OK)) {
-                        val bookListResponse = JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8))
+                        val bookListResponse = JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8), 0)
                         //                        parent.post { parent.addView(makeBookListCardView(bookListResponse, parent)) }
                         c++
                     }

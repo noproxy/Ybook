@@ -40,7 +40,7 @@ object PostHelper {
                     when (rep.getStatusLine().getStatusCode()) {
                         HttpStatus.SC_OK -> {
                             msg.what = MSG_SUCCESS
-                            msg.obj = JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8))
+                            msg.obj = JSONHelper.readBookListResponse(EntityUtils.toString(rep.getEntity(), HTTP.UTF_8), 0)
                         }
                         else -> msg.what = MSG_ERROR
                     }

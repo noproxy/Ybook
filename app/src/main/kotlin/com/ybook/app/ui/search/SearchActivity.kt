@@ -46,6 +46,7 @@ import android.widget
 import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.TypedValue
+import me.toxz.kotlin.after
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
@@ -140,15 +141,14 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         setContentView(R.layout.activity_search_result)
         setSupportActionBar(this.id(R.id.toolBar) as Toolbar)
 
-        mRecyclerView = (id(android.R.id.list) as RecyclerView).let {
+        mRecyclerView = (id(android.R.id.list) as RecyclerView).after {
             it setHasFixedSize true
-            it setLayoutManager LinearLayoutManager(this).let { mLayoutManager = it;it }
+            it setLayoutManager LinearLayoutManager(this).after { mLayoutManager = it }
             it setAdapter mPresenter.getAdapter()
             it setOnScrollListener mPresenter
-            it
         }
 
-        mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayout).let {
+        mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayout).after {
             with(TypedValue(), {
                 getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, this, true)
                 (getResources() getDimensionPixelSize this.resourceId).let { aInt ->
@@ -159,7 +159,6 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
             it setOnRefreshListener mPresenter
             it setSoundEffectsEnabled true
             it.setColorSchemeResources(android.R.color.holo_green_light, android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light)
-            it
         }
         mPresenter.onCreate(savedInstanceState)
     }
