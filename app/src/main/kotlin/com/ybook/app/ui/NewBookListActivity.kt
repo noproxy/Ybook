@@ -32,6 +32,8 @@ import java.util.ArrayList
 import com.ybook.app.util.BooksListUtil
 import android.view.MenuItem
 import com.ybook.app.ui.detail.BookDetailActivity
+import com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA
+import android.support.v7.widget.Toolbar
 
 /**
  * Created by carlos on 12/8/14.
@@ -43,11 +45,12 @@ public class NewBookListActivity() : SwipeBackActivity() {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_list)
 
-        getActionBar() setDisplayHomeAsUpEnabled true
-        getActionBar() setDisplayUseLogoEnabled false
+        setSupportActionBar(id(R.id.toolBar) as Toolbar)
+        getSupportActionBar() setDisplayHomeAsUpEnabled true
+        getSupportActionBar() setDisplayUseLogoEnabled false
 
 
-        val rep = getIntent().getSerializableExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val rep = getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (rep) {
             is BookListResponse -> {
                 setTitle(rep.title)
@@ -60,7 +63,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
                         when (tag) {
                             is SearchObject -> {
                                 val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
-                                intent.putExtra(com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
+                                intent.putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                                 startActivity(intent)
                             }
                         }

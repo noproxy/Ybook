@@ -68,4 +68,5 @@
     <string name="prompt_account">账号</string>
     <string name="prompt_password">密码</string>
     <string name="title_activity_login">登录</string>
+    <string name="hello_blank_fragment"></string>
 </resources>

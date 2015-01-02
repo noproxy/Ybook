@@ -56,6 +56,7 @@ import android.support.v4.content.Loader
 import android.support.v4.content.AsyncTaskLoader
 import me.toxz.kotlin.after
 import android.os.Bundle
+import com.ybook.app.ui.NewBookListActivity
 
 /**
  * Created by carlos on 11/13/14.
@@ -97,8 +98,8 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
         val t = v.getTag()
         when (t) {
             is BookListResponse -> {
-                com.umeng.analytics.MobclickAgent.onEvent(getActivity(), com.ybook.app.util.EVENT_OPEN_RECOMMEND_LIST)
-                startActivity(android.content.Intent(v.getContext(), javaClass<com.ybook.app.ui.NewBookListActivity>()).putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, v.getTag() as com.ybook.app.bean.BookListResponse))
+                MobclickAgent.onEvent(getActivity(), EVENT_OPEN_RECOMMEND_LIST)
+                startActivity(Intent(mActivity, javaClass<NewBookListActivity>()).putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, t))
             }
             is View -> {
                 if (t.getVisibility() == View.VISIBLE) {
@@ -177,7 +178,7 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
 
     var mActivity: Activity? = null
 
-    override fun onAttach(activity: android.app.Activity?) {
+    override fun onAttach(activity: Activity?) {
         super<Fragment>.onAttach(activity)
         (activity as MainActivity).onSectionAttached(0)
         mActivity = activity
@@ -215,7 +216,9 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
 
     private inner class BookListRecyclerViewAdapter() : RecyclerView.Adapter<BookListCardHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookListCardHolder? {
-            val card = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false) as CardView
+            val card = (LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false) as CardView ).after {
+                it setOnClickListener this@HomeFragment
+            }
             return BookListCardHolder(card)
         }
 
@@ -223,6 +226,8 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
             holder.coverImage.setImageResource(R.drawable.ic_empty)
             holder.titleText.setText("")
             holder.cardView setTag null
+            holder.coverImage setTag null
+            holder.titleText setTag null
             if (mListData.size() > position) {
                 mListData.get(position + 1)?.into(holder)
             }
@@ -231,7 +236,9 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
         private fun BookListResponse.into(holder: BookListCardHolder) {
             Picasso.with(holder.cardView.getContext()).load(this.coverImgUrl).into(holder.coverImage)
             holder.titleText.setText(this.title)
-            holder.cardView.setTag(this)
+            holder.cardView setTag this
+            holder.coverImage setTag this
+            holder.titleText setTag this
         }
 
         override fun getItemCount(): Int = 4

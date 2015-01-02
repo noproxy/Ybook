@@ -72,6 +72,5 @@
     <string name="homeMapContainC" translatable="false">一层 F H J Q R S\n二层 I\n三层 A B C D E G K TN TQ TS TU TV\n四层 TP U V X Z\n五层 N O P T TB TD TE TF TG TH TJ TK TL TM TU</string>
     <string name="homeMapContainD" translatable="false">二层北 中文社科（二） H K G\n二层南 中文社科（一） A B C D F E\n三层南 自然科学（二） T.TB-TV(TP除外) U V X Z\n四层南 自然科学（一） N O P Q R S\n四层北 中文计算机图书 TP</string>
     <string name="suggestedBook">Suggested book</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
