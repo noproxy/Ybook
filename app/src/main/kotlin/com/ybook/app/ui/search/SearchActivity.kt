@@ -149,13 +149,13 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         }
 
         mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayout).after {
-            with(TypedValue(), {
-                getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, this, true)
-                (getResources() getDimensionPixelSize this.resourceId).let { aInt ->
-                    it.setProgressViewOffset(false, aInt, 2 * aInt)
-                    println(aInt)
-                }
-            })
+            //            with(TypedValue(), {
+            //                getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, this, true)
+            //                (getResources() getDimensionPixelSize this.resourceId).let { aInt ->
+            //                    it.setProgressViewOffset(false, aInt, 2 * aInt)
+            //                    println(aInt)
+            //                }
+            //            })
             it setOnRefreshListener mPresenter
             it setSoundEffectsEnabled true
             it.setColorSchemeResources(android.R.color.holo_green_light, android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light)

@@ -8,8 +8,6 @@
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="android:windowBackground">@color/windowsBackground</item>
-        <item name="windowActionBarOverlay">true</item>
-
         <item name="android:toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 

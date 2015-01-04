@@ -64,6 +64,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
     override fun onCreate(savedInstanceState: Bundle?) {
         searchView.getSupportActionBar() setDisplayShowTitleEnabled true
         searchView.getSupportActionBar() setDisplayHomeAsUpEnabled  true
+        searchView.showProgress()
         handleIntent(searchView.getIntent())
     }
 

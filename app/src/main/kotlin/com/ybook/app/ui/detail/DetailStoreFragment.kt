@@ -46,9 +46,11 @@ public class DetailStoreFragment(val searchObject: SearchResponse.SearchObject?,
                 if (mDetailResponse == null) {
                     ordBtn.setEnabled(false)
                 } else {
+                    ordBtn.setEnabled(true)
                     (v id R.id.textViewStoreLocation) as TextView setText getItem(position)!!.libLocation
                     (v id R.id.textViewStoreStatus ) as TextView setText getItem(position)!!.libStatus
                     ordBtn setOnClickListener { v ->//TODO order
+
                     }
                 }
                 return v

@@ -9,8 +9,8 @@
         card_view:cardCornerRadius="2dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         >
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +18,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:gravity="center_vertical"
-                  android:padding="24dp"
+                  android:padding="16dp"
                   android:weightSum="1"
             >
 
@@ -52,7 +52,7 @@
                 android:layout_weight="0.7"
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginRight="8dp"
                 android:id="@+id/linearView"
                 android:layout_height="wrap_content"
                 >
@@ -100,7 +100,6 @@
                 android:id="@+id/bookMarkBtn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:padding="12dp"
                 android:scaleType="center"
                 android:src="@drawable/ic_mark"
                 android:background="@drawable/btn_default_selector"
