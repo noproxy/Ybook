@@ -57,6 +57,8 @@ import android.support.v4.content.AsyncTaskLoader
 import me.toxz.kotlin.after
 import android.os.Bundle
 import com.ybook.app.ui.list.NewBookListActivity
+import com.ybook.app.util.ACache
+import java.io.Serializable
 
 /**
  * Created by carlos on 11/13/14.
@@ -81,6 +83,9 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
 
     override fun onLoadFinished(loader: Loader<List<BookListResponse>>?, data: List<BookListResponse>?) {
         Log.i(TAG, "onLoadFinished,data: " + data + ", adapter: " + mAdapter)
+        if (data != null) {
+            ACache.get(mActivity).put("list", data as Serializable)
+        }
         data?.forEach { mListData.put(it.id, it);Log.d(TAG, it.toString()) }
         mAdapter?.notifyDataSetChanged()
     }
@@ -190,6 +195,8 @@ public class HomeFragment() : Fragment(), View.OnClickListener, OnScrollChangedL
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super<Fragment>.onActivityCreated(savedInstanceState)
         Log.i(TAG, "activity created")
+        val cache = ACache.get(mActivity).getAsObject("list") as? List<*>
+        onLoadFinished(null, cache as List<BookListResponse>?)
         getLoaderManager().initLoader(BOOK_LIST_LOADER_ID, Bundle().after { it.putInt(BUNDLE_KEY_POSITION, 0) }, this)
     }
 
