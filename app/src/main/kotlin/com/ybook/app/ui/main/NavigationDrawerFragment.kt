@@ -1,4 +1,4 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.main
 
 
 import android.app.Activity
@@ -40,22 +40,22 @@ public class NavigationDrawerFragment : Fragment() {
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
-    private var mDrawerToggle: ActionBarDrawerToggle? = null
+    private var mDrawerToggle: android.support.v4.app.ActionBarDrawerToggle? = null
 
-    private var mDrawerLayout: DrawerLayout? = null
-    private var mDrawerListView: ListView? = null
-    private var mFragmentContainerView: View? = null
+    private var mDrawerLayout: android.support.v4.widget.DrawerLayout? = null
+    private var mDrawerListView: android.widget.ListView? = null
+    private var mFragmentContainerView: android.view.View? = null
 
     private var mCurrentSelectedPosition = 0
     private var mFromSavedInstanceState: Boolean = false
     private var mUserLearnedDrawer: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        super<Fragment>.onCreate(savedInstanceState)
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
-        val sp = PreferenceManager.getDefaultSharedPreferences(getActivity())
+        val sp = android.preference.PreferenceManager.getDefaultSharedPreferences(getActivity())
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false)
 
         if (savedInstanceState != null) {
@@ -67,16 +67,16 @@ public class NavigationDrawerFragment : Fragment() {
         selectItem(mCurrentSelectedPosition)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: android.os.Bundle?) {
+        super<Fragment>.onActivityCreated(savedInstanceState)
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mDrawerListView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false) as ListView
-        mDrawerListView!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-            override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    override fun onCreateView(inflater: android.view.LayoutInflater, container: android.view.ViewGroup?, savedInstanceState: android.os.Bundle?): android.view.View? {
+        mDrawerListView = inflater.inflate(com.ybook.app.R.layout.fragment_navigation_drawer, container, false) as android.widget.ListView
+        mDrawerListView!!.setOnItemClickListener(object : android.widget.AdapterView.OnItemClickListener {
+            override fun onItemClick(parent: android.widget.AdapterView<*>, view: android.view.View, position: Int, id: Long) {
                 selectItem(position)
             }
         })
@@ -91,7 +91,7 @@ public class NavigationDrawerFragment : Fragment() {
 
     var mOnDrawerOpenListener: OnDrawerListener? = null
 
-    trait OnDrawerListener : DrawerLayout.DrawerListener
+    trait OnDrawerListener : android.support.v4.widget.DrawerLayout.DrawerListener
 
     public fun setOnDrawerListener(listener: OnDrawerListener) {
         mOnDrawerOpenListener = listener
@@ -107,12 +107,12 @@ public class NavigationDrawerFragment : Fragment() {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public fun setUp(fragmentId: Int, drawerLayout: DrawerLayout) {
+    public fun setUp(fragmentId: Int, drawerLayout: android.support.v4.widget.DrawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId)
         mDrawerLayout = drawerLayout
 
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout!!.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
+        mDrawerLayout!!.setDrawerShadow(com.ybook.app.R.drawable.drawer_shadow, android.support.v4.view.GravityCompat.START)
         // set up the drawer's list view with items and click listener
 
         val actionBar = getActionBar()
@@ -121,15 +121,15 @@ public class NavigationDrawerFragment : Fragment() {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = object : ActionBarDrawerToggle(getActivity(), mDrawerLayout, R.drawable.ic_launcher, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            override fun onDrawerClosed(drawerView: View?) {
+        mDrawerToggle = object : ActionBarDrawerToggle(getActivity(), mDrawerLayout, com.ybook.app.R.drawable.ic_launcher, com.ybook.app.R.string.navigation_drawer_open, com.ybook.app.R.string.navigation_drawer_close) {
+            override fun onDrawerClosed(drawerView: android.view.View?) {
                 super.onDrawerClosed(drawerView)
                 if (!isAdded()) return
                 mOnDrawerOpenListener?.onDrawerClosed(drawerView)
                 getActivity().invalidateOptionsMenu() // calls onPrepareOptionsMenu()
             }
 
-            override fun onDrawerOpened(drawerView: View?) {
+            override fun onDrawerOpened(drawerView: android.view.View?) {
                 super.onDrawerOpened(drawerView)
                 if (!isAdded()) return
                 mOnDrawerOpenListener?.onDrawerOpened(drawerView)
@@ -137,19 +137,19 @@ public class NavigationDrawerFragment : Fragment() {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
                     mUserLearnedDrawer = true
-                    val sp = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                    val sp = android.preference.PreferenceManager.getDefaultSharedPreferences(getActivity())
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply()
                 }
                 getActivity().invalidateOptionsMenu() // calls onPrepareOptionsMenu()
             }
 
-            override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
-                super<ActionBarDrawerToggle>.onDrawerSlide(drawerView, slideOffset)
+            override fun onDrawerSlide(drawerView: android.view.View?, slideOffset: Float) {
+                super<android.support.v4.app.ActionBarDrawerToggle>.onDrawerSlide(drawerView, slideOffset)
                 mOnDrawerOpenListener?.onDrawerSlide(drawerView, slideOffset)
             }
 
             override fun onDrawerStateChanged(newState: Int) {
-                super<ActionBarDrawerToggle>.onDrawerStateChanged(newState)
+                super<android.support.v4.app.ActionBarDrawerToggle>.onDrawerStateChanged(newState)
                 mOnDrawerOpenListener?.onDrawerStateChanged(newState)
             }
         }
@@ -178,8 +178,8 @@ public class NavigationDrawerFragment : Fragment() {
         }
     }
 
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
+    override fun onAttach(activity: android.app.Activity?) {
+        super<Fragment>.onAttach(activity)
         try {
             mCallbacks = activity as NavigationDrawerCallbacks
         } catch (e: ClassCastException) {
@@ -189,36 +189,36 @@ public class NavigationDrawerFragment : Fragment() {
     }
 
     override fun onDetach() {
-        super.onDetach()
+        super<Fragment>.onDetach()
         mCallbacks = null
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+    override fun onSaveInstanceState(outState: android.os.Bundle) {
+        super<Fragment>.onSaveInstanceState(outState)
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super<Fragment>.onConfigurationChanged(newConfig)
         // Forward the new configuration the drawer toggle component.
         mDrawerToggle!!.onConfigurationChanged(newConfig)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: android.view.Menu?, inflater: android.view.MenuInflater?) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater!!.inflate(R.menu.global, menu)
+            inflater!!.inflate(com.ybook.app.R.menu.global, menu)
             showGlobalContextActionBar()
         }
-        super.onCreateOptionsMenu(menu, inflater)
+        super<Fragment>.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: android.view.MenuItem?): Boolean {
         if (mDrawerToggle!!.onOptionsItemSelected(item)) {
             return true
         }
-        return super.onOptionsItemSelected(item)
+        return super<Fragment>.onOptionsItemSelected(item)
     }
 
     /**
@@ -228,12 +228,12 @@ public class NavigationDrawerFragment : Fragment() {
     private fun showGlobalContextActionBar() {
         val actionBar = getActionBar()
         actionBar.setDisplayShowTitleEnabled(true)
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD)
-        actionBar.setTitle(R.string.app_name)
+        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_STANDARD)
+        actionBar.setTitle(com.ybook.app.R.string.app_name)
     }
 
-    private fun getActionBar(): ActionBar {
-        return (getActivity() as ActionBarActivity).getSupportActionBar()
+    private fun getActionBar(): android.support.v7.app.ActionBar {
+        return (getActivity() as android.support.v7.app.ActionBarActivity).getSupportActionBar()
     }
 
     /**
@@ -246,9 +246,9 @@ public class NavigationDrawerFragment : Fragment() {
         public fun onNavigationDrawerItemSelected(position: Int)
     }
 
-    inner class NavigationAdapter : BaseAdapter() {
-        val nameStrings = array(R.string.navigationHome, R.string.navigationAbout, R.string.navigationFeedback)
-        val iconResIds = array(R.drawable.icon_home, R.drawable.icon_info, R.drawable.icon_setting)
+    inner class NavigationAdapter : android.widget.BaseAdapter() {
+        val nameStrings = array(com.ybook.app.R.string.navigationHome, com.ybook.app.R.string.navigationAbout, com.ybook.app.R.string.navigationFeedback)
+        val iconResIds = array(com.ybook.app.R.drawable.icon_home, com.ybook.app.R.drawable.icon_info, com.ybook.app.R.drawable.icon_setting)
 
         override fun getCount(): Int = 3
 
@@ -256,10 +256,10 @@ public class NavigationDrawerFragment : Fragment() {
 
         override fun getItemId(position: Int): Long = position.toLong()
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-            val v = convertView ?: LayoutInflater.from(getActivity()).inflate(R.layout.navigation_drawer_item, parent, false)
-            (v.findViewById(R.id.menu_text) as TextView).setText(nameStrings[position])
-            (v.findViewById(R.id.menu_icon) as ImageView).setImageResource(iconResIds[position])
+        override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View? {
+            val v = convertView ?: android.view.LayoutInflater.from(getActivity()).inflate(com.ybook.app.R.layout.navigation_drawer_item, parent, false)
+            (v.findViewById(com.ybook.app.R.id.menu_text) as android.widget.TextView).setText(nameStrings[position])
+            (v.findViewById(com.ybook.app.R.id.menu_icon) as android.widget.ImageView).setImageResource(iconResIds[position])
             return v
         }
     }

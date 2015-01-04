@@ -35,7 +35,7 @@ import com.ybook.app.ui.search.SearchActivity
 import android.widget.ScrollView
 import android.widget.LinearLayout
 import android.support.v7.widget.CardView
-import com.ybook.app.ui.MainActivity
+import com.ybook.app.ui.main.MainActivity
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
@@ -56,7 +56,7 @@ import android.support.v4.content.Loader
 import android.support.v4.content.AsyncTaskLoader
 import me.toxz.kotlin.after
 import android.os.Bundle
-import com.ybook.app.ui.NewBookListActivity
+import com.ybook.app.ui.list.NewBookListActivity
 
 /**
  * Created by carlos on 11/13/14.

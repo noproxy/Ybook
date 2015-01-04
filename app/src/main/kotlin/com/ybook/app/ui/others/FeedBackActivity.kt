@@ -1,12 +1,12 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.others
 
+import com.ybook.app.swipebacklayout.SwipeBackActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import com.ybook.app.R
-import com.ybook.app.swipebacklayout.SwipeBackActivity
-import com.umeng.analytics.MobclickAgent
 import android.view.MenuItem
+import com.ybook.app.R
+import com.umeng.analytics.MobclickAgent
 
 /**
  * Created by carlos on 12/3/14.

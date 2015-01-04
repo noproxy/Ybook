@@ -1,53 +1,31 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.others
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
-import android.app.Activity
-import android.app.LoaderManager.LoaderCallbacks
-import android.content.CursorLoader
-import android.content.Loader
-import android.database.Cursor
-import android.net.Uri
-import android.os.AsyncTask
-
-import android.os.Build
-import android.os.Bundle
-import android.provider.ContactsContract
-import android.text.TextUtils
-import android.view.KeyEvent
-import android.view.View
-import android.view.View.OnClickListener
-import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import com.ybook.app.R
-import com.ybook.app.swipebacklayout.SwipeBackActivity
-
-import java.util.ArrayList
-import com.ybook.app.id
-import android.app.ProgressDialog
-import me.toxz.kotlin.after
-import com.koushikdutta.ion.Ion
-import com.koushikdutta.async.http.WebSocket.StringCallback
-import com.koushikdutta.async.http.AsyncHttpClient
-import com.ybook.app.util.JSONHelper
-import android.util.Log
-import com.ybook.app.util.AccountHelper
-import com.ybook.app.net.LoginRequest
-import com.ybook.app.bean.getLibCode
 import me.toxz.kotlin.makeTag
+import com.ybook.app.id
+import me.toxz.kotlin.after
+import com.ybook.app.swipebacklayout.SwipeBackActivity
+import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.view.View
+import android.os.Bundle
+import android.widget.TextView
+import android.view.KeyEvent
+import android.widget.Button
+import android.annotation.TargetApi
+import android.app.ProgressDialog
+import com.ybook.app.net.LoginRequest
+import com.ybook.app.R
+import android.view.inputmethod.EditorInfo
+import android.os.Build
+import android.text.TextUtils
+import com.ybook.app.bean
+import com.ybook.app.util.AccountHelper
+import android.util.Log
 import android.os.Handler
-import com.koushikdutta.async.http.WebSocket
-import me.toxz.kotlin.from
-import com.ybook.app.net.getMainUrl
-import android.widget.Toast
-import android.app.AlertDialog
-import android.app.Dialog
-
+import com.ybook.app.util.JSONHelper
+import com.koushikdutta.async.http.AsyncHttpClient
+import com.ybook.app.net
+import me.toxz
 
 /**
  * A login screen that offers login via account/password.
@@ -143,7 +121,7 @@ public class LoginActivity : SwipeBackActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true)
-            login({ onFail() }, { onSucceed(it) }, LoginRequest(account, password, getLibCode(), null))
+            login({ onFail() }, { onSucceed(it) }, LoginRequest(account, password, bean.getLibCode(), null))
         }
     }
 
@@ -188,7 +166,7 @@ public class LoginActivity : SwipeBackActivity() {
     fun login(failed: () -> Unit, succeed: (request: LoginRequest) -> Unit, request: LoginRequest) {
 
         Log.i(TAG, "Login start")
-        from { getMainUrl() }
+        toxz.kotlin.from { net.getMainUrl() }
                 .supposing { it != null }
                 .then {
                     var isEnd = false
@@ -303,6 +281,3 @@ public class LoginActivity : SwipeBackActivity() {
     //    }
 
 }
-
-
-

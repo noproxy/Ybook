@@ -1,39 +1,38 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.list
 
+import com.ybook.app.id
 import com.ybook.app.swipebacklayout.SwipeBackActivity
 import android.os.Bundle
-import com.ybook.app.R
+import android.support.v7.widget.Toolbar
 import com.ybook.app.bean.BookListResponse
 import android.widget.ListView
+import com.ybook.app.bean.SearchResponse
+import com.ybook.app.ui.detail.BookDetailActivity
+import android.view.MenuItem
+import java.util.ArrayList
 import android.widget.BaseAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.ImageView
+import android.os.Handler
+import android.os.Message
+import com.ybook.app.bean.DetailResponse
+import com.ybook.app.R
+import com.ybook.app.ui.home
 import android.content.Intent
 import com.umeng.analytics.MobclickAgent
-import android.content.Context
+import com.ybook.app.util.BooksListUtil
 import android.view.LayoutInflater
-import com.ybook.app.bean.SearchResponse.SearchObject
-import com.ybook.app.id
-import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.ybook.app.bean.BookItem
 import android.widget.Toast
 import android.app.ProgressDialog
 import com.ybook.app.net.PostHelper
-import com.ybook.app.net.DetailRequest
-import com.ybook.app.bean.getLibCode
-import android.os.Handler
-import android.os.Message
-import com.ybook.app.net.MSG_SUCCESS
-import com.ybook.app.bean.DetailResponse
 import com.ybook.app.net.MSG_ERROR
-import java.util.ArrayList
-import com.ybook.app.util.BooksListUtil
-import android.view.MenuItem
-import com.ybook.app.ui.detail.BookDetailActivity
-import com.ybook.app.ui.home.KEY_BOOK_LIST_RESPONSE_EXTRA
-import android.support.v7.widget.Toolbar
+import com.ybook.app.net.DetailRequest
+import com.ybook.app.net.MSG_SUCCESS
+import com.ybook.app.bean.getLibCode
 
 /**
  * Created by carlos on 12/8/14.
@@ -50,7 +49,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
         getSupportActionBar() setDisplayUseLogoEnabled false
 
 
-        val rep = getIntent().getSerializableExtra(KEY_BOOK_LIST_RESPONSE_EXTRA)
+        val rep = getIntent().getSerializableExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         when (rep) {
             is BookListResponse -> {
                 setTitle(rep.title)
@@ -61,9 +60,9 @@ public class NewBookListActivity() : SwipeBackActivity() {
                     if (i != 0) {
                         val tag = view.getTag()
                         when (tag) {
-                            is SearchObject -> {
+                            is SearchResponse.SearchObject -> {
                                 val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
-                                intent.putExtra(KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
+                                intent.putExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                                 startActivity(intent)
                             }
                         }
@@ -81,10 +80,10 @@ public class NewBookListActivity() : SwipeBackActivity() {
         return super<SwipeBackActivity>.onOptionsItemSelected(item)
     }
 
-    fun Array<BookListResponse.BookListObject>.toListItem(): ArrayList<SearchObject> {
-        val a = ArrayList<SearchObject>()
+    fun Array<BookListResponse.BookListObject>.toListItem(): ArrayList<SearchResponse.SearchObject> {
+        val a = ArrayList<SearchResponse.SearchObject>()
         this.forEach { i ->
-            a.add(SearchObject(i.author, i.press, "loading", "record", i.title, i.coverImgUrl, i.id))
+            a.add(SearchResponse.SearchObject(i.author, i.press, "loading", "record", i.title, i.coverImgUrl, i.id))
         }
         return a
     }
@@ -99,7 +98,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
         MobclickAgent.onPause(this);
     }
 
-    val listItems = ArrayList<SearchObject>()
+    val listItems = ArrayList<SearchResponse.SearchObject>()
     val mUtil = BooksListUtil.getInstance(this)
 
     inner class TmpBookListAdapter(val comment: String) : BaseAdapter() {
@@ -130,7 +129,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
                     linearView setVisibility View.VISIBLE
                     markBtnView setVisibility View.VISIBLE
 
-                    val item = getItem(position) as SearchObject
+                    val item = getItem(position) as SearchResponse.SearchObject
                     v setTag item
                     markBtnView setTag item
                     titleView setText item.title
@@ -180,4 +179,3 @@ public class NewBookListActivity() : SwipeBackActivity() {
 
     }
 }
-

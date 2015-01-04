@@ -1,13 +1,15 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.others
 
 import android.support.v4.app.Fragment
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.os.Bundle
+import android.view.View
 import android.widget.TextView
-import com.ybook.app.R
 import android.app.Activity
+import com.ybook.app.ui.main.MainActivity
+import com.ybook.app.R
+import com.ybook.app.ui.main.MainActivity
 
 /**
  * Created by carlos on 9/21/14.

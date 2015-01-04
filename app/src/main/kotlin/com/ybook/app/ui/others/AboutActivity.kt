@@ -1,11 +1,10 @@
-package com.ybook.app.ui
+package com.ybook.app.ui.others
 
-import android.app.Activity
-import android.os.Bundle
-import com.ybook.app.R
-import android.support.v4.app.FragmentActivity
 import com.ybook.app.swipebacklayout.SwipeBackActivity
+import android.os.Bundle
 import android.view.MenuItem
+import com.ybook.app.R
+import com.ybook.app.ui
 
 /**
  * Created by Carlos on 2014/12/21.
