@@ -21,4 +21,6 @@
     <dimen name="cover_width">180dp</dimen>
 
     <dimen name="book_list_card_height">160dp</dimen>
+
+    <dimen name="tab_host_default_height">48dp</dimen>
 </resources>

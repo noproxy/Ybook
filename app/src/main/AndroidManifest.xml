@@ -97,7 +97,7 @@
                 android:name=".ui.others.LoginActivity"
                 android:label="@string/title_activity_login"
                 android:windowSoftInputMode="adjustResize|stateVisible"
-                android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+                android:theme="@style/AppTheme.Translucent"
                 >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
