@@ -48,6 +48,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.util.TypedValue
 import me.toxz.kotlin.after
 import com.pnikosis.materialishprogress.ProgressWheel
+import android.view.animation.AccelerateInterpolator
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
@@ -150,10 +151,11 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
 
     override fun showLoadPageMessage(page: Int) = showMessage((getResources() getString R.string.loadingSearchMessagePrefix) + " " + (page + 1), MessageType.INFO)
 
+    var mToolBar: Toolbar? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        setSupportActionBar(this.id(R.id.toolBar) as Toolbar)
+        setSupportActionBar((this.id(R.id.toolBar) as Toolbar).after { mToolBar = it })
 
         mRecyclerView = (id(android.R.id.list) as RecyclerView).after {
             it setHasFixedSize true
@@ -174,6 +176,7 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
 
     override fun scrollTo(position: Int) {
         mRecyclerView?.smoothScrollToPosition(position)
+        mToolBar?.animate()?.translationY(-mToolBar!!.getBottom().toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
     }
 
     override fun onNewIntent(intent: Intent) {
