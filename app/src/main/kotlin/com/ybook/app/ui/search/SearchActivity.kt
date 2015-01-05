@@ -47,6 +47,7 @@ import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.TypedValue
 import me.toxz.kotlin.after
+import com.pnikosis.materialishprogress.ProgressWheel
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
@@ -55,7 +56,9 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     private val mPresenter: SearchPresenter = SearchPresenterImpl(this)
     var mRecyclerView: RecyclerView ? = null
     private var mLayoutManager: RecyclerView.LayoutManager ? = null
-    private var mSwipeRefreshLayout: SwipeRefreshLayout? = null
+    var mSwipeRefreshLayout: SwipeRefreshLayout? = null
+    private var mProgressWheel: ProgressWheel? = null
+
     class object {
         val REQUEST_CODE_IS_COLLECTION_CHANGED = 0
         val EXTRA_POSITION = "position"
@@ -67,11 +70,21 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     }
 
     override fun showProgress(): SearchActivity {
-        mSwipeRefreshLayout?.setRefreshing(true)
+        mProgressWheel?.setVisibility(View.VISIBLE)
         return this
     }
 
     override fun hideProgress(): SearchActivity {
+        mProgressWheel?.setVisibility(View.GONE)
+        return this
+    }
+
+    override fun startRefresh(): SearchActivity {
+        mSwipeRefreshLayout?.setRefreshing(true)
+        return this
+    }
+
+    override fun endRefresh(): SearchView {
         mSwipeRefreshLayout?.setRefreshing(false)
         return this
     }
@@ -79,6 +92,7 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun showEmpty(): SearchView = this
 
     override fun hideEmpty(): SearchView = this
+
 
     override fun showMessage(msg: String, type: SearchView.MessageType): SearchView {
         when (type) {
@@ -149,22 +163,17 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         }
 
         mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayout).after {
-            //            with(TypedValue(), {
-            //                getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, this, true)
-            //                (getResources() getDimensionPixelSize this.resourceId).let { aInt ->
-            //                    it.setProgressViewOffset(false, aInt, 2 * aInt)
-            //                    println(aInt)
-            //                }
-            //            })
             it setOnRefreshListener mPresenter
             it setSoundEffectsEnabled true
+            it setEnabled false
             it.setColorSchemeResources(android.R.color.holo_green_light, android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light)
         }
+        mProgressWheel = (id(R.id.progressWheel)as ProgressWheel)
         mPresenter.onCreate(savedInstanceState)
     }
 
-    override fun scrollTo(p: Int) {
-        mRecyclerView?.smoothScrollToPosition(p)
+    override fun scrollTo(position: Int) {
+        mRecyclerView?.smoothScrollToPosition(position)
     }
 
     override fun onNewIntent(intent: Intent) {

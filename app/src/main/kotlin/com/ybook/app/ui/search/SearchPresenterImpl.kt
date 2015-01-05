@@ -172,7 +172,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
             PostHelper.search(SearchRequest(mSearchStatus!!.key, mSearchStatus!!.nextPage, SEARCH_BY_KEY, bean.getLibCode()), mHandler)
             mSearchStatus!!.requestedPage++
             mSearchStatus!!.isLoading = true
-            searchView.showProgress()
+            if (mSearchStatus!!.requestedPage > 0) searchView.showProgress()
             searchView.showLoadPageMessage(mSearchStatus!!.nextPage)
         }
     }
@@ -194,6 +194,8 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
             }
             mSearchStatus!!.isLoading = false;
             searchView.hideProgress()
+            searchView.endRefresh()
+            (searchView as SearchActivity).mSwipeRefreshLayout?.setEnabled(mSearchStatus!!.listItems.size() > 0)
         }
     }
 

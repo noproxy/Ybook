@@ -57,4 +57,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.cesarferreira.quickutils:library:2.+'
     compile 'com.koushikdutta.ion:ion:2.+'
+    compile 'com.pnikosis:materialish-progress:1.2'
 }

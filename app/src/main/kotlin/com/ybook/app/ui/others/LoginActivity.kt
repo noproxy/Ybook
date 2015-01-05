@@ -26,6 +26,7 @@ import com.ybook.app.util.JSONHelper
 import com.koushikdutta.async.http.AsyncHttpClient
 import com.ybook.app.net
 import me.toxz
+import me.toxz.kotlin.from
 
 /**
  * A login screen that offers login via account/password.
@@ -72,7 +73,7 @@ public class LoginActivity : SwipeBackActivity() {
     private fun setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true)
+            //            getSupportActionBar().setDisplayHomeAsUpEnabled(true)
         }
     }
 
@@ -166,7 +167,7 @@ public class LoginActivity : SwipeBackActivity() {
     fun login(failed: () -> Unit, succeed: (request: LoginRequest) -> Unit, request: LoginRequest) {
 
         Log.i(TAG, "Login start")
-        toxz.kotlin.from { net.getMainUrl() }
+        from { net.getMainUrl() }
                 .supposing { it != null }
                 .then {
                     var isEnd = false
@@ -180,22 +181,17 @@ public class LoginActivity : SwipeBackActivity() {
                         } else {
                             webSocket.setClosedCallback {
                                 Log.i(TAG, "closed")
-                                if (!isEnd)
-                                    this@LoginActivity.runOnUiThread (failed)
+                                if (!isEnd) this@LoginActivity.runOnUiThread (failed)
                             }
-
                             webSocket.setStringCallback {
                                 val rep = JSONHelper.readLoginResponse(it)
                                 Log.i(TAG, "login status:" + rep.status)
-                                if (rep.status == 0)
-                                    this@LoginActivity.runOnUiThread { succeed(request) }
-                                else
-                                    this@LoginActivity.runOnUiThread(failed)
+                                if (rep.status == 0) this@LoginActivity.runOnUiThread { succeed(request) }
+                                else this@LoginActivity.runOnUiThread(failed)
                                 isEnd = true
                             }
                             webSocket.send(request.getJSONStr())
                         }
-
                     })
                 }.or { failed() }.exec()
 
