@@ -167,6 +167,7 @@
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="android:windowBackground">@color/windowsBackground</item>
         <item name="android:toolbarStyle">@style/AppTheme.Toolbar</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
     <style name="AppTheme.Translucent" parent="AppTheme">

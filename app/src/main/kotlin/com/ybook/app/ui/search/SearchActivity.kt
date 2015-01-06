@@ -49,6 +49,7 @@ import android.util.TypedValue
 import me.toxz.kotlin.after
 import com.pnikosis.materialishprogress.ProgressWheel
 import android.view.animation.AccelerateInterpolator
+import es.oneoctopus.swiperefreshlayoutoverlay.SwipeRefreshLayoutOverlay
 
 public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
@@ -57,7 +58,7 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     private val mPresenter: SearchPresenter = SearchPresenterImpl(this)
     var mRecyclerView: RecyclerView ? = null
     private var mLayoutManager: RecyclerView.LayoutManager ? = null
-    var mSwipeRefreshLayout: SwipeRefreshLayout? = null
+    var mSwipeRefreshLayout: SwipeRefreshLayoutOverlay? = null
     private var mProgressWheel: ProgressWheel? = null
 
     class object {
@@ -166,7 +167,7 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
             it setOnScrollListener mPresenter
         }
 
-        mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayout).after {
+        mSwipeRefreshLayout = (id(R.id.swipeRefreshLayout) as SwipeRefreshLayoutOverlay).after {
             it setOnRefreshListener mPresenter
             it setSoundEffectsEnabled true
             it setEnabled false
@@ -180,13 +181,18 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
         mRecyclerView?.smoothScrollToPosition(position)
     }
 
-    var isToolBarShow = true
+    var toolBarBottom: Int ? = null
     override fun showToolBar(bool: Boolean) {
-        if (bool && isToolBarShow) {
-            mToolBar?.animate()?.translationY(-mToolBar!!.getBottom().toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+
+        if (toolBarBottom == null) {
+            toolBarBottom = mToolBar!!.getBottom()
+            mSwipeRefreshLayout?.setTopMargin(toolBarBottom!!)
         }
-        if ( !bool && !isToolBarShow) {
-            mToolBar?.animate()?.translationY(mToolBar!!.getHeight().toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+        if (bool) {
+            //open the view
+            mToolBar?.animate()?.translationY(0F)?.setInterpolator(AccelerateInterpolator())?.start()
+        } else {
+            mToolBar?.animate()?.translationY(-toolBarBottom!!.toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
         }
     }
 

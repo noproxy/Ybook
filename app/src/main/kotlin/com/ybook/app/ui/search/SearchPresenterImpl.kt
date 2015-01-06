@@ -47,6 +47,8 @@ import android.view.Window
 import android.provider.SearchRecentSuggestions
 import com.ybook.app.data.SearchSuggestionProvider
 import android.view.ViewConfiguration
+import android.support.v7.widget.RecyclerView.ViewHolder
+import me.toxz.kotlin.after
 
 /**
  * Created by Carlos on 2014/12/17.
@@ -156,6 +158,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
     }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        Log.d(TAG, dy.toString())
         if (dy > ViewConfiguration.get(searchView).getScaledTouchSlop()) {
             searchView.showToolBar(false)
         } else if (-dy > ViewConfiguration.get(searchView).getScaledTouchSlop()) {
@@ -205,39 +208,49 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
         }
     }
 
-    private val mRecyclerAdapter = object : RecyclerView.Adapter<SearchViewHolder>() {
+    private val mRecyclerAdapter = object : RecyclerView.Adapter<ViewHolder>() {
+        private val VIEW_TYPE_HEADER = 0
+        private val VIEW_TYPE_ITEM = 1
+
         var lastPosition: Int = -1
 
 
-        override fun onCreateViewHolder(parent: ViewGroup?, p1: Int): SearchViewHolder? {
-            val holder = SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false))
-            holder.view setOnClickListener this@SearchPresenterImpl
-            holder.markBtn setOnClickListener this@SearchPresenterImpl
-            return holder
+        override fun getItemViewType(position: Int): Int {
+            return if ((position == 0)) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
+            if (viewType == VIEW_TYPE_HEADER) return HeaderViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.padding_action_bar, parent, false))
+            else return SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false)).after {
+                it.view setOnClickListener this@SearchPresenterImpl
+                it.markBtn setOnClickListener this@SearchPresenterImpl
+            }
         }
 
         var oldPaddingTop: Int? = null
-        override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-            val item = mSearchStatus!!.listItems[position]
-            holder.titleText setText item.title
-            holder.idText setText item.id
-            holder.authorText setText item.author
-            holder.pressText setText item.press
-            Picasso.with(searchView) load item.coverImgUrl error (searchView.getResources().getDrawable(R.drawable.ic_error)) into holder.coverImage
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            if (holder is SearchViewHolder) {
+                val item = mSearchStatus!!.listItems[position]
+                holder.titleText setText item.title
+                holder.idText setText item.id
+                holder.authorText setText item.author
+                holder.pressText setText item.press
+                Picasso.with(searchView) load item.coverImgUrl error (searchView.getResources().getDrawable(R.drawable.ic_error)) into holder.coverImage
 
-            holder.view setTag item
-            holder.markBtn setTag item
-            holder.markBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
-            //            setAnimation(holder.view, position)
-            //            if (oldPaddingTop == null) {
-            //                oldPaddingTop = holder.view.getPaddingTop()
-            //            }
-            //            if (position == 0) {
-            //                holder.view.setPadding(holder.view.getPaddingLeft(), holder.view.getPaddingTop() + searchView.getSupportActionBar().getHeight(), holder.view.getPaddingRight(), holder.view.getPaddingBottom())
-            //            } else holder.view.setPadding(holder.view.getPaddingLeft(), oldPaddingTop!!, holder.view.getPaddingRight(), holder.view.getPaddingBottom())
+                holder.view setTag item
+                holder.markBtn setTag item
+                holder.markBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
+                //            setAnimation(holder.view, position)
+                //            if (oldPaddingTop == null) {
+                //                oldPaddingTop = holder.view.getPaddingTop()
+                //            }
+                //            if (position == 0) {
+                //                holder.view.setPadding(holder.view.getPaddingLeft(), holder.view.getPaddingTop() + searchView.getSupportActionBar().getHeight(), holder.view.getPaddingRight(), holder.view.getPaddingBottom())
+                //            } else holder.view.setPadding(holder.view.getPaddingLeft(), oldPaddingTop!!, holder.view.getPaddingRight(), holder.view.getPaddingBottom())
+            }
         }
 
-        override fun getItemCount(): Int = mSearchStatus!!.listItems.size
+        override fun getItemCount(): Int = mSearchStatus!!.listItems.size + 1
 
 
         private fun setAnimation(viewToAnimate: View, position: Int) {
@@ -252,6 +265,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
 
 }
 
+public class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view)
 public class SearchViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val titleText = (view id R.id.text_view_book_title) as TextView
     val idText = (view id R.id.text_view_book_query_id) as TextView

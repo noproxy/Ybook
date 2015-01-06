@@ -69,4 +69,6 @@
     <string name="prompt_password">密码</string>
     <string name="title_activity_login">登录</string>
     <string name="loginHint">登陆</string>
+    <string name="homeTabTitleCommon">推荐</string>
+    <string name="homeTabTitleIdentity">我</string>
 </resources>

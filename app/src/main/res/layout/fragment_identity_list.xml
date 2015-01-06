@@ -6,7 +6,7 @@
              tools:context="com.ybook.app.IdentityFragment"
         >
 
-    <ListView
+    <com.github.ksoichiro.android.observablescrollview.ObservableListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

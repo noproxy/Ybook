@@ -4,7 +4,6 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/primary"
-             android:paddingTop="?attr/actionBarSize"
              tools:context="com.ybook.app.ui.home.HomeTabFragment"
         >
 
@@ -28,6 +27,7 @@
     </FrameLayout>
 
     <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
+            android:layout_marginTop="?attr/actionBarSize"
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"

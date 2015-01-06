@@ -11,15 +11,17 @@ import android.widget.ListAdapter
 import android.support.v7.widget.RecyclerView
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
+import es.oneoctopus.swiperefreshlayoutoverlay.SwipeRefreshLayoutOverlay
+import android.support.v7.widget.RecyclerView.ViewHolder
 
 /**
  * Created by Carlos on 2014/12/17.
  */
-public trait SearchPresenter : RecyclerView.OnScrollListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public trait SearchPresenter : RecyclerView.OnScrollListener, View.OnClickListener, SwipeRefreshLayoutOverlay.OnRefreshListener {
     public fun onCreate(savedInstanceState: Bundle?)
     public fun onResume()
     public fun onPause()
-    public fun getAdapter(): RecyclerView.Adapter<SearchViewHolder>
+    public fun getAdapter(): RecyclerView.Adapter<ViewHolder>
     public fun onOptionsItemSelected(item: MenuItem?): Boolean
     public fun onNewIntent(intent: Intent)
 }

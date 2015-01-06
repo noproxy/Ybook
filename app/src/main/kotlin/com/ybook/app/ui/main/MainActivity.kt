@@ -32,32 +32,48 @@ import com.ybook.app.ui.search.SearchActivity
 import android.support.v7.widget.SearchView.OnQueryTextListener
 import com.ybook.app.ui.others.FeedBackActivity
 import com.ybook.app.ui.others.AboutFragment
-import com.ybook.app.ui.home.HomeFragment.OnFragmentScrollChangedListener
 import android.support.v7.app.ActionBarActivity
 import com.ybook.app.ui.home.HomeTabFragment
-import com.ybook.app.ui.home.HomeTabFragment.OnFragmentInteractionListener
+import com.ybook.app.ui.home.HomeTabFragment
 import android.net.Uri
-import com.ybook.app.IdentityFragment
+import com.ybook.app.ui.home.IdentityFragment
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks
+import com.github.ksoichiro.android.observablescrollview.ScrollState
+import com.github.ksoichiro.android.observablescrollview.Scrollable
+import me.toxz.kotlin.makeTag
+import me.toxz.kotlin.after
+import android.view.animation.AccelerateInterpolator
 
 val ARG_SECTION_NUMBER: String = "section_number"
 
-public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFragmentScrollChangedListener, OnFragmentInteractionListener, IdentityFragment.OnFragmentInteractionListener {
-    override fun onFragmentInteraction(id: String?) {
-        //TODO
+public class MainActivity : ActionBarActivity(),
+        NavigationDrawerCallbacks,
+        ObservableScrollViewCallbacks,
+        HomeTabFragment.OnFragmentInteractionListener,
+        IdentityFragment.OnFragmentInteractionListener {
+
+    val TAG = makeTag()
+
+    override fun onFragmentInteraction(id: String) {
+
+    }
+
+    override fun onScrollChanged(p0: Int, p1: Boolean, p2: Boolean) {
+    }
+
+    override fun onDownMotionEvent() {
+    }
+
+    override fun onUpOrCancelMotionEvent(p0: ScrollState?) {
+        Log.i(TAG, "ScrollState: " + p0)
+        when (p0) {
+            ScrollState.UP -> showHeadView(false)
+            ScrollState.DOWN -> showHeadView(true)
+        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {
         //TODO
-    }
-
-    override fun onScrollChanged(y: Int) {
-        android.util.Log.i("MainActivity", "onScroll, scrollY:${y}")
-        val actionBar = getSupportActionBar()
-        if (y >= actionBar.getHeight() && actionBar.isShowing()) {
-            actionBar.hide();
-        } else if ( y == 0 && !actionBar.isShowing()) {
-            actionBar.show();
-        }
     }
 
     override fun onBackPressed() {
@@ -96,10 +112,11 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
 
     //    var materialMenu: MaterialMenuIcon? = null
 
+    var mToolBar: Toolbar? = null
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super<ActionBarActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(id(R.id.toolBar) as android.support.v7.widget.Toolbar)
+        setSupportActionBar((id(R.id.toolBar) as Toolbar) after { mToolBar = it })
 
         val fm = getSupportFragmentManager()
 
@@ -171,6 +188,7 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
     }
 
     var mSearchView: SearchView ? = null
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (!mNavDrawerFragment!!.isDrawerOpen() && !mColDrawerFragment!!.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
@@ -211,4 +229,30 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
         }
         return super<ActionBarActivity>.onOptionsItemSelected(item)
     }
+
+    var toolBarBottom: Int ? = null
+    fun showHeadView(bool: Boolean) {
+        if (toolBarBottom == null) {
+            toolBarBottom = mToolBar!!.getBottom()
+        }
+        if (bool) {
+            //open the view
+            mToolBar?.animate()?.translationY(0F)?.setInterpolator(AccelerateInterpolator())?.start()
+        } else {
+            mToolBar?.animate()?.translationY(-toolBarBottom!!.toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+        }
+        mHeadViewHideOrShowListener?.onHideOrShow(bool, toolBarBottom!!)
+    }
+
+    var mHeadViewHideOrShowListener: OnHeadViewHideOrShowListener? = null
+
+    public fun setOnHeadViewHideOrShowListener(l: OnHeadViewHideOrShowListener) {
+        mHeadViewHideOrShowListener = l
+    }
+
+
+}
+
+public trait OnHeadViewHideOrShowListener {
+    public fun onHideOrShow(isShow: Boolean, parentBottom: Int)
 }

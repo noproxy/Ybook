@@ -7,6 +7,8 @@
     <color name="navigationBarColor">#000</color>
     <color name="apptheme_color">#50b543</color>
 
+    <color name="tabIndicatorColorAccent">#00ffffff</color>
+
 
     <color name="actionButton">#ff6733</color>
     <color name="actionButtonPressed">#ff6733</color>

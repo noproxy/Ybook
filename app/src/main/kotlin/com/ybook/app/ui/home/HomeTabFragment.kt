@@ -1,6 +1,5 @@
 package com.ybook.app.ui.home
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,11 +12,14 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app
 import android.support.v4.app.Fragment
 import android.util.SparseArray
-import com.ybook.app.IdentityFragment
+import com.ybook.app.ui.home.IdentityFragment
 import me.toxz.kotlin.after
 import android.support.v4.view.ViewPager
 import com.ybook.app.id
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
+import com.ybook.app.ui.main.OnHeadViewHideOrShowListener
+import android.view.animation.AccelerateInterpolator
+import com.ybook.app.ui.main.MainActivity
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,13 +30,29 @@ import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
  * create an instance of this fragment.
  */
 public class HomeTabFragment// Required empty public constructor
-: Fragment() {
+: Fragment(), OnHeadViewHideOrShowListener {
+    var mSlidingTabLayout: SlidingTabLayout? = null
+    var mSlidingTabLayoutBottom: Int = 0
+    override fun onHideOrShow(isShow: Boolean, parentBottom: Int) {
+        if (mSlidingTabLayoutBottom == 0) {
+            mSlidingTabLayoutBottom = mSlidingTabLayout?.getBottom() ?: 0
+        }
+        if (mSlidingTabLayoutBottom == 0) {
+            return
+        }
+        if (isShow) {
+            //open the view
+            mSlidingTabLayout?.animate()?.translationY(0F)?.setInterpolator(AccelerateInterpolator())?.start()
+        } else {
+            mSlidingTabLayout?.animate()?.translationY(-parentBottom.toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+        }
+    }
 
 
     private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super<Fragment>.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,12 +61,13 @@ public class HomeTabFragment// Required empty public constructor
             val mPager = it.id(R.id.pager) as ViewPager
             mPager.setAdapter(mPagerAdapter)
 
+            mSlidingTabLayout = (it.findViewById(R.id.sliding_tabs) as SlidingTabLayout).after {
+                it.setCustomTabView(R.layout.tab_indicator, android.R.id.text1)
+                it.setSelectedIndicatorColors(getResources().getColor(R.color.tabIndicatorColorAccent))
+                it.setDistributeEvenly(true)
+                it.setViewPager(mPager)
+            }
 
-            val slidingTabLayout = it.findViewById(R.id.sliding_tabs) as SlidingTabLayout
-            slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1)
-            slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent))
-            slidingTabLayout.setDistributeEvenly(true)
-            slidingTabLayout.setViewPager(mPager)
         }
     }
 
@@ -60,17 +79,17 @@ public class HomeTabFragment// Required empty public constructor
     }
 
     override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
+        super<Fragment>.onAttach(activity)
         try {
             mListener = activity as OnFragmentInteractionListener
         } catch (e: ClassCastException) {
             throw ClassCastException(activity!!.toString() + " must implement OnFragmentInteractionListener")
         }
-
+        (activity as MainActivity).setOnHeadViewHideOrShowListener(this)
     }
 
     override fun onDetach() {
-        super.onDetach()
+        super<Fragment>.onDetach()
         mListener = null
     }
 
