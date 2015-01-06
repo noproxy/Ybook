@@ -22,6 +22,7 @@ public trait SearchView : SwipeBackActivity {
     public fun scrollTo(position: Int)
     public fun startRefresh(): SearchView
     public fun endRefresh(): SearchView
+    public fun showToolBar(bool: Boolean)
     public enum class MessageType {
         ERROR; ALERT; INFO
     }

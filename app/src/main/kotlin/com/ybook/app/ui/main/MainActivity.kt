@@ -34,10 +34,21 @@ import com.ybook.app.ui.others.FeedBackActivity
 import com.ybook.app.ui.others.AboutFragment
 import com.ybook.app.ui.home.HomeFragment.OnFragmentScrollChangedListener
 import android.support.v7.app.ActionBarActivity
+import com.ybook.app.ui.home.HomeTabFragment
+import com.ybook.app.ui.home.HomeTabFragment.OnFragmentInteractionListener
+import android.net.Uri
+import com.ybook.app.IdentityFragment
 
 val ARG_SECTION_NUMBER: String = "section_number"
 
-public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFragmentScrollChangedListener {
+public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFragmentScrollChangedListener, OnFragmentInteractionListener, IdentityFragment.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(id: String?) {
+        //TODO
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        //TODO
+    }
 
     override fun onScrollChanged(y: Int) {
         android.util.Log.i("MainActivity", "onScroll, scrollY:${y}")
@@ -136,7 +147,7 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
 
     override fun onNavigationDrawerItemSelected(position: Int) {
         when (position) {
-            0 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, HomeFragment()).commit()
+            0 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, HomeTabFragment.newInstance()).commit()
             1 -> getSupportFragmentManager().beginTransaction().replace(R.id.container, AboutFragment()).commit()
             2 -> startActivity(Intent(this, javaClass<FeedBackActivity>()))
         }

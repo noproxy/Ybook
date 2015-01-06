@@ -46,6 +46,7 @@ import android.view.animation.AnimationUtils
 import android.view.Window
 import android.provider.SearchRecentSuggestions
 import com.ybook.app.data.SearchSuggestionProvider
+import android.view.ViewConfiguration
 
 /**
  * Created by Carlos on 2014/12/17.
@@ -155,6 +156,11 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
     }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        if (dy > ViewConfiguration.get(searchView).getScaledTouchSlop()) {
+            searchView.showToolBar(false)
+        } else if (-dy > ViewConfiguration.get(searchView).getScaledTouchSlop()) {
+            searchView.showToolBar(true)
+        }
         mSearchStatus!!.visibleItemCount = recyclerView.getChildCount()
         mSearchStatus!!.totalItemCount = searchView.getLayoutManager().getItemCount()
         mSearchStatus!!.firstVisibleItem = searchView.getLayoutManager().findFirstVisibleItemPosition()

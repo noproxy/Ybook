@@ -178,7 +178,16 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
 
     override fun scrollTo(position: Int) {
         mRecyclerView?.smoothScrollToPosition(position)
-        mToolBar?.animate()?.translationY(-mToolBar!!.getBottom().toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+    }
+
+    var isToolBarShow = true
+    override fun showToolBar(bool: Boolean) {
+        if (bool && isToolBarShow) {
+            mToolBar?.animate()?.translationY(-mToolBar!!.getBottom().toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+        }
+        if ( !bool && !isToolBarShow) {
+            mToolBar?.animate()?.translationY(mToolBar!!.getHeight().toFloat())?.setInterpolator(AccelerateInterpolator())?.start();
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
