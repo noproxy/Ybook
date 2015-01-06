@@ -3,16 +3,16 @@
     <!--<color name="primary">#3ab582</color>-->
     <color name="primary">#50b543</color>
     <color name="primaryDark">#319b00</color>
-    <color name="colorAccent">#ff6733</color>
+    <color name="colorAccent">#F48FB1</color>
     <color name="navigationBarColor">#000</color>
     <color name="apptheme_color">#50b543</color>
 
     <color name="tabIndicatorColorAccent">#00ffffff</color>
 
 
-    <color name="actionButton">#ff6733</color>
-    <color name="actionButtonPressed">#ff6733</color>
-    <color name="actionButtonRipple">#ff8d3d1c</color>
+    <color name="actionButton">@color/colorAccent</color>
+    <color name="actionButtonPressed">@color/colorAccent</color>
+    <color name="actionButtonRipple">#F50057</color>
 
     <color name="primaryText">#000000</color>
 

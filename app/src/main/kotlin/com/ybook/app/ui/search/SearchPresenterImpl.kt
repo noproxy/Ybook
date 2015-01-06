@@ -230,7 +230,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
         var oldPaddingTop: Int? = null
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             if (holder is SearchViewHolder) {
-                val item = mSearchStatus!!.listItems[position]
+                val item = mSearchStatus!!.listItems[position - 1]//headView added
                 holder.titleText setText item.title
                 holder.idText setText item.id
                 holder.authorText setText item.author
