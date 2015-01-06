@@ -58,4 +58,5 @@ dependencies {
     compile 'com.cesarferreira.quickutils:library:2.+'
     compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.pnikosis:materialish-progress:1.2'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.4.0'
 }

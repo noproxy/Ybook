@@ -155,7 +155,9 @@ public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        setSupportActionBar((this.id(R.id.toolBar) as Toolbar).after { mToolBar = it })
+        setSupportActionBar((this.id(R.id.toolBar) as Toolbar).after {
+            mToolBar = it
+        })
 
         mRecyclerView = (id(android.R.id.list) as RecyclerView).after {
             it setHasFixedSize true

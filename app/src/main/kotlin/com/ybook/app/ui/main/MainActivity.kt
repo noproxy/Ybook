@@ -50,10 +50,10 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
     }
 
     override fun onBackPressed() {
-        if (mNavigationDrawerFragment?.isDrawerOpen() ?: false) {
-            mNavigationDrawerFragment!!.close()
-        } else if (mCollectionDrawerFragment?.isDrawerOpen() ?: false) {
-            mCollectionDrawerFragment!!.close()
+        if (mNavDrawerFragment?.isDrawerOpen() ?: false) {
+            mNavDrawerFragment!!.close()
+        } else if (mColDrawerFragment?.isDrawerOpen() ?: false) {
+            mColDrawerFragment!!.close()
         } else super<ActionBarActivity>.onBackPressed()
 
     }
@@ -62,9 +62,9 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private var mNavigationDrawerFragment: NavigationDrawerFragment? = null
+    private var mNavDrawerFragment: NavigationDrawerFragment? = null
 
-    private var mCollectionDrawerFragment: CollectionDrawerFragment? = null
+    private var mColDrawerFragment: CollectionDrawerFragment? = null
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -90,11 +90,15 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
         setContentView(R.layout.activity_main)
         setSupportActionBar(id(R.id.toolBar) as android.support.v7.widget.Toolbar)
 
-        mNavigationDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.navigation_drawer ) as NavigationDrawerFragment
-        mNavigationDrawerFragment!!.setUp(R.id.navigation_drawer, id(R.id.drawer_layout) as DrawerLayout)
+        val fm = getSupportFragmentManager()
+
+        mNavDrawerFragment = (fm findFragmentById R.id.navigation_drawer ) as NavigationDrawerFragment
+        mNavDrawerFragment!!.setUp(R.id.navigation_drawer, id(R.id.drawer_layout) as DrawerLayout)
         mTitle = getTitle()
-        mCollectionDrawerFragment = (getSupportFragmentManager() findFragmentById R.id.collection_drawer) as CollectionDrawerFragment
-        mCollectionDrawerFragment!!.setUp(R.id.collection_drawer, id(R.id.drawer_layout) as DrawerLayout)
+        mColDrawerFragment = (fm findFragmentById R.id.collection_drawer) as CollectionDrawerFragment
+        mColDrawerFragment!!.setUp(R.id.collection_drawer, id(R.id.drawer_layout) as DrawerLayout)
+
+
 
         //        materialMenu = MaterialMenuIcon(this, Color.WHITE, Stroke.THIN);
         //        mNavigationDrawerFragment?.setOnDrawerListener(object : OnDrawerListener {
@@ -157,7 +161,7 @@ public class MainActivity : ActionBarActivity(), NavigationDrawerCallbacks, OnFr
 
     var mSearchView: SearchView ? = null
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (!mNavigationDrawerFragment!!.isDrawerOpen() && !mCollectionDrawerFragment!!.isDrawerOpen()) {
+        if (!mNavDrawerFragment!!.isDrawerOpen() && !mColDrawerFragment!!.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
