@@ -29,6 +29,7 @@ import com.ybook.app.ui.main.MainActivity
  * Use the {@link HomeTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+//TODO add fade out animation to background
 public class HomeTabFragment// Required empty public constructor
 : Fragment(), OnHeadViewHideOrShowListener {
     var mSlidingTabLayout: SlidingTabLayout? = null
@@ -64,7 +65,7 @@ public class HomeTabFragment// Required empty public constructor
             mSlidingTabLayout = (it.findViewById(R.id.sliding_tabs) as SlidingTabLayout).after {
                 it.setCustomTabView(R.layout.tab_indicator, android.R.id.text1)
                 it.setSelectedIndicatorColors(getResources().getColor(R.color.tabIndicatorColorAccent))
-                it.setDistributeEvenly(true)
+                it.setDistributeEvenly(false)//to look like Google Play Store's tab
                 it.setViewPager(mPager)
             }
 
