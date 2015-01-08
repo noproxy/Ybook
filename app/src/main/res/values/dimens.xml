@@ -8,6 +8,9 @@
     <dimen name="vertical_spacing_large">72dp</dimen>
     <dimen name="vertical_spacing_slim">8dp</dimen>
 
+    <dimen name="card_min_height">64dp</dimen>
+    <dimen name="head_min_height">48dp</dimen>
+
 
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->

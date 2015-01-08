@@ -34,18 +34,8 @@ import com.ybook.app.R
  */
 public class IdentityFragment : Fragment(), OnItemClickListener {
 
-    private var mListener: OnFragmentInteractionListener? = null
-
-
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private var mListView: ListView? = null
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
+    private var mInteractionListener: OnFragmentInteractionListener? = null
+    private var mRecyclerView: RecyclerView? = null
     private var mAdapter: ListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,16 +48,16 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
         val view = inflater!!.inflate(app.R.layout.fragment_identity_list, container, false)
 
         // Set the adapter
-        mListView = view.findViewById(android.R.id.list) as ListView
-        mListView!!.addHeaderView(inflater.inflate(R.layout.padding_tab,
+        mRecyclerView = view.findViewById(android.R.id.list) as ListView
+        mRecyclerView!!.addHeaderView(inflater.inflate(R.layout.padding_tab,
                 //parent must be null,see:http://stackoverflow.com/questions/8275669/classcastexception-when-calling-listview-addheaderview
                 null))
-        mListView!!.setAdapter(mAdapter)
+        mRecyclerView!!.setAdapter(mAdapter)
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView!!.setOnItemClickListener(this)
+        mRecyclerView!!.setOnItemClickListener(this)
         if (!this.isDetached()) {
-            (mListView as Scrollable).setScrollViewCallbacks(mCallback)
+            (mRecyclerView as Scrollable).setScrollViewCallbacks(mCallback)
         }
         return view
     }
@@ -78,15 +68,15 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
     override fun onAttach(activity: Activity?) {
         super<Fragment>.onAttach(activity)
         try {
-            mListener = activity as OnFragmentInteractionListener
+            mInteractionListener = activity as OnFragmentInteractionListener
         } catch (e: ClassCastException) {
             throw ClassCastException(activity!!.toString() + " must implement OnFragmentInteractionListener")
         }
 
         try {
             mCallback = activity as ObservableScrollViewCallbacks
-            if (mListView != null) {
-                (mListView as Scrollable).setScrollViewCallbacks(mCallback)
+            if (mRecyclerView != null) {
+                (mRecyclerView as Scrollable).setScrollViewCallbacks(mCallback)
             }
         } catch(e: ClassCastException) {
             throw ClassCastException(activity!!.toString() + " must implement ObservableScrollViewCallbacks")
@@ -95,16 +85,16 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
 
     override fun onDetach() {
         super<Fragment>.onDetach()
-        mListener = null
-        (mListView as Scrollable).setScrollViewCallbacks(null)
+        mInteractionListener = null
+        (mRecyclerView as Scrollable).setScrollViewCallbacks(null)
     }
 
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        if (null != mListener) {
+        if (null != mInteractionListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener!!.onFragmentInteraction(DummyContent.ITEMS.get(position).id)
+            mInteractionListener!!.onFragmentInteraction(DummyContent.ITEMS.get(position).id)
         }
     }
 
@@ -114,7 +104,7 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
      * to supply the text it should use.
      */
     public fun setEmptyText(emptyText: CharSequence) {
-        val emptyView = mListView!!.getEmptyView()
+        val emptyView = mRecyclerView!!.getEmptyView()
 
         if (emptyView is TextView) {
             (emptyView as TextView).setText(emptyText)
