@@ -12,6 +12,7 @@ import com.koushikdutta.async.http.WebSocket.StringCallback
 import com.ybook.app.util.AccountHelper
 import com.ybook.app.util.JSONHelper
 import me.toxz.kotlin.makeTag
+import android.content.Context
 
 /**
  *  read Token of json string
@@ -30,6 +31,7 @@ fun String.getToken(): Int {
  *
  */
 object WebSocketHelper : StringCallback {
+    var mContext: Context? = null
     override fun onStringAvailable(s: String?) {
         Log.i(TAG, "response:" + s)
         val hash = s?.getToken()
@@ -94,7 +96,7 @@ object WebSocketHelper : StringCallback {
 
     val login = {
         Log.i(TAG, "login..." + ( w == null))
-        w?.send(AccountHelper.getStoreAccount().getJSONStr())
+        w?.send(AccountHelper.getStoreAccount(mContext!!).getJSONStr())
     }
 
 
@@ -133,6 +135,7 @@ object WebSocketHelper : StringCallback {
      * request profile.But you must login  first.
      */
     public fun request(req: SocketRequest): Unit {
+        if (mContext == null) throw IllegalStateException("You must login before request!")
         list.add(req)
         Log.i(TAG, "request")
         if (w == null) {
@@ -144,7 +147,8 @@ object WebSocketHelper : StringCallback {
         } else start()
     }
 
-    public fun login(req: LoginRequest) {
+    public fun login(req: LoginRequest, con: Context) {
+        mContext = con
         list.clear()
         if (w == null) reConnect()//list empty
         if (w == null) {

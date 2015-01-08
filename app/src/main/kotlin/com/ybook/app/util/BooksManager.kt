@@ -6,6 +6,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager
 import com.ybook.app.MyApplication
 import com.ybook.app.R
 import android.util.Log
+import android.content.Context
 
 /**
  * Created by carlos on 12/5/14.
@@ -17,7 +18,7 @@ public object BooksManager {
     private val mBooks = ArrayList<BookItem>()
     private var isUpdate = false
     private var mHelper: MyDatabaseHelper? = null
-    private fun getHelper(): MyDatabaseHelper = mHelper ?: OpenHelperManager.getHelper(MyApplication.getApplication(), javaClass<MyDatabaseHelper>())
+    private fun getHelper(con: Context): MyDatabaseHelper = mHelper ?: OpenHelperManager.getHelper(con, javaClass<MyDatabaseHelper>())
 
     public fun releaseHelper() {
         if (mHelper != null) {
@@ -36,9 +37,9 @@ public object BooksManager {
 
     }
 
-    public fun addBook(item: BookItem): Boolean = 1 == getHelper().getBookItemDao().create(item)
+    public fun addBook(item: BookItem, con: Context): Boolean = 1 == getHelper(con).getBookItemDao().create(item)
 
-    public fun removeBook(item: BookItem): Boolean = 1 == getHelper().getBookItemDao().delete(item)
+    public fun removeBook(item: BookItem, con: Context): Boolean = 1 == getHelper(con).getBookItemDao().delete(item)
 
     private fun loadBooks() {
         isUpdate = true

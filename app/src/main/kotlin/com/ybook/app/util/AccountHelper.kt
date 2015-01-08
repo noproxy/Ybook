@@ -13,17 +13,17 @@ object AccountHelper {
     val LIB_CODE = "lib_code"
     val ACCOUNT_SHARE_PREFERENCES = "LoginInfo"
 
-    public fun deleteAccount() {
-        val sh = MyApplication.getApplication().getSharedPreferences(ACCOUNT_SHARE_PREFERENCES, Context.MODE_PRIVATE)
+    public fun deleteAccount(con: Context) {
+        val sh = con.getSharedPreferences(ACCOUNT_SHARE_PREFERENCES, Context.MODE_PRIVATE)
         sh.edit().remove(USER_NAME).remove(PASSWORD).remove(LIB_CODE).commit()
     }
 
-    public fun hasAccount(): Boolean {
-        return getStoreAccount().password.size > 5
+    public fun hasAccount(con: Context): Boolean {
+        return getStoreAccount(con).password.size > 5
     }
 
-    public fun getStoreAccount(): LoginRequest {
-        val sh = MyApplication.getApplication().getSharedPreferences(ACCOUNT_SHARE_PREFERENCES, Context.MODE_PRIVATE)
+    public fun getStoreAccount(con: Context): LoginRequest {
+        val sh = con.getSharedPreferences(ACCOUNT_SHARE_PREFERENCES, Context.MODE_PRIVATE)
         return LoginRequest(sh.getString(USER_NAME, ""), sh.getString(PASSWORD, ""), sh.getInt(LIB_CODE, 0), null)
     }
 

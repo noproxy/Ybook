@@ -22,6 +22,13 @@ import com.ybook.app.ui.main.MainActivity
 import com.ybook.app.ui.main.OnHeadViewHideOrShowListener
 import android.widget.ListView
 import com.ybook.app.R
+import android.support.v7.widget.RecyclerView
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
+import java.util.ArrayList
+import com.ybook.app.ui.home.IdentityRecyclerAdapter.IdentityCardData
+import com.ybook.app.util.AccountHelper
+import me.toxz.kotlin.after
+import android.support.v7.widget.LinearLayoutManager
 
 /**
  * A fragment representing a list of Items.
@@ -35,29 +42,26 @@ import com.ybook.app.R
 public class IdentityFragment : Fragment(), OnItemClickListener {
 
     private var mInteractionListener: OnFragmentInteractionListener? = null
-    private var mRecyclerView: RecyclerView? = null
-    private var mAdapter: ListAdapter? = null
+    private var mRecyclerView: ObservableRecyclerView? = null
+    private var mAdapter: IdentityRecyclerAdapter? = null
+    private val mItems = ArrayList<IdentityCardData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         // TODO: Change Adapter to display your content
-        mAdapter = ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(app.R.layout.fragment_identity_list, container, false)
+        if (AccountHelper.hasAccount(inflater.getContext())) mItems.add(IdentityCardData(IdentityRecyclerAdapter.ViewType.Login))
 
-        // Set the adapter
-        mRecyclerView = view.findViewById(android.R.id.list) as ListView
-        mRecyclerView!!.addHeaderView(inflater.inflate(R.layout.padding_tab,
-                //parent must be null,see:http://stackoverflow.com/questions/8275669/classcastexception-when-calling-listview-addheaderview
-                null))
-        mRecyclerView!!.setAdapter(mAdapter)
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mRecyclerView!!.setOnItemClickListener(this)
-        if (!this.isDetached()) {
-            (mRecyclerView as Scrollable).setScrollViewCallbacks(mCallback)
+        mAdapter = IdentityRecyclerAdapter(inflater, mItems)
+        mRecyclerView = (view.findViewById(android.R.id.list) as ObservableRecyclerView) after {
+            it setHasFixedSize true
+            it setLayoutManager LinearLayoutManager(inflater.getContext())
+            it setAdapter mAdapter
+            if (!this.isDetached()) it setScrollViewCallbacks mCallback
         }
         return view
     }
@@ -86,7 +90,7 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
     override fun onDetach() {
         super<Fragment>.onDetach()
         mInteractionListener = null
-        (mRecyclerView as Scrollable).setScrollViewCallbacks(null)
+        mRecyclerView!!.setScrollViewCallbacks(null)
     }
 
 
@@ -95,19 +99,6 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mInteractionListener!!.onFragmentInteraction(DummyContent.ITEMS.get(position).id)
-        }
-    }
-
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public fun setEmptyText(emptyText: CharSequence) {
-        val emptyView = mRecyclerView!!.getEmptyView()
-
-        if (emptyView is TextView) {
-            (emptyView as TextView).setText(emptyText)
         }
     }
 
