@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:minHeight="@dimen/card_min_height"
         app:cardCornerRadius="2dp"
         app:cardUseCompatPadding="true"
@@ -22,21 +23,26 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="center_vertical|left"
+                android:minHeight="@dimen/card_min_height"
+                android:text="@string/loginCardHintExtra"
                 android:gravity="center_vertical"
-                android:text="Login to continue.."
-                android:textStyle="bold"
-                android:drawableRight="@drawable/ic_arrow_right"
+                android:padding="16dp"
+                />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#99bfbfbf"
                 />
 
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/card_min_height"
-                android:text="    我们会在这里显示您的借阅书籍等最新状态。帮助您预定书籍，及时归还。"
+                android:layout_height="48dp"
+                android:paddingLeft="16dp"
+                android:layout_gravity="center_vertical|left"
                 android:gravity="center_vertical"
-                android:padding="16dp"
+                android:text="@string/loginCardHint"
+                android:drawableLeft="@drawable/ic_arrow_forward"
                 />
     </LinearLayout>
 

@@ -15,7 +15,6 @@
 -->
 <View xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/tab_height"
-      android:layout_marginTop="8dp"
-      android:minHeight="@dimen/tab_height"
+      android:layout_height="@dimen/tabPadding"
+      android:minHeight="@dimen/tabPadding"
         />

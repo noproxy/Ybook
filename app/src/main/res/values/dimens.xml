@@ -27,4 +27,5 @@
 
     <dimen name="tab_host_default_height">48dp</dimen>
     <dimen name="tab_height">48dp</dimen>
+    <dimen name="tabPadding">56dp</dimen>
 </resources>

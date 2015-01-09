@@ -45,17 +45,31 @@ public class IdentityFragment : Fragment(), OnItemClickListener {
     private var mRecyclerView: ObservableRecyclerView? = null
     private var mAdapter: IdentityRecyclerAdapter? = null
     private val mItems = ArrayList<IdentityCardData>()
+    private var mEmptyData: IdentityCardData? = IdentityCardData(IdentityRecyclerAdapter.ViewType.Login)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<Fragment>.onCreate(savedInstanceState)
         // TODO: Change Adapter to display your content
     }
 
+    override fun onResume() {
+        super<Fragment>.onResume()
+        testLogin()
+    }
+
+    private fun testLogin() {
+        if (mItems.contains(mEmptyData) && AccountHelper.hasAccount(getActivity())) {
+            mItems.remove(mEmptyData)
+            mAdapter!!.notifyDataSetChanged()
+        } else if (!mItems.contains(mEmptyData) && !AccountHelper.hasAccount(getActivity())) {
+            mItems.add(mEmptyData)
+            mAdapter!!.notifyDataSetChanged()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater!!.inflate(app.R.layout.fragment_identity_list, container, false)
-        if (AccountHelper.hasAccount(inflater.getContext())) mItems.add(IdentityCardData(IdentityRecyclerAdapter.ViewType.Login))
 
+        val view = inflater!!.inflate(app.R.layout.fragment_identity_list, container, false)
         mAdapter = IdentityRecyclerAdapter(inflater, mItems)
         mRecyclerView = (view.findViewById(android.R.id.list) as ObservableRecyclerView) after {
             it setHasFixedSize true

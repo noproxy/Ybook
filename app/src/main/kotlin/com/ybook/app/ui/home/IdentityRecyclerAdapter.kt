@@ -12,6 +12,7 @@ import com.ybook.app.ui.home.IdentityRecyclerAdapter.IdentityCardData
 import com.ybook.app.ui.search.HeaderViewHolder
 import android.content.Intent
 import com.ybook.app.ui.others.LoginActivity
+import com.ybook.app.id
 
 /**
  * Created by Carlos on 2015/1/7.
@@ -43,9 +44,9 @@ public class IdentityRecyclerAdapter(val mInflater: LayoutInflater, val mItems: 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when ( ViewType.values()[viewType] ) {
-            ViewType.Header -> HeaderViewHolder(mInflater.inflate(R.layout.padding_tab, null))
-            ViewType.Empty -> EmptyViewHolder(mInflater.inflate(R.layout.padding_tab, null))
-            ViewType.Login -> LoginViewHolder(mInflater.inflate(R.layout.card_to_login, null))
+            ViewType.Header -> HeaderViewHolder(mInflater.inflate(R.layout.padding_tab, parent, false))
+            ViewType.Empty -> EmptyViewHolder(mInflater.inflate(R.layout.card_empty, parent, false))
+            ViewType.Login -> LoginViewHolder(mInflater.inflate(R.layout.card_to_login, parent, false))
             else -> ItemViewHolder(null!!)
         }
     }
@@ -53,13 +54,44 @@ public class IdentityRecyclerAdapter(val mInflater: LayoutInflater, val mItems: 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         //TODO header:position - 1
         when ( viewHolder ) {
+            is EmptyViewHolder -> viewHolder.view setOnClickListener { viewHolder.switchState(EmptyState.Loading) }
             is LoginViewHolder -> viewHolder.view setOnClickListener { it.getContext().let { it.startActivity(Intent(it, javaClass<LoginActivity>())) } }
             is ItemViewHolder -> return
         }
     }
 
     class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-    class EmptyViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class EmptyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        private val mEmptyText = (view id R.id.emptyText) as TextView
+        private val mProgressBar = (view id R.id.emptyProgressBar)
+        public fun switchState(state: EmptyState) {
+            when (state) {
+                EmptyState.More -> {
+                    mEmptyText setVisibility View.VISIBLE
+                    mEmptyText setText (view.getResources() getString R.string.emptyCardHintA)
+                    mProgressBar setVisibility View.INVISIBLE
+                }
+                EmptyState.Loading -> {
+                    mEmptyText setVisibility View.INVISIBLE
+                    mProgressBar setVisibility View.VISIBLE
+                }
+                EmptyState.Empty -> {
+                    mEmptyText setVisibility View.VISIBLE
+                    mEmptyText setText (view.getResources() getString R.string.emptyCardHintB)
+                    mProgressBar setVisibility View.INVISIBLE
+                }
+            }
+        }
+
+
+    }
+
+    public enum class EmptyState {
+        More
+        Loading
+        Empty
+    }
+
     class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view)
     class LoginViewHolder(val view: View) : RecyclerView.ViewHolder(view)
     public data class IdentityCardData(val viewType: ViewType)
