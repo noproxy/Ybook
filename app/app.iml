@@ -85,6 +85,7 @@
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.1.0" level="project" />
+    <orderEntry type="library" exported="" name="koan-21s-0.2" level="project" />
     <orderEntry type="library" exported="" name="crouton-1.8.5-sources" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="kotlin-stdlib-0.9.976" level="project" />
