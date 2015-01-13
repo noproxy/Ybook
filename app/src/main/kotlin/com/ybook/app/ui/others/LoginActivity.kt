@@ -43,6 +43,9 @@ import com.koushikdutta.async.http.AsyncHttpClient
 import com.ybook.app.net
 import me.toxz
 import me.toxz.kotlin.from
+import android.widget.LinearLayout
+import android.content.res.Configuration
+import android.widget.Toast
 
 /**
  * A login screen that offers login via account/password.
@@ -55,7 +58,7 @@ public class LoginActivity : SwipeBackActivity() {
     private var mEmailView: AutoCompleteTextView? = null
     private var mPasswordView: EditText? = null
     private var mLoginFormView: View? = null
-
+    private var mViewToHide: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
@@ -78,8 +81,21 @@ public class LoginActivity : SwipeBackActivity() {
         }
         (id(R.id.sign_in_button) as Button).let { it setOnClickListener { attemptLogin() } }
         mLoginFormView = id(R.id.login_form)
+        mViewToHide = id (R.id.loginHeadView)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        //TODO　break: It's said there is no official interface to implement
+        Toast.makeText(this, "changed!", Toast.LENGTH_SHORT).show()
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+            mViewToHide!!.setVisibility(View.GONE)
+            Toast.makeText(this, "gone!", Toast.LENGTH_SHORT).show()
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT && newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            mViewToHide!!.setVisibility(View.VISIBLE)
+            Toast.makeText(this, "visible!", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     /**        dialog.show();
 

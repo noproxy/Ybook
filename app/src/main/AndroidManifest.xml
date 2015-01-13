@@ -96,7 +96,17 @@
         <activity
                 android:name=".ui.others.LoginActivity"
                 android:label="@string/title_activity_login"
-                android:windowSoftInputMode="adjustResize|stateVisible"
+                android:windowSoftInputMode="adjustPan|stateVisible"
+                android:theme="@style/AppTheme.Translucent"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".ui.detail.DetailActivity"
+                android:label="@string/title_activity_login"
                 android:theme="@style/AppTheme.Translucent"
                 >
             <intent-filter>
