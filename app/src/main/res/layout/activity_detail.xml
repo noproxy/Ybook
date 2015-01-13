@@ -21,118 +21,39 @@
              android:orientation="vertical"
         >
 
-    <ScrollView
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-        <!--
-         Dummy background contents.
-         You can replace this to map or something.
-         -->
-        <LinearLayout
+
+        <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 >
+            <!--
+             Dummy background contents.
+             You can replace this to map or something.
+             -->
 
-            <View
+
+            <LinearLayout
+                    android:id="@+id/main_content"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#E91E63"
-                    />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+            </LinearLayout>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#3F51B5"
-                    />
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#2196F3"
-                    />
+        </ScrollView>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#03A9F4"
-                    />
+        <com.pnikosis.materialishprogress.ProgressWheel
+                android:id="@+id/progressWheel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#8BC34A"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#FFEB3B"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#FFC107"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#FF9800"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#E91E63"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#3F51B5"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#2196F3"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#03A9F4"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#8BC34A"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#FFEB3B"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#FFC107"
-                    />
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#FF9800"
-                    />
-        </LinearLayout>
-    </ScrollView>
-
+    </FrameLayout>
 
     <ImageView
             android:id="@+id/image"

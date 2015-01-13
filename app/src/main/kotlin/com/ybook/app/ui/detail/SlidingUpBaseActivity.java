@@ -126,7 +126,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends Action
     };
 
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
 
