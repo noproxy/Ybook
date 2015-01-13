@@ -28,4 +28,17 @@
     <dimen name="tab_host_default_height">48dp</dimen>
     <dimen name="tab_height">48dp</dimen>
     <dimen name="tabPadding">56dp</dimen>
+
+    // detail
+    <dimen name="margin_extra_short">4dp</dimen>
+    <dimen name="margin_standard">16dp</dimen>
+
+    <dimen name="toolbar_margin_start">72dp</dimen>
+    <dimen name="flexible_space_image_height">240dp</dimen>
+
+    <dimen name="header_bar_height">72dp</dimen>
+    <dimen name="intersection_height">16dp</dimen>
+
+    <dimen name="sliding_overlay_blur_size">4dp</dimen>
+    <dimen name="sliding_slop">32dp</dimen>
 </resources>

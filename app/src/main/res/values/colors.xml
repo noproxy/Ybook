@@ -4,6 +4,7 @@
     <color name="primary">#50b543</color>
     <color name="primaryDark">#319b00</color>
     <color name="colorAccent">#F48FB1</color>
+    <color name="colorAccentLight">#F48FB1</color>
     <color name="navigationBarColor">#000</color>
     <color name="apptheme_color">#50b543</color>
 
