@@ -3,8 +3,6 @@ before_install:
  - chmod +x gradlew
 android:
   components:
-  -distributionUrl=http\://services.gradle.org/distributions/gradle-2.1-all.zip
-  +distributionUrl=http\://services.gradle.org/distributions/gradle-2.2-all.zip
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
     - platform-tools
