@@ -194,10 +194,9 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         return scrollView
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super<SlidingUpBaseActivity>.onCreate(savedInstanceState, persistentState)// setContextView is called by super.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super<SlidingUpBaseActivity>.onCreate(savedInstanceState)// setContextView is called by super.
         //Don't call setContentView(), it will be called in super class. Change getLayoutResId() will affect the content view layout.
-        throw NullPointerException("2333")
         setResult(RESULT_CODE_UNCHANGED, getIntent())//to report whether the status of book is changed
         mObject = getIntent() getSerializableExtra INTENT_SEARCH_OBJECT ?: getIntent().getSerializableExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA)
         initViews()
