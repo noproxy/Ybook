@@ -40,7 +40,7 @@ object PostHelper {
     val loginClient = object : DefaultHttpClient() {}
     val bookListClient = object : DefaultHttpClient() {}
 
-    private fun newPost(s: String, data: ArrayList<NameValuePair>?): HttpPost {
+    public fun newPost(s: String, data: ArrayList<NameValuePair>?): HttpPost {
         val p = HttpPost(s)
         p.addHeader("application", "x-www-form-urlencoded")
         p.setEntity(UrlEncodedFormEntity(data, HTTP.UTF_8))
