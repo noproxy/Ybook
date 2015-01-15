@@ -36,7 +36,6 @@ import com.ybook.app.ui.detail.BookDetailActivity.OnDetail
  */
 public class DetailStoreFragment(val searchObject: SearchResponse.SearchObject?, val bookItem: BookItem?) : Fragment(), OnDetail {
     var mListView: ListView? = null
-    //    var mEmptyLayout: EmptyLayout? = null
     var mAdapter: BaseAdapter? = null
 
     override fun onRefresh(detail: DetailResponse) {

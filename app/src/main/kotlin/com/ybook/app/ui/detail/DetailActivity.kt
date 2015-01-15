@@ -43,6 +43,8 @@ import com.ybook.app.bean
 import android.widget.Toast
 import me.toxz.kotlin.makeTag
 import android.util.Log
+import android.widget.ListView
+import android.widget.BaseAdapter
 
 /*
     Copyright 2015 Carlos
@@ -68,6 +70,24 @@ import android.util.Log
  */
 public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), ObservableScrollViewCallbacks, LoaderManager.LoaderCallbacks<DetailResponse> {
     val TAG = makeTag()
+
+    /**
+     * View to display Storage Info
+     */
+    var mListView: ListView? = null
+    var mAdapter: BaseAdapter? = null
+    /**
+     * store the detail info.It could come from the previous activity( for example: CollectionSlidingDrawer) as well as
+     *  create by a loader from server.
+     *
+     *  In this implement,it will be set from the intent extra data if it is a BookItem.If not, it need to create a loader
+     *  to get it from server, and when it is in order it will be set by the callback.
+     */
+    var mDetailResponse: DetailResponse? = null
+    /**
+     * View to notice there is no Storage Info
+     */
+    var mNoHintView: View? = null
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<DetailResponse>? {
         val searchO = mObject
@@ -115,7 +135,10 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
     private fun refreshUi() {
         //to ensure refresh both the text info and collection status
         val container = (id (R.id.main_content)as LinearLayout) after { it.removeAllViews() }
-        fun ViewGroup.addItem(text: String? = null, textMain: String? = null, resID: Int = R.layout.detail_item) = DetailItemViewHolder(getLayoutInflater().inflate(resID, container, true), text, textMain)
+        fun ViewGroup.addItem(text: String, textMain: String? = null, resID: Int = R.layout.detail_item) {
+            this.addView(DetailItemViewHolder(getLayoutInflater().inflate(resID, null), text, textMain).view)
+        }
+
         val o = mObject
         Log.i(TAG, o.toString())
         when (o) {
@@ -128,6 +151,7 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
                 getLoaderManager().initLoader(0, null, this)
             }
             is BookItem -> {
+                mDetailResponse = o.detailResponse
                 container.addItem(getString(R.string.authorText), o.detailResponse.author)
                 container.addItem(getString(R.string.publisherText), o.detailResponse.publish)
                 container.addItem(getString(R.string.queryIdText), o.detailResponse.queryID)
@@ -202,23 +226,50 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         initViews()
     }
 
+
     /**
      * holder to contain the text info.It's a horizontal block on the ui.
      */
-    private inner class DetailItemViewHolder(view: View, text: String?, textMain: String?) {
+    private inner class DetailItemViewHolder(val view: View, text: String, textMain: String?) {
         val textView = ( (view id R.id.item_title) as TextView).after {
-            if (text.isNotEmpty()) it setText text
+            it setText text
         }
 
         val textViewMain = (view id R.id.item_text) as TextView after {
-            it setText (textMain ?: getString(R.string.loadingContentHint))
+            it setText if (textMain.isNotEmpty()) textMain else getString(R.string.loadingContentHint)
         }
     }
 
     //init the ui at first time create.it should only be called once.
     private fun initViews() {
         Log.i(TAG, "initViews")
-        showLoadError()
+        mListView = findViewById(R.id.contentListView) as ListView
+        mNoHintView = id (R.id.nothingHint)
+
+        mAdapter = object : BaseAdapter() {
+            override fun getCount() = mDetailResponse?.libInfo?.size ?: 0
+            override fun getItem(position: Int) = mDetailResponse?.libInfo?.get(position)
+            override fun getItemId(position: Int) = position.toLong()
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+                val v = convertView ?: this@DetailActivity.getLayoutInflater().inflate(R.layout.detail_store_item, parent, false)
+                val ordBtn = v.findViewById(R.id.ordBtn)
+                if (mDetailResponse == null) {
+                    ordBtn.setEnabled(false)
+                } else {
+                    ordBtn.setEnabled(true)
+                    (v id R.id.textViewStoreLocation) as TextView setText getItem(position)!!.libLocation
+                    (v id R.id.textViewStoreStatus ) as TextView setText getItem(position)!!.libStatus
+                    ordBtn setOnClickListener { v ->//TODO order
+
+                    }
+                }
+                return v
+            }
+
+        }
+        mListView!!.setAdapter(mAdapter)
+
+
         refreshUi()
     }
 
