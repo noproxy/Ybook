@@ -162,8 +162,9 @@
                         android:layout_height="0dp"
                         android:background="?attr/colorPrimary"
                         />
-
+                <!--a line below the toolbar, hided-->
                 <View
+                        android:visibility="invisible"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/sliding_overlay_blur_size"
                         android:background="@drawable/sliding_header_overlay"
