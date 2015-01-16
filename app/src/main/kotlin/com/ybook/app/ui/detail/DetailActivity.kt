@@ -145,18 +145,18 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
             is SearchResponse.SearchObject -> {
                 container.addItem(getString(R.string.authorText), o.author)
                 container.addItem(getString(R.string.publisherText), o.press)
-                container.addItem(getString(R.string.queryIdText))
                 container.addItem(getString(R.string.isbnText))
                 container.addItem(getString(R.string.detailText), o.detail)
+                setSlidingUpTitle(getString(R.string.loadingContentHint))
                 getLoaderManager().initLoader(0, null, this)
             }
             is BookItem -> {
                 mDetailResponse = o.detailResponse
                 container.addItem(getString(R.string.authorText), o.detailResponse.author)
                 container.addItem(getString(R.string.publisherText), o.detailResponse.publish)
-                container.addItem(getString(R.string.queryIdText), o.detailResponse.queryID)
                 container.addItem(getString(R.string.isbnText), o.detailResponse.isbn)
                 container.addItem(getString(R.string.detailText), o.detailResponse.detail)
+                setSlidingUpTitle(getString(R.string.queryIdText) + o.detailResponse.queryID)
             }
             is BookListResponse.BookListObject -> {
                 mObject = (mObject as BookListResponse.BookListObject).toSearchObject()
