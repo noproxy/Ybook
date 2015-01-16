@@ -34,6 +34,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.ybook.app.R;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class SlidingUpBaseActivity<S extends Scrollable> extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
@@ -174,7 +175,6 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends Action
         mToolbarTitle.setText(mTitle.getText());
         ViewHelper.setAlpha(mToolbarTitle, 0);
         ViewHelper.setTranslationY(mTitle, (mHeaderBarHeight - mActionBarSize) / 2);
-
         if (savedInstanceState == null) {
             mSlidingState = SLIDING_STATE_BOTTOM;
         }
@@ -191,8 +191,19 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends Action
         });
     }
 
+    /**
+     * set the text of the bottom handler.
+     *
+     * @param title to set.
+     */
+    protected final void setSlidingUpTitle(String title) {
+        if (mTitle != null) {
+            mTitle.setText(title);
+        }
+    }
+
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         // All the related temporary states can be restored by slidingState
         mSlidingState = savedInstanceState.getInt(STATE_SLIDING_STATE);
