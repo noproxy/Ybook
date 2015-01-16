@@ -202,6 +202,17 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends Action
         }
     }
 
+    /**
+     * set the text of the tool bar.
+     *
+     * @param title to set.
+     */
+    protected final void setToolbarTitle(String title) {
+        if (mToolbarTitle != null) {
+            mToolbarTitle.setText(title);
+        }
+    }
+
     @Override
     protected void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
