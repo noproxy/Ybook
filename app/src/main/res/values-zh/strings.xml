@@ -71,4 +71,8 @@
     <string name="loginHint">登陆</string>
     <string name="homeTabTitleCommon">推荐</string>
     <string name="homeTabTitleIdentity">我</string>
+    <string name="emptyCardHintA">更多</string>
+    <string name="emptyCardHintB">没有更多</string>
+    <string name="loginCardHint">\t\t立即登陆</string>
+    <string name="title_activity_detail">加载中…</string>
 </resources>

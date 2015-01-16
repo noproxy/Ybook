@@ -78,7 +78,7 @@
     <string name="homeTabTitleCommon">Recommend</string>
     <string name="homeTabTitleIdentity">Yours</string>
     <string name="loginCardHint">\t\tLogin To Enable</string>
-    <string name="loginCardHintExtra">我们会在这里显示您的借阅书籍等最新状态。帮助您预定书籍，及时归还。</string>
+    <string name="loginCardHintExtra" translatable="false">我们会在这里显示您的借阅书籍等最新状态。帮助您预定书籍，及时归还。</string>
     <string name="emptyCardHintA">More</string>
     <string name="emptyCardHintB">Nothing Now</string>
 </resources>
