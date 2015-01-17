@@ -93,43 +93,9 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         val searchO = mObject
         if (searchO is SearchResponse.SearchObject ) {
             Log.i(TAG, "detail loader for search object created. ")
-            return DetailLoader(DetailRequest(searchO.id, searchO.idType, bean.getLibCode()))
+            return DetailLoader(DetailRequest(searchO.id, searchO.idType, bean.getLibCode()), this)
         }
         return null
-    }
-
-    /**
-     * @param req describe what detail to load.
-     * @see  {@link com.ybook.app.bean.DetailResponse}
-     */
-    private inner class DetailLoader(val req: DetailRequest) : AsyncTaskLoader<DetailResponse>(this) {
-        {
-            onContentChanged()
-        }
-        override fun loadInBackground(): DetailResponse? {
-            Log.i(TAG, "start loadInBackground.")
-            val data = ArrayList<NameValuePair>()
-            data.add(BasicNameValuePair("id", req.id))
-            data.add(BasicNameValuePair("id_type", req.idType))
-            data.add(BasicNameValuePair("lib_code", req.libCode.toString()))
-
-            val rep = DefaultHttpClient().execute(PostHelper.newPost(getMainUrl() + "/detail", data))
-            when (rep.getStatusLine().getStatusCode()) {
-                HttpStatus.SC_OK -> {
-                    return JSONHelper.readDetailResponse(EntityUtils.toString(rep.getEntity()))
-                }
-                else -> return null
-            }
-        }
-
-        override fun onStartLoading() {
-            if (takeContentChanged())
-                forceLoad();
-        }
-
-        override fun onStopLoading() {
-            cancelLoad();
-        }
     }
 
 
@@ -287,4 +253,42 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
     }
 
 
+}
+
+
+/**
+ * @param req describe what detail to load.
+ * @see  {@link com.ybook.app.bean.DetailResponse}
+ */
+//it can't be static inner member class
+//otherwise produce a java.lang.IllegalArgumentException: Object returned from onCreateLoader must not be a non-static inner member class: DetailLoader
+public class DetailLoader(val req: DetailRequest, context: Context) : AsyncTaskLoader<DetailResponse>(context) {
+    {
+        onContentChanged()
+    }
+    val TAG = makeTag()
+    override fun loadInBackground(): DetailResponse? {
+        Log.i(TAG, "start loadInBackground.")
+        val data = ArrayList<NameValuePair>()
+        data.add(BasicNameValuePair("id", req.id))
+        data.add(BasicNameValuePair("id_type", req.idType))
+        data.add(BasicNameValuePair("lib_code", req.libCode.toString()))
+
+        val rep = DefaultHttpClient().execute(PostHelper.newPost(getMainUrl() + "/detail", data))
+        when (rep.getStatusLine().getStatusCode()) {
+            HttpStatus.SC_OK -> {
+                return JSONHelper.readDetailResponse(EntityUtils.toString(rep.getEntity()))
+            }
+            else -> return null
+        }
+    }
+
+    override fun onStartLoading() {
+        if (takeContentChanged())
+            forceLoad();
+    }
+
+    override fun onStopLoading() {
+        cancelLoad();
+    }
 }
