@@ -41,4 +41,8 @@
 
     <dimen name="sliding_overlay_blur_size">4dp</dimen>
     <dimen name="sliding_slop">32dp</dimen>
+
+    <dimen name="detail_cover_height">120dp</dimen>
+    <dimen name="detail_cover_width">120dp</dimen>
+    <dimen name="detail_header_height">120dp</dimen>
 </resources>
