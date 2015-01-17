@@ -34,9 +34,10 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.ybook.app.R;
+import com.ybook.app.swipebacklayout.SwipeBackActivity;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class SlidingUpBaseActivity<S extends Scrollable> extends ActionBarActivity implements ObservableScrollViewCallbacks {
+public abstract class SlidingUpBaseActivity<S extends Scrollable> extends SwipeBackActivity implements ObservableScrollViewCallbacks {
 
     private static final String STATE_SLIDING_STATE = "slidingState";
     private static final int SLIDING_STATE_TOP = 0;
