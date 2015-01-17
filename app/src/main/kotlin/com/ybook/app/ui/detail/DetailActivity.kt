@@ -103,6 +103,9 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
      * @see  {@link com.ybook.app.bean.DetailResponse}
      */
     private inner class DetailLoader(val req: DetailRequest) : AsyncTaskLoader<DetailResponse>(this) {
+        {
+            onContentChanged()
+        }
         override fun loadInBackground(): DetailResponse? {
             Log.i(TAG, "start loadInBackground.")
             val data = ArrayList<NameValuePair>()
@@ -118,7 +121,17 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
                 else -> return null
             }
         }
+
+        override fun onStartLoading() {
+            if (takeContentChanged())
+                forceLoad();
+        }
+
+        override fun onStopLoading() {
+            cancelLoad();
+        }
     }
+
 
     override fun onLoadFinished(loader: Loader<DetailResponse>?, data: DetailResponse?) {
         Log.i(TAG, "onLoadFinished")
