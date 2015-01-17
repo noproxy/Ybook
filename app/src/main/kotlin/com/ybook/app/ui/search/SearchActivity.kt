@@ -23,7 +23,6 @@ import com.ybook.app.bean.SearchResponse
 import android.widget.ListView
 import android.view.MenuItem
 import android.os.Bundle
-import com.ybook.app.ui.detail.BookDetailActivity
 import java.io.Serializable
 import android.os.Handler
 import android.os.Message

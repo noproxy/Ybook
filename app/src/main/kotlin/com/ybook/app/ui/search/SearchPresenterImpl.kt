@@ -51,7 +51,6 @@ import android.view.MenuItem
 import android.os.Bundle
 import android.app.SearchManager
 import android.content.Intent
-import com.ybook.app.ui.detail.BookDetailActivity
 import java.io.Serializable
 import com.ybook.app.util.ListEndToLoadUtil
 import com.ybook.app.ui.search.SearchView.MessageType
@@ -65,6 +64,7 @@ import com.ybook.app.data.SearchSuggestionProvider
 import android.view.ViewConfiguration
 import android.support.v7.widget.RecyclerView.ViewHolder
 import me.toxz.kotlin.after
+import com.ybook.app.ui.detail.DetailActivity
 
 /**
  * Created by Carlos on 2014/12/17.
@@ -165,7 +165,7 @@ public class SearchPresenterImpl(val searchView: SearchView) : SearchPresenter, 
                     })
                 }
             }
-            R.id.card_view -> searchView.startActivityForResult(Intent(searchView, javaClass<BookDetailActivity>()).putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, v.getTag() as Serializable).putExtra(SearchActivity.EXTRA_POSITION, mSearchStatus!!.listItems.indexOf(v.getTag())), SearchActivity.REQUEST_CODE_IS_COLLECTION_CHANGED)
+            R.id.card_view -> searchView.startActivityForResult(Intent(searchView, javaClass<DetailActivity>()).putExtra(DetailActivity.INTENT_SEARCH_OBJECT, v.getTag() as Serializable).putExtra(SearchActivity.EXTRA_POSITION, mSearchStatus!!.listItems.indexOf(v.getTag())), SearchActivity.REQUEST_CODE_IS_COLLECTION_CHANGED)
         }
     }
 

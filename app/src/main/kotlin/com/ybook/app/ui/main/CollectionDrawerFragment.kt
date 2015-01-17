@@ -42,7 +42,6 @@ import com.umeng.analytics.MobclickAgent
 import com.ybook.app.util.EVENT_OPEN_COLLECTION
 import android.support.v7.app.ActionBarActivity
 import android.support.v7.app.ActionBar
-import com.ybook.app.ui.detail.BookDetailActivity
 import com.ybook.app.ui.detail.DetailActivity
 
 /**
@@ -90,7 +89,7 @@ public class CollectionDrawerFragment : ListFragment() {
             override fun onItemClick(parent: android.widget.AdapterView<*>, view: android.view.View, position: Int, id: Long) {
                 android.util.Log.i("onItemClick()", position.toString())
                 val intent = android.content.Intent(getActivity(), javaClass<DetailActivity>())
-                intent.putExtra(BookDetailActivity.INTENT_SEARCH_OBJECT, view.getTag() as java.io.Serializable)
+                intent.putExtra(DetailActivity.INTENT_SEARCH_OBJECT, view.getTag() as java.io.Serializable)
                 startActivity(intent)
             }
         })

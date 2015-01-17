@@ -23,7 +23,6 @@ import android.support.v7.widget.Toolbar
 import com.ybook.app.bean.BookListResponse
 import android.widget.ListView
 import com.ybook.app.bean.SearchResponse
-import com.ybook.app.ui.detail.BookDetailActivity
 import android.view.MenuItem
 import java.util.ArrayList
 import android.widget.BaseAdapter
@@ -49,6 +48,7 @@ import com.ybook.app.net.MSG_ERROR
 import com.ybook.app.net.DetailRequest
 import com.ybook.app.net.MSG_SUCCESS
 import com.ybook.app.bean.getLibCode
+import com.ybook.app.ui.detail.DetailActivity
 
 /**
  * Created by carlos on 12/8/14.
@@ -77,7 +77,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
                         val tag = view.getTag()
                         when (tag) {
                             is SearchResponse.SearchObject -> {
-                                val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
+                                val intent = Intent(view.getContext(), javaClass<DetailActivity>())
                                 intent.putExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                                 startActivity(intent)
                             }

@@ -24,11 +24,11 @@ import android.widget.BaseAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.ybook.app.ui.detail.BookDetailActivity
 import com.ybook.app.R
 import com.ybook.app.ui.home
 import android.content.Intent
 import com.umeng.analytics.MobclickAgent
+import com.ybook.app.ui.detail.DetailActivity
 
 /**
  * Created by carlos on 12/8/14.
@@ -59,7 +59,7 @@ public class BookListActivity() : SwipeBackActivity() {
                     val tag = view.getTag()
                     when (tag) {
                         is BookListResponse.BookListObject -> {
-                            val intent = Intent(view.getContext(), javaClass<BookDetailActivity>())
+                            val intent = Intent(view.getContext(), javaClass<DetailActivity>())
                             intent.putExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                             startActivity(intent)
                         }

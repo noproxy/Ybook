@@ -54,10 +54,7 @@
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".ui.detail.BookDetailActivity"
-                android:theme="@style/AppTheme.Translucent"
-                />
+
         <activity
                 android:name=".ui.list.BookListActivity"
                 android:theme="@style/AppTheme.Translucent"
