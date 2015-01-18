@@ -28,6 +28,7 @@ import android.support.v7.widget.Toolbar
 
 /**
  * A new implement to display search result interface, replacing the [[link:SearchActivity]] with Fragment.
+ * This implement is better for adapting LoaderManager and Fragment.
  *
  * Activities that contain this fragment must implement the
  * {@link SearchResultFragment.OnFragmentInteractionListener} interface to handle interaction events.
@@ -47,6 +48,9 @@ public class SearchResultFragment// Required empty public constructor
 
     private var mSearchKey: String? = null
 
+    /**
+     * listener to reflect to the interaction.
+     */
     private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

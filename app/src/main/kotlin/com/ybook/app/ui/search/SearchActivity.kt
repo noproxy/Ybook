@@ -66,7 +66,12 @@ import com.pnikosis.materialishprogress.ProgressWheel
 import android.view.animation.AccelerateInterpolator
 import es.oneoctopus.swiperefreshlayoutoverlay.SwipeRefreshLayoutOverlay
 
-public class SearchActivity : SwipeBackActivity(), SearchView {
+/**
+ * an implement of search result interface, it will load search result if the keyword provided.
+ *
+ * Deprecated, use [[SearchResultFragment]] instead.
+ */
+deprecated("use Fragment instead") public class SearchActivity : SwipeBackActivity(), SearchView {
     override fun getLayoutManager(): LinearLayoutManager = mLayoutManager as LinearLayoutManager
 
 
