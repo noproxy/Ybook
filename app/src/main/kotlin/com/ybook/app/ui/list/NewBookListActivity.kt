@@ -53,6 +53,8 @@ import com.ybook.app.ui.detail.DetailActivity
 /**
  * A new implement of the recommended book list interface.
  * This implement adapting the RecyclerView and CardView.
+ *
+ * book list interface is similar to search result interface, but the former has a recommending card in addition.
  */
 
 
@@ -70,6 +72,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
         when (rep) {
             is BookListResponse -> {
                 setTitle(rep.title)
+                //TODO the ListView need to be replaced with RecyclerView.
                 val list = findViewById(android.R.id.list) as ListView
                 listItems addAll rep.books.toListItem()
                 list.setAdapter(this.TmpBookListAdapter(rep.comment))
@@ -78,6 +81,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
                         val tag = view.getTag()
                         when (tag) {
                             is SearchResponse.SearchObject -> {
+                                //TODO handle the DetailActivity to compatible with this.
                                 val intent = Intent(view.getContext(), javaClass<DetailActivity>())
                                 intent.putExtra(home.KEY_BOOK_LIST_RESPONSE_EXTRA, tag)
                                 startActivity(intent)
@@ -118,6 +122,7 @@ public class NewBookListActivity() : SwipeBackActivity() {
     val listItems = ArrayList<SearchResponse.SearchObject>()
     val mUtil = BooksListUtil.getInstance(this)
 
+    //TODO this implement need improving. Just copy from old.
     inner class TmpBookListAdapter(val comment: String) : BaseAdapter() {
         override fun getItem(position: Int): Any? = listItems[position - 1]
         override fun getCount(): Int = listItems.size + 1
