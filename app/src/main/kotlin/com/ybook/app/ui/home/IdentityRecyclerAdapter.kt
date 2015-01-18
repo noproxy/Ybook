@@ -31,6 +31,9 @@ import com.ybook.app.ui.others.LoginActivity
 import com.ybook.app.id
 
 /**
+ * This is an recyclerAdapter of IdentityFragment to manage the cards.
+ * This must handle the placeholder( there is an empty because of the SlidingUp to hide header), the empty card and the login hint card.
+ *
  * Created by Carlos on 2015/1/7.
  */
 public class IdentityRecyclerAdapter(val mInflater: LayoutInflater, val mItems: ArrayList<IdentityCardData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
