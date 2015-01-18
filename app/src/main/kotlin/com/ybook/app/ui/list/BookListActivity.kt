@@ -35,7 +35,7 @@ import com.ybook.app.ui.detail.DetailActivity
  */
 
 
-public class BookListActivity() : SwipeBackActivity() {
+deprecated("NewBookListActivity instead") public class BookListActivity() : SwipeBackActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SwipeBackActivity>.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_list)

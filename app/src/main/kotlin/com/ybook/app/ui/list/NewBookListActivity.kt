@@ -51,7 +51,8 @@ import com.ybook.app.bean.getLibCode
 import com.ybook.app.ui.detail.DetailActivity
 
 /**
- * Created by carlos on 12/8/14.
+ * A new implement of the recommended book list interface.
+ * This implement adapting the RecyclerView and CardView.
  */
 
 
