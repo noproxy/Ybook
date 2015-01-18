@@ -27,12 +27,13 @@ import com.ybook.app.R
 import android.support.v7.widget.Toolbar
 
 /**
- * A simple {@link Fragment} subclass.
+ * A new implement to display search result interface, replacing the [[link:SearchActivity]] with Fragment.
+ *
  * Activities that contain this fragment must implement the
- * {@link SearchResultFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SearchResultFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * {@link SearchResultFragment.OnFragmentInteractionListener} interface to handle interaction events.
+ * And an argument to contain the search keyword is necessary.
+ *
+ * Use the {@link SearchResultFragment#newInstance} factory method to create an instance of this fragment.
  */
 public class SearchResultFragment// Required empty public constructor
 : Fragment() {
