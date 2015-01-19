@@ -32,6 +32,21 @@ import android.content.AsyncTaskLoader
 import android.content.Context
 import java.util.ArrayList
 import android.support.v7.widget.RecyclerView
+import com.ybook.app.net.SearchRequest
+import android.os.Handler
+import org.apache.http.NameValuePair
+import org.apache.http.message.BasicNameValuePair
+import com.ybook.app.net.getMainUrl
+import org.apache.http.HttpStatus
+import com.ybook.app.net.MSG_SUCCESS
+import org.apache.http.util.EntityUtils
+import com.ybook.app.util.JSONHelper
+import com.ybook.app.util.OneResultException
+import com.ybook.app.net.MSG_ONE_SEARCH_RESULT
+import com.ybook.app.net.MSG_ERROR
+import org.apache.http.impl.client.DefaultHttpClient
+import com.ybook.app.net.PostHelper
+import com.ybook.app.bean.DetailResponse
 
 /**
  * A new implement to display search result interface, replacing the [[link:SearchActivity]] with Fragment.
@@ -187,7 +202,43 @@ public class SearchResultFragment// Required empty public constructor
 }
 
 public class SearchLoader(val page: Int, val key: String, con: Context) : AsyncTaskLoader<Array<SearchResponse.SearchObject>>(con) {
+    val searchClient = object : DefaultHttpClient() {}
+
     override fun loadInBackground(): Array<SearchResponse.SearchObject>? {
+        val re = search(SearchRequest(key, page))
+        when ( re ) {
+            is DetailResponse -> null//TODO
+            is SearchResponse -> return re.objects//TODO improve
+        }
+        return null
+    }
+
+    public fun search(req: SearchRequest): Any? {
+        val data = ArrayList<NameValuePair>()
+        data.add(BasicNameValuePair("key", req.key))
+        data.add(BasicNameValuePair("curr_page", req.currPage.toString()))
+        data.add(BasicNameValuePair("se_type", req.searchType))
+        data.add(BasicNameValuePair("lib_code", req.libCode.toString()))
+        var re: Any ? = null
+
+        try {
+            val rep = searchClient.execute(PostHelper.newPost(getMainUrl() + "/search", data))
+
+            when (rep.getStatusLine().getStatusCode()) {
+                HttpStatus.SC_OK -> {
+                    val str = EntityUtils.toString(rep.getEntity())
+                    try {
+                        re = JSONHelper.readSearchResponse(str)
+                    } catch(e: OneResultException) {
+                        re = JSONHelper.readDetailResponse(str)
+                    }
+                }
+            }
+            rep.getEntity().consumeContent()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return re
 
     }
 
