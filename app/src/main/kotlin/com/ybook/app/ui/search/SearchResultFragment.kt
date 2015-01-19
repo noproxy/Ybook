@@ -25,6 +25,13 @@ import android.net.Uri
 import android.app.Activity
 import com.ybook.app.R
 import android.support.v7.widget.Toolbar
+import android.app.LoaderManager
+import com.ybook.app.bean.SearchResponse
+import android.content.Loader
+import android.content.AsyncTaskLoader
+import android.content.Context
+import java.util.ArrayList
+import android.support.v7.widget.RecyclerView
 
 /**
  * A new implement to display search result interface, replacing the [[link:SearchActivity]] with Fragment.
@@ -37,7 +44,60 @@ import android.support.v7.widget.Toolbar
  * Use the {@link SearchResultFragment#newInstance} factory method to create an instance of this fragment.
  */
 public class SearchResultFragment// Required empty public constructor
-: Fragment() {
+: Fragment(), LoaderManager.LoaderCallbacks<Array<SearchResponse.SearchObject>> {
+
+    val BUNDLE_KEY_PAGE = "page"
+    val BUNDLE_KEY_KEYWORD = "keyword"
+    val mListItems: ArrayList<SearchResponse.SearchObject> = ArrayList()
+    val mAdapter: RecyclerView.Adapter<SearchViewHolder>? = null
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Array<SearchResponse.SearchObject>>? {
+        if (args == null) {
+            return null
+        } else {
+            val page = args.getInt(BUNDLE_KEY_PAGE)
+            val key = args.getString(BUNDLE_KEY_KEYWORD)
+            return SearchLoader(page, key, getActivity())
+        }
+    }
+
+
+    /**
+     * to handle the loaded data.
+     */
+    override fun onLoadFinished(loader: Loader<Array<SearchResponse.SearchObject>>?,
+                                data: Array<SearchResponse.SearchObject>?) {
+        if (data != null) {
+            if ((loader as SearchLoader).page == 0) {
+                onNewData(data)
+            } else onData(data)
+        }
+
+
+    }
+
+    /**
+     * add the data to result list.
+     */
+    private fun onData(data: Array<SearchResponse.SearchObject>) {
+        mListItems.addAll(data)
+        mAdapter!!.notifyDataSetChanged()
+    }
+
+    /**
+     * replace the data of result list
+     */
+    private fun onNewData(data: Array<SearchResponse.SearchObject>) {
+        mListItems.clear()
+        mListItems.addAll(data)
+        mAdapter!!.notifyDataSetChanged()
+    }
+
+    override fun onLoaderReset(loader: Loader<Array<SearchResponse.SearchObject>>?) {
+        //nothing now
+    }
+
+
     // variables that control the Action Bar auto hide behavior (aka "quick recall")
     private var mActionBarAutoHideEnabled = false
     private var mActionBarAutoHideSensivity = 0
@@ -54,7 +114,7 @@ public class SearchResultFragment// Required empty public constructor
     private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super<Fragment>.onCreate(savedInstanceState)
         if (getArguments() != null) {
             mSearchKey = getArguments().getString(ARG_PARAM_SEARCH_KEY)
         }
@@ -73,7 +133,7 @@ public class SearchResultFragment// Required empty public constructor
     }
 
     override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
+        super<Fragment>.onAttach(activity)
         try {
             mListener = activity as OnFragmentInteractionListener
         } catch (e: ClassCastException) {
@@ -83,7 +143,7 @@ public class SearchResultFragment// Required empty public constructor
     }
 
     override fun onDetach() {
-        super.onDetach()
+        super<Fragment>.onDetach()
         mListener = null
     }
 
@@ -121,6 +181,14 @@ public class SearchResultFragment// Required empty public constructor
             fragment.setArguments(args)
             return fragment
         }
+    }
+
+
+}
+
+public class SearchLoader(val page: Int, val key: String, con: Context) : AsyncTaskLoader<Array<SearchResponse.SearchObject>>(con) {
+    override fun loadInBackground(): Array<SearchResponse.SearchObject>? {
+
     }
 
 }
