@@ -47,6 +47,9 @@ import com.ybook.app.net.MSG_ERROR
 import org.apache.http.impl.client.DefaultHttpClient
 import com.ybook.app.net.PostHelper
 import com.ybook.app.bean.DetailResponse
+import com.ybook.app.id
+import android.widget.TextView
+import android.widget.ImageView
 
 /**
  * A new implement to display search result interface, replacing the [[link:SearchActivity]] with Fragment.
@@ -244,4 +247,15 @@ public class SearchLoader(val page: Int, val key: String, con: Context) : AsyncT
 
     }
 
+}
+
+public class SearchHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+public class SearchItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    val titleText = (view id R.id.text_view_book_title) as TextView
+    val idText = (view id R.id.text_view_book_query_id) as TextView
+    val authorText = (view id R.id.text_view_book_author) as TextView
+    val pressText = (view id R.id.text_view_book_publisher) as TextView
+    val markBtn = (view id R.id.bookMarkBtn)  as ImageView
+    val coverImage = (view id R.id.image_view_book_cover) as ImageView
 }
