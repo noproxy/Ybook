@@ -59,7 +59,9 @@ import com.ybook.app.bean.DetailResponse
  * Use the {@link SearchResultFragment#newInstance} factory method to create an instance of this fragment.
  */
 public class SearchResultFragment// Required empty public constructor
-: Fragment(), LoaderManager.LoaderCallbacks<Array<SearchResponse.SearchObject>> {
+: Fragment(),
+        //the loaded results may contain only one items, which will be DetailResponse rather than SearchResponse
+        LoaderManager.LoaderCallbacks<Array<SearchResponse.SearchObject>> {
 
     val BUNDLE_KEY_PAGE = "page"
     val BUNDLE_KEY_KEYWORD = "keyword"
