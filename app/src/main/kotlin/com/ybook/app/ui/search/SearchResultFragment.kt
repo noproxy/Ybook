@@ -50,6 +50,11 @@ import com.ybook.app.bean.DetailResponse
 import com.ybook.app.id
 import android.widget.TextView
 import android.widget.ImageView
+import android.support.v7.widget.RecyclerView.ViewHolder
+import me.toxz.kotlin.after
+import com.squareup.picasso.Picasso
+import android.view.animation.AnimationUtils
+import com.ybook.app.util.BooksListUtil
 
 /**
  * A new implement to display search result interface, replacing the [[link:SearchActivity]] with Fragment.
@@ -64,10 +69,16 @@ import android.widget.ImageView
 public class SearchResultFragment// Required empty public constructor
 : Fragment(),
         //the loaded results may contain only one items, which will be DetailResponse rather than SearchResponse
-        LoaderManager.LoaderCallbacks<Array<SearchResponse.SearchObject>> {
+        LoaderManager.LoaderCallbacks<Array<SearchResponse.SearchObject>>,
+        View.OnClickListener {
+    override fun onClick(v: View) {
+        throw UnsupportedOperationException()
+    }
 
     val BUNDLE_KEY_PAGE = "page"
     val BUNDLE_KEY_KEYWORD = "keyword"
+    val mUtil = BooksListUtil.getInstance(getActivity())//TODO NullPointerException
+
     val mListItems: ArrayList<SearchResponse.SearchObject> = ArrayList()
     val mAdapter: RecyclerView.Adapter<SearchViewHolder>? = null
 
@@ -200,6 +211,54 @@ public class SearchResultFragment// Required empty public constructor
             args.putString(ARG_PARAM_SEARCH_KEY, searchKey)
             fragment.setArguments(args)
             return fragment
+        }
+    }
+
+    public inner class SearchAdapter() : RecyclerView.Adapter<ViewHolder>() {
+        private val VIEW_TYPE_HEADER = 0
+        private val VIEW_TYPE_ITEM = 1
+
+        var lastPosition: Int = -1
+
+
+        override fun getItemViewType(position: Int): Int {
+            return if ((position == 0)) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
+            if (viewType == VIEW_TYPE_HEADER) return HeaderViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.padding_action_bar, parent, false))
+            else return SearchViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.search_result_item, parent, false)).after {
+                it.view setOnClickListener this@SearchResultFragment
+                it.markBtn setOnClickListener this@SearchResultFragment
+            }
+        }
+
+        var oldPaddingTop: Int? = null
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            if (holder is SearchViewHolder) {
+                val item = mListItems[position - 1]//headView added
+                holder.titleText setText item.title
+                holder.idText setText item.id
+                holder.authorText setText item.author
+                holder.pressText setText item.press
+                Picasso.with(getActivity()) load item.coverImgUrl error (getActivity().getResources().getDrawable(R.drawable.ic_error)) into holder.coverImage
+
+                holder.view setTag item
+                holder.markBtn setTag item
+                holder.markBtn setImageResource(if (item isMarked mUtil) R.drawable.ic_marked else R.drawable.ic_mark)
+            }
+        }
+
+        override fun getItemCount(): Int = mListItems.size + 1
+
+
+        private fun setAnimation(viewToAnimate: View, position: Int) {
+            // If the bound view wasn't previously displayed on screen, it's animated
+            if (position > lastPosition) {
+                val animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
+            }
         }
     }
 
