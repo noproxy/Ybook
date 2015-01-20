@@ -37,6 +37,8 @@ import com.ybook.app.bean.BookListResponse.BookListObject
 import com.ybook.app.bean.BookListResponse
 
 /**
+ * A util to convert Object between JSONString and targeted Object.
+ *
  * Created by carlos on 11/10/14.
  */
 object JSONHelper {
@@ -75,6 +77,11 @@ object JSONHelper {
     val keyDate = "date"
     val TAG = "JSONHelper"
 
+    /**
+     * Returns the value mapped by {@code key} if it exists, coercing it if
+     * necessary, or return "" and log if no such mapping exists.
+     *
+     */
     fun JSONObject.s(key: String): String {
         try {
             return this.getString(key)
@@ -84,8 +91,27 @@ object JSONHelper {
         }
     }
 
+    /**
+     * Returns the value mapped by {@code key} if it exists and is an Int or
+     * can be coerced to an Int, or throws otherwise.
+     *
+     * @throws JSONException if the mapping doesn't exist or cannot be coerced
+     *     to an Int.
+     */
     fun JSONObject.i(key: String): Int = this.getInt(key)
+
+    /**
+     * Returns the Boolean value mapped by {@code key} if it exists and is 1 or 0,
+     * or throws otherwise.
+     *
+     * @throws JSONException if the mapping doesn't exist or cannot be coerced
+     *     to an Boolean.
+     */
     fun JSONObject.b(key: String): Boolean = this.getInt(key) == 1
+
+    /**
+     * Convert JSONArray to an Array.
+     */
     fun JSONArray.ls(): Array<JSONObject> {
         var i = 0
         val a = ArrayList<JSONObject>();
@@ -96,6 +122,13 @@ object JSONHelper {
         return a.copyToArray()
     }
 
+    /**
+     * Returns the array mapped by {@code key} if it exists and is an Array,
+     * or throws otherwise.
+     *
+     * @throws JSONException if the mapping doesn't exist or cannot be coerced
+     *     to an Array.
+     */
     fun JSONObject.a(key: String): Array<JSONObject> = this.getJSONArray(key).ls()
 
 
