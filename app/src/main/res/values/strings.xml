@@ -23,11 +23,11 @@
     <string name="isCollectionHint">Collection</string>
     <string name="availableHint">avai</string>
     <string name="bookCoverHint">Cover Image</string>
-    <string name="authorText">Author :</string>
-    <string name="publisherText">Publish :</string>
+    <string name="authorText">Author</string>
+    <string name="publisherText">Publish</string>
     <string name="queryIdText">Query :</string>
-    <string name="isbnText" translatable="false">ISBN :</string>
-    <string name="detailText">Intro :</string>
+    <string name="isbnText" translatable="false">ISBN</string>
+    <string name="detailText">Intro</string>
     <string name="searchHintText">Search by book name</string>
     <string name="collectBtnText">Collect</string>
     <string name="cancelCollectBtnText">Remove</string>
