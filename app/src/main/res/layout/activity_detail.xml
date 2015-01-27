@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
-
+                    android:src="@drawable/fab_star_like"
                     app:fab_colorNormal="@color/colorAccentLight"
                     app:fab_colorPressed="@color/colorAccent"
                     />
