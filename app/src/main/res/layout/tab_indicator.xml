@@ -18,6 +18,7 @@
           style="@style/ThemeOverlay.AppCompat.Light"
           android:layout_weight="0"
           android:layout_width="wrap_content"
+          android:minWidth="84dp"
           android:layout_height="48dp"
           android:background="?android:selectableItemBackground"
           android:gravity="center"
