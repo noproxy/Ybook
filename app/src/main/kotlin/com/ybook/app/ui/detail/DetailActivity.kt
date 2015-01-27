@@ -126,6 +126,7 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
                 container.addItem(getString(R.string.publisherText), o.press)
                 container.addItem(getString(R.string.isbnText))
                 container.addItem(getString(R.string.detailText), o.detail)
+                setToolbarTitle(o.title)
                 setSlidingUpTitle(getString(R.string.loadingContentHint))
                 getLoaderManager().initLoader(0, null, this)
             }
@@ -135,6 +136,7 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
                 container.addItem(getString(R.string.publisherText), o.detailResponse.publish)
                 container.addItem(getString(R.string.isbnText), o.detailResponse.isbn)
                 container.addItem(getString(R.string.detailText), o.detailResponse.detail)
+                setToolbarTitle(o.detailResponse.title)
                 setSlidingUpTitle(getString(R.string.queryIdText) + o.detailResponse.queryID)
             }
             is BookListResponse.BookListObject -> {
@@ -145,8 +147,15 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         }
     }
 
+    var mBookTitle:TextView?=null
+
     override fun onLoaderReset(loader: Loader<DetailResponse>?) {
         //not implement: no data need release
+    }
+
+    override fun setToolbarTitle(title: String?) {
+        super<SlidingUpBaseActivity>.setToolbarTitle(title)
+            mBookTitle?.setText(title)
     }
 
     /**
@@ -224,6 +233,7 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         Log.i(TAG, "initViews")
         mListView = findViewById(R.id.contentListView) as ListView
         mNoHintView = id (R.id.nothingHint)
+        mBookTitle = id (R.id.text_view_book_title) as TextView
 
         mAdapter = object : BaseAdapter() {
             override fun getCount() = mDetailResponse?.libInfo?.size ?: 0

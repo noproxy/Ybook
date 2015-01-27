@@ -208,7 +208,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends SwipeB
      *
      * @param title to set.
      */
-    protected final void setToolbarTitle(String title) {
+    protected void setToolbarTitle(String title) {
         if (mToolbarTitle != null) {
             mToolbarTitle.setText(title);
         }
