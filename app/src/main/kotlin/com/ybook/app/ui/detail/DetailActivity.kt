@@ -45,6 +45,7 @@ import me.toxz.kotlin.makeTag
 import android.util.Log
 import android.widget.ListView
 import android.widget.BaseAdapter
+import com.squareup.picasso.Picasso
 
 /*
     Copyright 2015 Carlos
@@ -88,6 +89,11 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
      * View to notice there is no Storage Info
      */
     var mNoHintView: View? = null
+    var mBookCover:ImageView?=null
+
+    private fun loadCover(url: String) {
+        Picasso.with(this).load(url).error(R.drawable.ic_error).resize(240,240).centerInside().into(mBookCover)
+    }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<DetailResponse>? {
         val searchO = mObject
@@ -122,6 +128,7 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         Log.i(TAG, o.toString())
         when (o) {
             is SearchResponse.SearchObject -> {
+                loadCover(o.coverImgUrl)
                 container.addItem(getString(R.string.authorText), o.author)
                 container.addItem(getString(R.string.publisherText), o.press)
                 container.addItem(getString(R.string.isbnText))
@@ -132,12 +139,13 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
             }
             is BookItem -> {
                 mDetailResponse = o.detailResponse
-                container.addItem(getString(R.string.authorText), o.detailResponse.author)
-                container.addItem(getString(R.string.publisherText), o.detailResponse.publish)
-                container.addItem(getString(R.string.isbnText), o.detailResponse.isbn)
-                container.addItem(getString(R.string.detailText), o.detailResponse.detail)
-                setToolbarTitle(o.detailResponse.title)
-                setSlidingUpTitle(getString(R.string.queryIdText) + o.detailResponse.queryID)
+                loadCover(mDetailResponse!!.coverImageUrl)
+                container.addItem(getString(R.string.authorText), mDetailResponse!!.author)
+                container.addItem(getString(R.string.publisherText), mDetailResponse!!.publish)
+                container.addItem(getString(R.string.isbnText), mDetailResponse!!.isbn)
+                container.addItem(getString(R.string.detailText), mDetailResponse!!.detail)
+                setToolbarTitle(mDetailResponse!!.title)
+                setSlidingUpTitle(getString(R.string.queryIdText) + mDetailResponse!!.queryID)
             }
             is BookListResponse.BookListObject -> {
                 mObject = (mObject as BookListResponse.BookListObject).toSearchObject()
@@ -234,6 +242,7 @@ public class DetailActivity() : SlidingUpBaseActivity<ObservableScrollView>(), O
         mListView = findViewById(R.id.contentListView) as ListView
         mNoHintView = id (R.id.nothingHint)
         mBookTitle = id (R.id.text_view_book_title) as TextView
+        mBookCover = id (R.id.image_view_book_cover) as ImageView
 
         mAdapter = object : BaseAdapter() {
             override fun getCount() = mDetailResponse?.libInfo?.size ?: 0
